@@ -6,4 +6,5 @@ An app made fore codespace managers to best manage their space
 
 - [x] Setup project
 - [x] Initialise on Github
-- [] App deployment
+- [x] Init DB and link it to app
+- [x] App deployment
