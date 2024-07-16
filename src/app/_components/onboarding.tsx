@@ -40,7 +40,6 @@ export default function OnboardingComponent() {
   const router = useRouter();
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const utils = api.useUtils();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -53,13 +52,8 @@ export default function OnboardingComponent() {
   const createProfile = api.profile.create.useMutation({
     onSuccess: async () => {
       console.log("success");
-      // await utils.profile.invalidate();
     },
   });
-
-  // function onSubmit(values: z.infer<typeof formSchema>) {
-  //   createProfile.mutate(values);
-  // }
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);

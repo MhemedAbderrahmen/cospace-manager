@@ -1,22 +1,50 @@
-import { auth } from "@clerk/nextjs/server";
 import { z } from "zod";
-import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from "~/server/api/trpc";
 
 export const profileReducer = createTRPCRouter({
-  create: publicProcedure
+  create: protectedProcedure
     .input(z.object({ username: z.string().min(1) }))
     .mutation(({ ctx, input }) => {
-      const user = auth();
-      if (!user) throw new Error("Unauthorized");
-      if (!user.userId) throw new Error("Unauthorized");
-
       return ctx.db.profile.create({
         data: {
-          userId: user.userId,
+          userId: ctx.user.userId,
           username: input.username,
         },
       });
     }),
+
+  update: protectedProcedure
+    .input(
+      z.object({
+        id: z.coerce.number(),
+        data: z.object({
+          username: z.string().min(2).max(50),
+          bio: z.string().min(2).max(50),
+        }),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { id, data } = input;
+      const updatedProfile = await ctx.db.profile.update({
+        where: { id },
+        data,
+      });
+      return updatedProfile;
+    }),
+
+  getUserProfile: protectedProcedure.query(({ ctx }) => {
+    return ctx.db.profile.findFirst({
+      where: {
+        userId: {
+          equals: ctx.user.userId,
+        },
+      },
+    });
+  }),
 
   getLatest: publicProcedure.query(({ ctx }) => {
     return ctx.db.profile.findFirst({
