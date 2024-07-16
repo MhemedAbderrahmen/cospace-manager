@@ -1,11 +1,14 @@
 import Link from "next/link";
 import { Button } from "~/components/ui/button";
-import { HydrateClient } from "~/trpc/server";
+import { api, HydrateClient } from "~/trpc/server";
 
-export default function Home() {
+export default async function Home() {
+  const hello = await api.post.hello({ text: "from tRPC" });
+  void api.post.getLatest.prefetch();
+
   return (
     <HydrateClient>
-      <main>
+      <main className="p-4">
         <Link href={"/dashboard"}>
           <Button>Dashboard</Button>
         </Link>

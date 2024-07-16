@@ -1,5 +1,5 @@
 {
-  "editor.fontFamily": "'Cascadia Code', 'Courier New', monospace",
+  "editor.fontFamily": "'Operator Mono','Cascadia Code', 'Courier New', monospace",
   // "editor.fontFamily": "JetBrains Mono, Menlo, Monaco, Courier New, monospace",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnPaste": false, // required
