@@ -28,6 +28,7 @@ import {
 import { Input } from "~/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
 import { api } from "~/trpc/react";
+import { completeOnboarding } from "../onboarding/_actions";
 
 const formSchema = z.object({
   username: z.string().min(2).max(50),
@@ -35,11 +36,11 @@ const formSchema = z.object({
 });
 
 export default function OnboardingComponent() {
-  const [error, setError] = useState("");
-  // const utils = api.useUtils();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { user } = useUser();
   const router = useRouter();
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const utils = api.useUtils();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -56,25 +57,22 @@ export default function OnboardingComponent() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    createProfile.mutate(values);
-  }
-
-  // async function onSubmit(values: z.infer<typeof formSchema>) {
-  //   setIsLoading(true);
-
+  // function onSubmit(values: z.infer<typeof formSchema>) {
   //   createProfile.mutate(values);
-
-  //   const res = await completeOnboarding(values);
-  //   setIsLoading(false);
-  //   if (res?.message) {
-  //     await user?.reload();
-  //     router.push("/");
-  //   }
-  //   if (res?.error) {
-  //     setError(res?.error);
-  //   }
   // }
+
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsLoading(true);
+    const res = await completeOnboarding(values);
+    if (res?.message) {
+      await user?.reload();
+      await createProfile.mutateAsync(values);
+      router.push("/");
+    }
+    if (res?.error) {
+      setError(res?.error);
+    }
+  }
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center p-4">
