@@ -6,6 +6,7 @@ import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 import { ThemeProvider } from "~/components/theme-provider";
 import { TRPCReactProvider } from "~/trpc/react";
+import { TopNav } from "./_components/top-nav";
 
 export const metadata: Metadata = {
   title: "cospace | APP",
@@ -22,15 +23,22 @@ export default function RootLayout({
         baseTheme: dark,
       }}
     >
-      <html lang="en" className={`${GeistSans.variable}`}>
-        <body>
+      <html
+        lang="en"
+        className={`${GeistSans.variable}`}
+        suppressHydrationWarning
+      >
+        <body className="flex min-h-screen flex-col p-4">
           <ThemeProvider
             attribute="class"
             defaultTheme="dark"
             enableSystem
             disableTransitionOnChange
           >
-            <TRPCReactProvider>{children}</TRPCReactProvider>
+            <TRPCReactProvider>
+              <TopNav />
+              {children}
+            </TRPCReactProvider>
           </ThemeProvider>
         </body>
       </html>
