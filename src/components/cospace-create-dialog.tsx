@@ -33,6 +33,7 @@ const formSchema = z.object({
 });
 
 export const CospaceCreateModal: React.FC = () => {
+  const utils = api.useUtils();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -47,10 +48,13 @@ export const CospaceCreateModal: React.FC = () => {
       toast.message("Creating your cospace", { id: "isPending" });
     },
     onSuccess: async () => {
+      await utils.cospace.invalidate();
+      await utils.profile.invalidate();
       toast.dismiss("isPending");
       toast.success("Profile updated", {
         duration: 1000,
       });
+      setIsOpen(false);
     },
   });
 
