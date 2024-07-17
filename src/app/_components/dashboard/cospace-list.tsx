@@ -19,6 +19,7 @@ interface ICospaceItemProps {
     updatedAt: Date;
   };
 }
+
 function CospaceItem({ data }: Readonly<{ data: ICospaceItemProps }>) {
   return (
     <div>

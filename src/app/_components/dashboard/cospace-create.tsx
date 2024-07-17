@@ -1,12 +1,19 @@
 "use client";
 
 import dayjs from "dayjs";
+import { useRouter } from "next/navigation";
 import { CospaceCreateModal } from "~/components/cospace-create-dialog";
-import { Card, CardContent, CardHeader } from "~/components/ui/card";
+import { Button } from "~/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "~/components/ui/card";
 import { api } from "~/trpc/react";
 export default function CospaceCreate() {
   const { data, isPending } = api.profile.getUserProfile.useQuery();
-
+  const router = useRouter();
   if (isPending) return <div>Loading...</div>;
 
   if (data?.Cospace)
@@ -27,6 +34,16 @@ export default function CospaceCreate() {
             {data?.Cospace.description}
           </small>
         </CardContent>
+        <CardFooter className="flex w-full justify-end">
+          <Button
+            size={"sm"}
+            onClick={() =>
+              router.push("/dashboard/manager/cospace/" + data.Cospace?.name)
+            }
+          >
+            Manage
+          </Button>
+        </CardFooter>
       </Card>
     );
 

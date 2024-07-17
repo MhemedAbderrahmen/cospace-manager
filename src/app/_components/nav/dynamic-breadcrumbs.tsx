@@ -31,7 +31,7 @@ export const DynamicBreadcrumbs = () => {
   const breadcrumbs = generateBreadcrumbs(pathname);
 
   return (
-    <Breadcrumb>
+    <Breadcrumb className="pb-4">
       <BreadcrumbList>
         {breadcrumbs.map((breadcrumb, index) => (
           <React.Fragment key={breadcrumb.href}>
