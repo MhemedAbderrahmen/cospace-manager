@@ -59,4 +59,12 @@ export const cospaceReducer = createTRPCRouter({
       },
     });
   }),
+
+  getAll: protectedProcedure.query(async ({ ctx }) => {
+    return await ctx.db.cospace.findMany({
+      include: {
+        manager: true,
+      },
+    });
+  }),
 });

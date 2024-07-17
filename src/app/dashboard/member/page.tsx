@@ -1,6 +1,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import LatestCospace from "~/app/_components/dashboard/cospace-latest";
+import CospaceList from "~/app/_components/dashboard/cospace-list";
 import { Card, CardHeader } from "~/components/ui/card";
 import { api, HydrateClient } from "~/trpc/server";
 
@@ -26,9 +27,10 @@ export default function MemberDashboard() {
             </p>
           </CardHeader>
         </Card>
-        <>
+        <div className="flex flex-col lg:flex-row">
           <LatestCospace />
-        </>
+          <CospaceList />
+        </div>
       </div>
     </HydrateClient>
   );

@@ -1,7 +1,9 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { PlusIcon } from "lucide-react";
+import { Loader2, PlusIcon } from "lucide-react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 import { api } from "~/trpc/react";
 import { Button } from "./ui/button";
@@ -31,6 +33,7 @@ const formSchema = z.object({
 });
 
 export const CospaceCreateModal: React.FC = () => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -40,8 +43,14 @@ export const CospaceCreateModal: React.FC = () => {
   });
 
   const createCospace = api.cospace.create.useMutation({
+    onMutate: () => {
+      toast.message("Creating your cospace", { id: "isPending" });
+    },
     onSuccess: async () => {
-      console.log("success");
+      toast.dismiss("isPending");
+      toast.success("Profile updated", {
+        duration: 1000,
+      });
     },
   });
 
@@ -50,7 +59,7 @@ export const CospaceCreateModal: React.FC = () => {
   }
 
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button size={"sm"} className="w-full" variant={"outline"}>
           <PlusIcon className="m-2" size={18} /> Create a new cospace
@@ -98,10 +107,10 @@ export const CospaceCreateModal: React.FC = () => {
                     </FormItem>
                   )}
                 />
-                <Button type="submit">
-                  {/* {isLoading && (
+                <Button type="submit" disabled={createCospace.isPending}>
+                  {createCospace.isPending && (
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  )} */}
+                  )}
                   Submit
                 </Button>
               </form>
