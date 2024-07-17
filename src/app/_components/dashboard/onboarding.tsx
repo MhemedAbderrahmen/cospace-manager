@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { completeOnboarding } from "~/app/onboarding/_actions";
 import { Button } from "~/components/ui/button";
 import {
   Card,
@@ -28,7 +29,6 @@ import {
 import { Input } from "~/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
 import { api } from "~/trpc/react";
-import { completeOnboarding } from "../onboarding/_actions";
 
 const formSchema = z.object({
   username: z.string().min(2).max(50),

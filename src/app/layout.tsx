@@ -8,7 +8,7 @@ import { ThemeProvider } from "~/components/theme-provider";
 import { Toaster } from "~/components/ui/sonner";
 import { cn } from "~/lib/utils";
 import { TRPCReactProvider } from "~/trpc/react";
-import { TopNav } from "./_components/top-nav";
+import { TopNav } from "./_components/nav/top-nav";
 
 export const metadata: Metadata = {
   title: "cospace | APP",

@@ -43,6 +43,9 @@ export const profileReducer = createTRPCRouter({
           equals: ctx.user.userId,
         },
       },
+      include: {
+        Cospace: true,
+      },
     });
   }),
 

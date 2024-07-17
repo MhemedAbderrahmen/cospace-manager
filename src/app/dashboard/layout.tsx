@@ -1,7 +1,7 @@
 "use client";
 
 import "~/styles/globals.css";
-import { SideNav } from "../_components/side-nav";
+import { SideNav } from "../_components/nav/side-nav";
 
 export default function DashboardLayout({
   children,

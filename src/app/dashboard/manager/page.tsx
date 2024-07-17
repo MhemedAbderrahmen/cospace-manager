@@ -1,15 +1,33 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
+import CospaceCreate from "~/app/_components/dashboard/cospace-create";
+import { Card, CardHeader } from "~/components/ui/card";
+import { api, HydrateClient } from "~/trpc/server";
 
 export default function ManagerDashboard() {
+  void api.profile.getUserProfile.prefetch();
   const { sessionClaims } = auth();
 
   if (sessionClaims?.metadata.role !== "manager") redirect("/");
 
   return (
-    <>
-      <h1>This is the manager dashboard</h1>
-      <p>This page is restricted to users with the &apos;manager&apos; role.</p>
-    </>
+    <HydrateClient>
+      <div className="flex flex-col gap-4">
+        <Card>
+          <CardHeader>
+            <p className="text-xl font-semibold leading-7 [&:not(:first-child)]:mt-6">
+              🎉 Congratulations, you can start managing your coworking space
+              now!
+            </p>
+            <p className="text-md text-muted-foreground">
+              You dont have one? What are you waiting for
+            </p>
+          </CardHeader>
+        </Card>
+        <div>
+          <CospaceCreate />
+        </div>
+      </div>
+    </HydrateClient>
   );
 }
