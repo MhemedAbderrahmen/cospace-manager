@@ -16,16 +16,18 @@ export default function LatestCospace() {
     <Card className="w-full md:w-1/2">
       <CardHeader>Latest Coworking Space</CardHeader>
       <CardContent className="flex flex-col gap-2">
-        <div className="fex-row flex items-center justify-between">
-          <div className="text-lg font-semibold">{latestCospace?.name}</div>
-          <Button variant={"link"} className="text-sm text-muted-foreground">
-            Manager @{latestCospace?.manager.username}
-          </Button>
-        </div>
-        <p className="text-sm text-muted-foreground">
+        <small className="text-sm font-medium leading-none text-muted-foreground">
           Created {dayjs(latestCospace?.createdAt).format("DD/MM/YYYY")}
-        </p>
-        <div className="text-md">{latestCospace?.description}</div>
+        </small>
+        <div className="flex flex-row items-center justify-between">
+          <div className="text-lg font-semibold">{latestCospace?.name}</div>
+          <small className="text-sm font-medium leading-none text-muted-foreground">
+            Manager @{latestCospace?.manager.username}
+          </small>
+        </div>
+        <small className="text-sm font-medium leading-none">
+          {latestCospace?.description}
+        </small>
       </CardContent>
       <CardFooter>
         <Button size={"sm"} variant={"link"}>
