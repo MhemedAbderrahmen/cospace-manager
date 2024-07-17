@@ -59,6 +59,7 @@ export default function EditProfile() {
       data: values,
     });
   }
+
   if (isPending) return <div>Loading...</div>;
   return (
     <div className="flex w-full flex-col space-y-4 lg:w-1/2">
