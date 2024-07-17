@@ -26,7 +26,7 @@ const formSchema = z.object({
 });
 
 export default function EditProfile() {
-  const [profileData] = api.profile.getUserProfile.useSuspenseQuery();
+  const { data, isPending } = api.profile.getUserProfile.useQuery();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -46,20 +46,20 @@ export default function EditProfile() {
   });
 
   useEffect(() => {
-    if (profileData) {
-      form.setValue("username", profileData.username);
-      form.setValue("bio", profileData.bio ?? "");
+    if (data) {
+      form.setValue("username", data.username);
+      form.setValue("bio", data.bio ?? "");
     }
-  }, [profileData]);
+  }, [data]);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     toast.message("Updating profile", { id: "pending" });
     updateProfile.mutate({
-      id: profileData?.id ?? 0,
+      id: data?.id ?? 0,
       data: values,
     });
   }
-
+  if (isPending) return <div>Loading...</div>;
   return (
     <div className="flex w-full flex-col space-y-4 lg:w-1/2">
       <>

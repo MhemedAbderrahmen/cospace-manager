@@ -6,25 +6,25 @@ import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardHeader } from "~/components/ui/card";
 import { api } from "~/trpc/react";
 export default function CospaceCreate() {
-  const [profileData] = api.profile.getUserProfile.useSuspenseQuery();
+  const { data, isPending } = api.profile.getUserProfile.useQuery();
 
-  if (profileData?.Cospace)
+  if (isPending) return <div>Loading...</div>;
+
+  if (data?.Cospace)
     return (
       <Card className="w-full md:w-1/2">
         <CardHeader>Your coworking space</CardHeader>
         <CardContent className="flex flex-col gap-2">
-          <div className="fex-row flex items-center justify-between">
-            <div className="text-lg font-semibold">
-              {profileData?.Cospace.name}
-            </div>
+          <div className="fex-row flex justify-between">
+            <div className="text-lg font-semibold">{data?.Cospace.name}</div>
             <Button variant={"link"} className="text-sm text-muted-foreground">
-              Manager @{profileData?.username}
+              Manager @{data?.username}
             </Button>
           </div>
           <p className="text-sm text-muted-foreground">
-            Created {dayjs(profileData?.Cospace.createdAt).format("DD/MM/YYYY")}
+            Created {dayjs(data?.Cospace.createdAt).format("DD/MM/YYYY")}
           </p>
-          <div className="text-md">{profileData?.Cospace.description}</div>
+          <div className="text-md">{data?.Cospace.description}</div>
         </CardContent>
       </Card>
     );
