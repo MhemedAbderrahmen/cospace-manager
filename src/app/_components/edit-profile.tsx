@@ -3,6 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 import { Button } from "~/components/ui/button";
@@ -37,7 +38,10 @@ export default function EditProfile() {
 
   const updateProfile = api.profile.update.useMutation({
     onSuccess: async () => {
-      console.log("success");
+      toast.dismiss("pending");
+      toast.success("Profile updated", {
+        duration: 1000,
+      });
     },
   });
 
@@ -49,6 +53,7 @@ export default function EditProfile() {
   }, [profileData]);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    toast.message("Updating profile", { id: "pending" });
     updateProfile.mutate({
       id: profileData?.id ?? 0,
       data: values,
