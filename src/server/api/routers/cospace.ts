@@ -1,10 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-import {
-  createTRPCRouter,
-  protectedProcedure,
-  publicProcedure,
-} from "~/server/api/trpc";
+import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
 export const cospaceReducer = createTRPCRouter({
   create: protectedProcedure
@@ -49,12 +45,18 @@ export const cospaceReducer = createTRPCRouter({
           equals: ctx.user.userId,
         },
       },
+      include: {
+        manager: true,
+      },
     });
   }),
 
-  getLatest: publicProcedure.query(({ ctx }) => {
-    return ctx.db.cospace.findFirst({
+  getLatest: protectedProcedure.query(async ({ ctx }) => {
+    return await ctx.db.cospace.findFirst({
       orderBy: { createdAt: "desc" },
+      include: {
+        manager: true,
+      },
     });
   }),
 });

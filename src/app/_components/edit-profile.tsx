@@ -61,7 +61,7 @@ export default function EditProfile() {
   }
 
   return (
-    <div className="flex w-full flex-col space-y-4 lg:w-1/3">
+    <div className="flex w-full flex-col space-y-4 lg:w-1/2">
       <>
         <div className="text-lg font-semibold">Profile</div>
         <div className="text-sm">

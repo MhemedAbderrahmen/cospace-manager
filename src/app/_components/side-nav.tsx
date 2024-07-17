@@ -10,10 +10,10 @@ export const SideNav = () => {
   const isActive = (path: string) => pathname === path;
 
   return (
-    <nav className="border-1 m-2 h-full min-h-96">
-      <div className="flex flex-col space-y-1">
+    <nav className="border-1 h-full min-w-48 p-4">
+      <div className="flex:row flex gap-2 lg:flex-col">
         <Button
-          size={"icon"}
+          className="justify-start"
           variant={
             isActive("/dashboard/manager") || isActive("/dashboard/member")
               ? "secondary"
@@ -21,21 +21,21 @@ export const SideNav = () => {
           }
           onClick={() => router.push("/dashboard")}
         >
-          <LayoutDashboardIcon size={20} />
+          <LayoutDashboardIcon size={20} className="mr-2 h-4 w-4" /> Dashboard
         </Button>
         <Button
-          size={"icon"}
+          className="justify-start"
           variant={isActive("/dashboard/profile") ? "secondary" : "ghost"}
           onClick={() => router.push("/dashboard/profile")}
         >
-          <UserIcon size={20} />
+          <UserIcon size={20} className="mr-2 h-4 w-4" /> Profile
         </Button>
         <Button
-          size={"icon"}
+          className="justify-start"
           variant={isActive("/dashboard/settings") ? "secondary" : "ghost"}
           onClick={() => router.push("/dashboard/settings")}
         >
-          <SettingsIcon size={20} />
+          <SettingsIcon size={20} className="mr-2 h-4 w-4" /> Settings
         </Button>
       </div>
     </nav>

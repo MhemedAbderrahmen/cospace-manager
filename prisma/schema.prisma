@@ -21,22 +21,24 @@ model Post {
 
 model Profile {
     id        Int      @id @default(autoincrement())
-    userId    String
+    userId    String   @unique
     username  String
     bio       String?
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+    Cospace   Cospace?
 
     @@index([username])
 }
 
 model Cospace {
-    id        Int      @id @default(autoincrement())
-    managerId String
-    name      String
+    id          Int      @id @default(autoincrement())
+    managerId   String   @unique
+    manager     Profile  @relation(fields: [managerId], references: [userId])
+    name        String
     description String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
 
     @@index([name])
 }

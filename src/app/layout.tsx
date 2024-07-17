@@ -33,7 +33,7 @@ export default function RootLayout({
       <html lang="en" suppressHydrationWarning>
         <body
           className={cn(
-            "flex h-full min-h-screen flex-col bg-background font-sans antialiased",
+            "flex h-full min-h-screen w-full flex-col items-center bg-background font-sans antialiased",
             fontSans.variable,
           )}
         >
@@ -44,8 +44,10 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <TRPCReactProvider>
-              <TopNav />
-              {children}
+              <div className="w-full max-w-screen-xl">
+                <TopNav />
+                {children}
+              </div>
               <Toaster />
             </TRPCReactProvider>
           </ThemeProvider>
