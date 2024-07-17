@@ -27,7 +27,7 @@ export default function MemberDashboard() {
             </p>
           </CardHeader>
         </Card>
-        <div className="flex flex-col lg:flex-row">
+        <div className="flex flex-col gap-4 lg:flex-row">
           <LatestCospace />
           <CospaceList />
         </div>

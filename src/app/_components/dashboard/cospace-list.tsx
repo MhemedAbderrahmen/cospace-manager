@@ -1,5 +1,6 @@
 "use client";
 
+import { Card, CardContent, CardHeader } from "~/components/ui/card";
 import { api } from "~/trpc/react";
 
 interface ICospaceItemProps {
@@ -34,10 +35,13 @@ export default function CospaceList() {
   const { data, isPending } = api.cospace.getAll.useQuery();
   if (isPending) return <div>Loading..</div>;
   return (
-    <div className="w-full p-2">
-      {data?.map((cospace, index) => (
-        <CospaceItem data={cospace} key={index} />
-      ))}
-    </div>
+    <Card className="w-full md:w-1/2">
+      <CardHeader>Coworking Spaces Available</CardHeader>
+      <CardContent>
+        {data?.map((cospace, index) => (
+          <CospaceItem data={cospace} key={index} />
+        ))}
+      </CardContent>
+    </Card>
   );
 }
