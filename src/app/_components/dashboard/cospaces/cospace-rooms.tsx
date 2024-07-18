@@ -26,7 +26,7 @@ export default function CospaceRooms() {
         {rooms.map((room) => (
           <div
             key={room.id}
-            className="flex flex-col gap-2 rounded-md bg-muted p-4"
+            className="flex flex-col gap-2 rounded-md border p-4"
           >
             <div className="flex flex-row items-center justify-between">
               <div className="text-lg font-semibold">{room.name}</div>

@@ -1,6 +1,7 @@
 "use client";
 
 import CospaceRooms from "./cospace-rooms";
+
 export default function CospaceManager() {
   return (
     <div className="flex flex-col gap-4">
