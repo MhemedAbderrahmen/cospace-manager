@@ -1,5 +1,6 @@
 "use client";
 
+import { SkeletonCard } from "~/components/skeleton-card";
 import { Card, CardContent, CardHeader } from "~/components/ui/card";
 import { api } from "~/trpc/react";
 
@@ -38,7 +39,8 @@ function CospaceItem({ data }: Readonly<{ data: ICospaceItemProps }>) {
 
 export default function CospaceList() {
   const { data, isPending } = api.cospace.getAll.useQuery();
-  if (isPending) return <div>Loading..</div>;
+  if (isPending) return <SkeletonCard />;
+
   return (
     <Card className="w-full md:w-1/2">
       <CardHeader>Coworking Spaces Available</CardHeader>

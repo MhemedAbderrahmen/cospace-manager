@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
+import { SkeletonCard } from "~/components/skeleton-card";
 
 import { Button } from "~/components/ui/button";
 import {
@@ -60,7 +61,7 @@ export default function EditProfile() {
     });
   }
 
-  if (isPending) return <div>Loading...</div>;
+  if (isPending) return <SkeletonCard />;
   return (
     <div className="flex w-full flex-col space-y-4 lg:w-1/2">
       <>

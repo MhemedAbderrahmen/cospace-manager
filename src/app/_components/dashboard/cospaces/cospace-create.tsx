@@ -3,6 +3,7 @@
 import dayjs from "dayjs";
 import { useRouter } from "next/navigation";
 import { CospaceCreateModal } from "~/components/cospace-create-dialog";
+import { SkeletonCard } from "~/components/skeleton-card";
 import { Button } from "~/components/ui/button";
 import {
   Card,
@@ -14,8 +15,8 @@ import { api } from "~/trpc/react";
 export default function CospaceCreate() {
   const { data, isPending } = api.profile.getUserProfile.useQuery();
   const router = useRouter();
-  if (isPending) return <div>Loading...</div>;
 
+  if (isPending) return <SkeletonCard />;
   if (data?.Cospace)
     return (
       <Card className="w-full md:w-1/2">
