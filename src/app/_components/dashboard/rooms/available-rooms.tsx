@@ -2,9 +2,9 @@
 
 import { type Amenties, type RoomType } from "@prisma/client";
 import { User2Icon } from "lucide-react";
-import { RoomCreateModal } from "~/components/room-create-dialog";
 import { Badge } from "~/components/ui/badge";
-import { Card, CardHeader } from "~/components/ui/card";
+import { Button } from "~/components/ui/button";
+import { Card, CardFooter, CardHeader } from "~/components/ui/card";
 import { api } from "~/trpc/react";
 
 function toTitleCase(str: string) {
@@ -68,20 +68,29 @@ function displayRoomItem(
           </div>
         </div>
       </CardHeader>
+      <CardFooter className="flex flex-row justify-end">
+        <Button size={"sm"}>Book</Button>
+      </CardFooter>
     </Card>
   );
 }
 
-export default function CospaceRooms() {
-  const [rooms] = api.room.getMyCospaceRooms.useSuspenseQuery();
+export default function AvailableRooms({
+  params,
+}: {
+  params: { slug: number };
+}) {
+  const { data } = api.room.getCospaceRooms.useQuery({
+    cospaceId: params.slug,
+    available: "true",
+  });
   return (
     <div className="flex w-full flex-col gap-4 md:w-1/2">
       <div className="flex flex-row items-center justify-between">
-        <div>Rooms</div>
-        <RoomCreateModal />
+        <div>Available Rooms</div>
       </div>
       <div className="flex flex-col gap-4">
-        {rooms.map((room) => displayRoomItem(room))}
+        {data?.map((room) => displayRoomItem(room))}
       </div>
     </div>
   );

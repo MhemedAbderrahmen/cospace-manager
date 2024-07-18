@@ -59,7 +59,7 @@ export const roomReducer = createTRPCRouter({
       return updatedCospace;
     }),
 
-  getAll: protectedProcedure.query(async ({ ctx }) => {
+  getMyCospaceRooms: protectedProcedure.query(async ({ ctx }) => {
     const cospace = await ctx.db.cospace.findFirst({
       where: {
         managerId: {
@@ -77,6 +77,35 @@ export const roomReducer = createTRPCRouter({
       },
     });
   }),
+
+  getCospaceRooms: protectedProcedure
+    .input(
+      z.object({
+        cospaceId: z.coerce.number(),
+        available: z.enum(["all", "true", "false"]),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      if (input.available === "all")
+        return await ctx.db.room.findMany({
+          where: {
+            cospaceId: input.cospaceId,
+          },
+          include: {
+            cospace: true,
+          },
+        });
+      else
+        return await ctx.db.room.findMany({
+          where: {
+            cospaceId: input.cospaceId,
+            available: input.available === "true" ? true : false,
+          },
+          include: {
+            cospace: true,
+          },
+        });
+    }),
 
   delete: protectedProcedure
     .input(

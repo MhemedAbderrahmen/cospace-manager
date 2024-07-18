@@ -1,7 +1,10 @@
+import AvailableRooms from "~/app/_components/dashboard/rooms/available-rooms";
 import { Card, CardHeader } from "~/components/ui/card";
-import { HydrateClient } from "~/trpc/server";
+import { api, HydrateClient } from "~/trpc/server";
 
-export default function Page() {
+export default function Page({ params }: { params: { slug: number } }) {
+  void api.room.getCospaceRooms({ cospaceId: params.slug, available: "true" });
+
   return (
     <HydrateClient>
       <div className="flex flex-col gap-4">
@@ -15,6 +18,9 @@ export default function Page() {
             </p>
           </CardHeader>
         </Card>
+
+        <div>List of available rooms</div>
+        <AvailableRooms params={params} />
       </div>
     </HydrateClient>
   );

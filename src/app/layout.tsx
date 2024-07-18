@@ -6,6 +6,7 @@ import { type Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
 import { ThemeProvider } from "~/components/theme-provider";
 import { Toaster } from "~/components/ui/sonner";
+import { TooltipProvider } from "~/components/ui/tooltip";
 import { cn } from "~/lib/utils";
 import { TRPCReactProvider } from "~/trpc/react";
 import { TopNav } from "./_components/nav/top-nav";
@@ -46,7 +47,7 @@ export default function RootLayout({
             <TRPCReactProvider>
               <div className="w-full max-w-screen-xl">
                 <TopNav />
-                {children}
+                <TooltipProvider>{children}</TooltipProvider>
               </div>
               <Toaster />
             </TRPCReactProvider>

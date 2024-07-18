@@ -3,7 +3,7 @@ import { Card, CardHeader } from "~/components/ui/card";
 import { api, HydrateClient } from "~/trpc/server";
 
 export default function ManageCospace() {
-  void api.room.getAll.prefetch();
+  void api.room.getMyCospaceRooms.prefetch();
 
   return (
     <HydrateClient>
