@@ -9,21 +9,29 @@ export const roomReducer = createTRPCRouter({
       z.object({
         name: z.string().min(1),
         capacity: z.coerce.number(),
-        cospaceId: z.coerce.number(),
         type: z.nativeEnum(RoomType),
         amenties: z.array(z.nativeEnum(Amenties)),
       }),
     )
-    .mutation(({ ctx, input }) => {
+    .mutation(async ({ ctx, input }) => {
       if (ctx.user.sessionClaims.metadata.role !== "manager")
         throw new TRPCError({ code: "UNAUTHORIZED" });
+      const cospace = await ctx.db.cospace.findFirst({
+        where: {
+          managerId: {
+            equals: ctx.user.userId,
+          },
+        },
+      });
+      if (!cospace) throw new TRPCError({ code: "UNAUTHORIZED" });
+
       return ctx.db.room.create({
         data: {
           capacity: input.capacity,
           name: input.name,
           type: input.type,
           amenties: input.amenties,
-          cospaceId: input.cospaceId,
+          cospaceId: cospace?.id,
         },
       });
     }),
@@ -56,9 +64,6 @@ export const roomReducer = createTRPCRouter({
         managerId: {
           equals: ctx.user.userId,
         },
-      },
-      include: {
-        manager: true,
       },
     });
 

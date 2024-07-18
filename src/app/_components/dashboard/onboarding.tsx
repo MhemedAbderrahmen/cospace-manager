@@ -51,17 +51,17 @@ export default function OnboardingComponent() {
 
   const createProfile = api.profile.create.useMutation({
     onSuccess: async () => {
-      console.log("success");
+      router.push("/");
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
     const res = await completeOnboarding(values);
+    console.log("🚀 ~ onSubmit ~ res:", res);
     if (res?.message) {
       await user?.reload();
       await createProfile.mutateAsync(values);
-      router.push("/");
     }
     if (res?.error) {
       setError(res?.error);

@@ -38,7 +38,6 @@ import {
 const formSchema = z.object({
   name: z.string().min(1),
   capacity: z.coerce.number(),
-  cospaceId: z.coerce.number(),
   type: z.nativeEnum(RoomType),
   amenties: z.array(z.nativeEnum(Amenties)),
 });
@@ -83,9 +82,8 @@ export const RoomCreateModal: React.FC = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
-      amenties: ["COFFEE"],
+      amenties: [],
       capacity: 0,
-      cospaceId: data?.id,
       type: "MEETING",
     },
   });
@@ -95,8 +93,7 @@ export const RoomCreateModal: React.FC = () => {
       toast.message("Creating your room", { id: "isPending" });
     },
     onSuccess: async () => {
-      await utils.cospace.invalidate();
-      await utils.profile.invalidate();
+      await utils.room.invalidate();
       toast.dismiss("isPending");
       toast.success("Room created", {
         duration: 1000,
@@ -106,8 +103,7 @@ export const RoomCreateModal: React.FC = () => {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log("🚀 ~ onSubmit ~ values:", values);
-    // await createRoom.mutateAsync(values);
+    await createRoom.mutateAsync(values);
   }
 
   return (
