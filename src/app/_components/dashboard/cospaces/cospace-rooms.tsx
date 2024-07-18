@@ -4,6 +4,7 @@ import { type Amenties, type RoomType } from "@prisma/client";
 import { User2Icon } from "lucide-react";
 import { RoomCreateModal } from "~/components/room-create-dialog";
 import { Badge } from "~/components/ui/badge";
+import { Card, CardHeader } from "~/components/ui/card";
 import { api } from "~/trpc/react";
 
 function toTitleCase(str: string) {
@@ -35,29 +36,36 @@ function displayRoomItem(
   },
 ) {
   return (
-    <div key={room.id} className="flex flex-col gap-2 rounded-md border p-4">
-      <div className="flex flex-row items-center justify-between">
-        <div className="text-lg font-semibold">{room.name}</div>
-        <>
-          <div className="flex gap-2 text-lg font-semibold leading-none text-muted-foreground">
-            <User2Icon size={18} />
-            {room.capacity}
+    <Card key={room.id}>
+      <CardHeader>
+        <div className="flex flex-row items-center justify-between">
+          <div className="text-lg font-semibold">{room.name}</div>
+          <div className="flex items-center space-x-2">
+            <Badge
+              className={`${
+                room.available ? "bg-green-500" : "bg-red-500"
+              } text-white`}
+            >
+              {room.available ? "Available" : "Not Available"}
+            </Badge>
+            <div className="flex gap-2 text-lg font-semibold leading-none text-muted-foreground">
+              <User2Icon size={18} />
+              {room.capacity}
+            </div>
           </div>
-          <Badge>Available</Badge>
-        </>
-      </div>
-      <small className="text-sm font-medium leading-none">Room Type</small>
-      <div>
-        <Badge>{toTitleCase(room.type)} Room</Badge>
-      </div>
-
-      <small className="text-sm font-medium leading-none">Amenties</small>
-      <div className="flex flex-row flex-wrap gap-1">
-        {room.amenties.map((amenties, index) => (
-          <Badge key={index}>{toTitleCase(amenties)}</Badge>
-        ))}
-      </div>
-    </div>
+        </div>
+        <div className="flex flex-col gap-2">
+          <div>
+            <Badge>{toTitleCase(room.type)} Room</Badge>
+          </div>
+          <div className="flex flex-row flex-wrap gap-1">
+            {room.amenties.map((amenties, index) => (
+              <Badge key={index}>{toTitleCase(amenties)}</Badge>
+            ))}
+          </div>
+        </div>
+      </CardHeader>
+    </Card>
   );
 }
 

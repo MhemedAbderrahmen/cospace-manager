@@ -32,6 +32,7 @@ export const roomReducer = createTRPCRouter({
           type: input.type,
           amenties: input.amenties,
           cospaceId: cospace?.id,
+          available: true,
         },
       });
     }),
