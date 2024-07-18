@@ -37,9 +37,7 @@ export default function CospaceCreate() {
         <CardFooter className="flex w-full justify-end">
           <Button
             size={"sm"}
-            onClick={() =>
-              router.push("/dashboard/manager/cospace/" + data.Cospace?.name)
-            }
+            onClick={() => router.push("/dashboard/manager/cospace")}
           >
             Manage
           </Button>

@@ -2,9 +2,9 @@ import CospaceManager from "~/app/_components/dashboard/cospaces/cospace-manager
 import { Card, CardHeader } from "~/components/ui/card";
 import { api, HydrateClient } from "~/trpc/server";
 
-export default function Page({ params }: { params: { slug: string } }) {
-  void api.room.getAll.prefetch({ name: params.slug });
-  console.log("slug", params.slug);
+export default function ManageCospace() {
+  void api.room.getAll.prefetch();
+
   return (
     <HydrateClient>
       <div className="flex flex-col gap-4">

@@ -50,20 +50,25 @@ export const roomReducer = createTRPCRouter({
       return updatedCospace;
     }),
 
-  getAll: protectedProcedure
-    .input(
-      z.object({
-        name: z.string(),
-      }),
-    )
-    .query(async ({ ctx, input }) => {
-      return await ctx.db.room.findMany({
-        where: {
-          name: input.name,
+  getAll: protectedProcedure.query(async ({ ctx }) => {
+    const cospace = await ctx.db.cospace.findFirst({
+      where: {
+        managerId: {
+          equals: ctx.user.userId,
         },
-        include: {
-          cospace: true,
-        },
-      });
-    }),
+      },
+      include: {
+        manager: true,
+      },
+    });
+
+    return await ctx.db.room.findMany({
+      where: {
+        cospaceId: cospace?.id,
+      },
+      include: {
+        cospace: true,
+      },
+    });
+  }),
 });

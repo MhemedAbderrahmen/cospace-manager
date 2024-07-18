@@ -3,8 +3,8 @@ import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
 export const cospaceReducer = createTRPCRouter({
-  getCospace: protectedProcedure.query(({ ctx }) => {
-    return ctx.db.cospace.findFirst({
+  getCospace: protectedProcedure.query(async ({ ctx }) => {
+    return await ctx.db.cospace.findFirst({
       where: {
         managerId: {
           equals: ctx.user.userId,
