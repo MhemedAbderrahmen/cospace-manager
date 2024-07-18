@@ -76,4 +76,18 @@ export const roomReducer = createTRPCRouter({
       },
     });
   }),
+
+  delete: protectedProcedure
+    .input(
+      z.object({
+        id: z.coerce.number(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.db.room.delete({
+        where: {
+          id: input.id,
+        },
+      });
+    }),
 });
