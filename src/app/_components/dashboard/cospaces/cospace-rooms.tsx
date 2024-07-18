@@ -42,9 +42,10 @@ function displayRoomItem(
           <div className="text-lg font-semibold">{room.name}</div>
           <div className="flex items-center space-x-2">
             <Badge
-              className={`${
-                room.available ? "bg-green-500" : "bg-red-500"
-              } text-white`}
+              className={
+                `${room.available ? "bg-green-500" : "bg-red-500"} text-white` +
+                " rounded-md"
+              }
             >
               {room.available ? "Available" : "Not Available"}
             </Badge>
@@ -56,11 +57,13 @@ function displayRoomItem(
         </div>
         <div className="flex flex-col gap-2">
           <div>
-            <Badge>{toTitleCase(room.type)} Room</Badge>
+            <Badge className="rounded-md">{toTitleCase(room.type)} Room</Badge>
           </div>
           <div className="flex flex-row flex-wrap gap-1">
             {room.amenties.map((amenties, index) => (
-              <Badge key={index}>{toTitleCase(amenties)}</Badge>
+              <Badge key={index} className="rounded-md">
+                {toTitleCase(amenties)}
+              </Badge>
             ))}
           </div>
         </div>

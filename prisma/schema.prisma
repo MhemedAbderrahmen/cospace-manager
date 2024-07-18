@@ -36,13 +36,14 @@ model Post {
 }
 
 model Profile {
-    id        Int      @id @default(autoincrement())
-    userId    String   @unique
+    id        Int       @id @default(autoincrement())
+    userId    String    @unique
     username  String
     bio       String?
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    createdAt DateTime  @default(now())
+    updatedAt DateTime  @updatedAt
     Cospace   Cospace?
+    Booking   Booking[]
 
     @@index([username])
 }
@@ -71,6 +72,20 @@ model Room {
     cospace   Cospace    @relation(fields: [cospaceId], references: [id])
     createdAt DateTime   @default(now())
     updatedAt DateTime   @updatedAt
+    Booking   Booking[]
 
     @@index([name])
+}
+
+model Booking {
+    id        Int      @id @default(autoincrement())
+    profileId Int
+    roomId    Int? // Nullable for desk bookings
+    startTime DateTime
+    endTime   DateTime
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    profile Profile @relation(fields: [profileId], references: [id])
+    room    Room?   @relation(fields: [roomId], references: [id])
 }

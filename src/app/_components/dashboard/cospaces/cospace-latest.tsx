@@ -1,6 +1,7 @@
 "use client";
 
 import dayjs from "dayjs";
+import { useRouter } from "next/navigation";
 import { Button } from "~/components/ui/button";
 import {
   Card,
@@ -10,6 +11,7 @@ import {
 } from "~/components/ui/card";
 import { api } from "~/trpc/react";
 export default function LatestCospace() {
+  const router = useRouter();
   const [latestCospace] = api.cospace.getLatest.useSuspenseQuery();
 
   return (
@@ -29,11 +31,18 @@ export default function LatestCospace() {
           {latestCospace?.description}
         </small>
       </CardContent>
-      <CardFooter>
+      <CardFooter className="flex justify-end">
         <Button size={"sm"} variant={"link"}>
           Details
         </Button>
-        <Button size={"sm"}>Book Now</Button>
+        <Button
+          size={"sm"}
+          onClick={() =>
+            router.push("/dashboard/member/cospace/" + latestCospace?.id)
+          }
+        >
+          Book Now
+        </Button>
       </CardFooter>
     </Card>
   );
