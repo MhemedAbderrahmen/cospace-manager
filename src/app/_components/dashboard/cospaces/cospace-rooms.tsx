@@ -24,7 +24,10 @@ export default function CospaceRooms() {
       </CardHeader>
       <CardContent className="flex flex-col gap-4">
         {rooms.map((room) => (
-          <div key={room.id} className="flex flex-col gap-2">
+          <div
+            key={room.id}
+            className="flex flex-col gap-2 rounded-md bg-muted p-4"
+          >
             <div className="flex flex-row items-center justify-between">
               <div className="text-lg font-semibold">{room.name}</div>
               <div className="flex gap-2 text-lg font-semibold leading-none text-muted-foreground">
@@ -35,10 +38,9 @@ export default function CospaceRooms() {
             <small className="text-sm font-medium leading-none">
               Room Type
             </small>
-
-            <small className="text-sm font-medium leading-none">
-              <Badge variant={"secondary"}>{toTitleCase(room.type)} Room</Badge>
-            </small>
+            <div>
+              <Badge>{toTitleCase(room.type)} Room</Badge>
+            </div>
 
             <small className="text-sm font-medium leading-none">Amenties</small>
             <div className="flex flex-row flex-wrap gap-1">
