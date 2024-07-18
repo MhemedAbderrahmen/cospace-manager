@@ -2,6 +2,7 @@ import { postRouter } from "~/server/api/routers/post";
 import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
 import { cospaceReducer } from "./routers/cospace";
 import { profileReducer } from "./routers/profile";
+import { roomReducer } from "./routers/room";
 
 /**
  * This is the primary router for your server.
@@ -12,6 +13,7 @@ export const appRouter = createTRPCRouter({
   post: postRouter,
   profile: profileReducer,
   cospace: cospaceReducer,
+  room: roomReducer,
 });
 
 // export type definition of API

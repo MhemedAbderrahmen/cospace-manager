@@ -10,6 +10,22 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
+enum RoomType {
+    MEETING
+    REGULAR
+}
+
+enum Amenties {
+    WHITEBOARD
+    PROJECTOR
+    TV
+    INTERNET
+    COFFEE
+    TEA
+    WATER
+    SNACKS
+}
+
 model Post {
     id        Int      @id @default(autoincrement())
     name      String
@@ -39,6 +55,21 @@ model Cospace {
     description String
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt
+    Room        Room?
+
+    @@index([name])
+}
+
+model Room {
+    id        Int        @id @default(autoincrement())
+    name      String
+    type      RoomType
+    amenties  Amenties[]
+    capacity  Int
+    cospaceId Int        @unique
+    cospace   Cospace    @relation(fields: [cospaceId], references: [id])
+    createdAt DateTime   @default(now())
+    updatedAt DateTime   @updatedAt
 
     @@index([name])
 }

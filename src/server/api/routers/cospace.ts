@@ -3,6 +3,19 @@ import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
 export const cospaceReducer = createTRPCRouter({
+  getCospace: protectedProcedure.query(({ ctx }) => {
+    return ctx.db.cospace.findFirst({
+      where: {
+        managerId: {
+          equals: ctx.user.userId,
+        },
+      },
+      include: {
+        manager: true,
+      },
+    });
+  }),
+
   create: protectedProcedure
     .input(
       z.object({ name: z.string().min(1), description: z.string().min(1) }),
@@ -37,19 +50,6 @@ export const cospaceReducer = createTRPCRouter({
       });
       return updatedCospace;
     }),
-
-  geManagerCospace: protectedProcedure.query(({ ctx }) => {
-    return ctx.db.cospace.findFirst({
-      where: {
-        managerId: {
-          equals: ctx.user.userId,
-        },
-      },
-      include: {
-        manager: true,
-      },
-    });
-  }),
 
   getLatest: protectedProcedure.query(async ({ ctx }) => {
     return await ctx.db.cospace.findFirst({
