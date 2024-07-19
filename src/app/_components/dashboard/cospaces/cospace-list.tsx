@@ -30,9 +30,7 @@ function CospaceItem({ data }: Readonly<{ data: ICospaceItemProps }>) {
           Manager @{data.manager.username}
         </small>
       </div>
-      <small className="text-sm font-medium leading-none">
-        {data.description}
-      </small>
+      <p className="leading-7 [&:not(:first-child)]:mt-6">{data.description}</p>
     </div>
   );
 }

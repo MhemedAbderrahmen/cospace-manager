@@ -16,9 +16,30 @@ export const cospaceReducer = createTRPCRouter({
     });
   }),
 
+  getCospaceById: protectedProcedure
+    .input(
+      z.object({
+        id: z.coerce.number(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      return await ctx.db.cospace.findFirst({
+        where: {
+          id: input.id,
+        },
+        include: {
+          manager: true,
+        },
+      });
+    }),
+
   create: protectedProcedure
     .input(
-      z.object({ name: z.string().min(1), description: z.string().min(1) }),
+      z.object({
+        name: z.string().min(1),
+        description: z.string().min(1),
+        coverImage: z.string().url(),
+      }),
     )
     .mutation(({ ctx, input }) => {
       if (ctx.user.sessionClaims.metadata.role !== "manager")
@@ -28,6 +49,7 @@ export const cospaceReducer = createTRPCRouter({
           managerId: ctx.user.userId,
           description: input.description,
           name: input.name,
+          coverImage: input.coverImage,
         },
       });
     }),

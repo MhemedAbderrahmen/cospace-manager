@@ -1,6 +1,7 @@
 "use client";
 
 import dayjs from "dayjs";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { CospaceCreateModal } from "~/components/cospace-create-dialog";
 import { SkeletonCard } from "~/components/skeleton-card";
@@ -22,18 +23,28 @@ export default function CospaceCreate() {
       <Card className="w-full md:w-1/2">
         <CardHeader>Your coworking space</CardHeader>
         <CardContent className="flex flex-col gap-2">
-          <small className="text-sm font-medium leading-none text-muted-foreground">
-            Created {dayjs(data?.Cospace.createdAt).format("DD/MM/YYYY")}
-          </small>
+          {data?.Cospace?.coverImage ? (
+            <Image
+              src={data?.Cospace?.coverImage as string}
+              alt="cospace cover"
+              className="h-32 w-full rounded-md object-cover"
+              width={100}
+              height={100}
+            />
+          ) : null}
+
           <div className="flex flex-row items-center justify-between">
             <div className="text-lg font-semibold">{data?.Cospace.name}</div>
             <small className="text-sm font-medium leading-none text-muted-foreground">
               Manager @{data?.username}
             </small>
           </div>
-          <small className="text-sm font-medium leading-none">
-            {data?.Cospace.description}
+          <small className="text-sm font-medium leading-none text-muted-foreground">
+            Created {dayjs(data?.Cospace.createdAt).format("DD/MM/YYYY")}
           </small>
+          <p className="leading-7 [&:not(:first-child)]:mt-6">
+            {data?.Cospace.description}
+          </p>
         </CardContent>
         <CardFooter className="flex w-full justify-end">
           <Button

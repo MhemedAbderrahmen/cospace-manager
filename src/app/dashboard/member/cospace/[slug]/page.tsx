@@ -1,3 +1,4 @@
+import CospaceDetails from "~/app/_components/dashboard/cospaces/cospace-details";
 import AvailableRooms from "~/app/_components/dashboard/rooms/available-rooms";
 import { Card, CardHeader } from "~/components/ui/card";
 import { api, HydrateClient } from "~/trpc/server";
@@ -18,7 +19,7 @@ export default function Page({ params }: { params: { slug: number } }) {
             </p>
           </CardHeader>
         </Card>
-
+        <CospaceDetails params={params} />
         <div>List of available rooms</div>
         <AvailableRooms params={params} />
       </div>

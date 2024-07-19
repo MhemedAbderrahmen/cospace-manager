@@ -26,15 +26,6 @@ enum Amenties {
     SNACKS
 }
 
-model Post {
-    id        Int      @id @default(autoincrement())
-    name      String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    @@index([name])
-}
-
 model Profile {
     id        Int       @id @default(autoincrement())
     userId    String    @unique
@@ -54,6 +45,7 @@ model Cospace {
     manager     Profile  @relation(fields: [managerId], references: [userId])
     name        String
     description String
+    coverImage  String
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt
     Room        Room[]
