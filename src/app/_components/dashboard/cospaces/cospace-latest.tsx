@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 "use client";
 
 import dayjs from "dayjs";
@@ -21,7 +22,7 @@ export default function LatestCospace() {
       <CardContent className="flex flex-col gap-2">
         {latestCospace?.coverImage ? (
           <Image
-            src={latestCospace.coverImage as string}
+            src={latestCospace.coverImage}
             alt="cospace cover"
             className="h-32 w-full rounded-md object-cover"
             width={420}

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 "use client";
 
 import Image from "next/image";
@@ -15,7 +16,7 @@ export default function CospaceDetails({
   if (isPending) return <SkeletonLine />;
   return (
     <Image
-      src={data?.coverImage as string}
+      src={data!.coverImage}
       alt="cospace cover"
       className="h-44 w-full rounded-md object-cover"
       width={1080}
