@@ -44,13 +44,15 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <TRPCReactProvider>
-              <div className="w-full max-w-screen-xl">
-                <TopNav />
-                <TooltipProvider>{children}</TooltipProvider>
-              </div>
-              <Toaster />
-            </TRPCReactProvider>
+            <TooltipProvider>
+              <TRPCReactProvider>
+                <div className="w-full max-w-screen-xl">
+                  <TopNav />
+                  {children}
+                </div>
+                <Toaster />
+              </TRPCReactProvider>
+            </TooltipProvider>
           </ThemeProvider>
         </body>
       </html>
