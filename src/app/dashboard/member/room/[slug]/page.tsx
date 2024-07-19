@@ -1,9 +1,9 @@
-import AvailableRooms from "~/app/_components/dashboard/rooms/available-rooms";
+import AvailableSlots from "~/app/_components/dashboard/rooms/available-slots";
 import { Card, CardHeader } from "~/components/ui/card";
 import { api, HydrateClient } from "~/trpc/server";
 
 export default function Page({ params }: { params: { slug: number } }) {
-  void api.room.getCospaceRooms.prefetch({ cospaceId: params.slug });
+  void api.availability.getAvailableSlots.prefetch({ roomId: params.slug });
 
   return (
     <HydrateClient>
@@ -11,16 +11,16 @@ export default function Page({ params }: { params: { slug: number } }) {
         <Card>
           <CardHeader>
             <p className="text-xl font-semibold leading-7 [&:not(:first-child)]:mt-6">
-              🚀 Select your option to book
+              🚀 Overview of this room&apos;s availabilities
             </p>
             <p className="text-md text-muted-foreground">
-              You can book rooms or desks, whatever you need.
+              Select the slots you wish to book and confirm
             </p>
           </CardHeader>
         </Card>
 
-        <div>List of available rooms</div>
-        <AvailableRooms params={params} />
+        <div>List of available slots</div>
+        <AvailableSlots params={params} />
       </div>
     </HydrateClient>
   );

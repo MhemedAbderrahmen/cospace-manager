@@ -51,7 +51,7 @@ export const CospaceCreateModal: React.FC = () => {
       await utils.cospace.invalidate();
       await utils.profile.invalidate();
       toast.dismiss("isPending");
-      toast.success("Profile updated", {
+      toast.success("Cospace created", {
         duration: 1000,
       });
       setIsOpen(false);

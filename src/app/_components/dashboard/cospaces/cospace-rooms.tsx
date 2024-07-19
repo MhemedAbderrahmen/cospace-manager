@@ -1,13 +1,14 @@
 "use client";
 
 import { type Amenties, type RoomType } from "@prisma/client";
-import { User2Icon } from "lucide-react";
+import { EditIcon, User2Icon } from "lucide-react";
 import { RoomCreateModal } from "~/components/room-create-dialog";
 import { Badge } from "~/components/ui/badge";
+import { Button } from "~/components/ui/button";
 import { Card, CardHeader } from "~/components/ui/card";
 import { api } from "~/trpc/react";
 
-function toTitleCase(str: string) {
+export function toTitleCase(str: string) {
   return str.replace(
     /\w\S*/g,
     (text: string) =>
@@ -30,7 +31,6 @@ function displayRoomItem(
     name: string;
     type: RoomType;
     capacity: number;
-    available: boolean;
     amenties: Amenties[];
     updatedAt: Date;
   },
@@ -40,19 +40,19 @@ function displayRoomItem(
       <CardHeader>
         <div className="flex flex-row items-center justify-between">
           <div className="text-lg font-semibold">{room.name}</div>
-          <div className="flex items-center space-x-2">
-            <Badge
-              className={
-                `${room.available ? "bg-green-500" : "bg-red-500"} text-white` +
-                " rounded-md"
-              }
-            >
-              {room.available ? "Available" : "Not Available"}
-            </Badge>
-            <div className="flex gap-2 text-lg font-semibold leading-none text-muted-foreground">
-              <User2Icon size={18} />
-              {room.capacity}
+          <div className="flex gap-2">
+            <div className="flex items-center space-x-2">
+              <div className="flex gap-2 text-sm font-semibold leading-none text-muted-foreground">
+                <User2Icon size={14} />
+                {room.capacity}
+              </div>
             </div>
+            <Button size="icon" variant={"ghost"}>
+              <EditIcon size={18} />
+            </Button>
+            {/* <Button size="icon" variant={"destructive"}>
+              <Trash2 size={18} />
+            </Button> */}
           </div>
         </div>
         <div className="flex flex-col gap-2">

@@ -32,7 +32,6 @@ export const roomReducer = createTRPCRouter({
           type: input.type,
           amenties: input.amenties,
           cospaceId: cospace?.id,
-          available: true,
         },
       });
     }),
@@ -82,29 +81,17 @@ export const roomReducer = createTRPCRouter({
     .input(
       z.object({
         cospaceId: z.coerce.number(),
-        available: z.enum(["all", "true", "false"]),
       }),
     )
     .query(async ({ ctx, input }) => {
-      if (input.available === "all")
-        return await ctx.db.room.findMany({
-          where: {
-            cospaceId: input.cospaceId,
-          },
-          include: {
-            cospace: true,
-          },
-        });
-      else
-        return await ctx.db.room.findMany({
-          where: {
-            cospaceId: input.cospaceId,
-            available: input.available === "true" ? true : false,
-          },
-          include: {
-            cospace: true,
-          },
-        });
+      return await ctx.db.room.findMany({
+        where: {
+          cospaceId: input.cospaceId,
+        },
+        include: {
+          cospace: true,
+        },
+      });
     }),
 
   delete: protectedProcedure

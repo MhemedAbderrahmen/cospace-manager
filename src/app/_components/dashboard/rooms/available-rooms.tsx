@@ -2,6 +2,8 @@
 
 import { type Amenties, type RoomType } from "@prisma/client";
 import { User2Icon } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { SkeletonCard } from "~/components/skeleton-card";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
 import { Card, CardFooter, CardHeader } from "~/components/ui/card";
@@ -15,7 +17,7 @@ function toTitleCase(str: string) {
   );
 }
 
-function displayRoomItem(
+function RoomItem(
   room: {
     cospace: {
       id: number;
@@ -30,25 +32,17 @@ function displayRoomItem(
     name: string;
     type: RoomType;
     capacity: number;
-    available: boolean;
     amenties: Amenties[];
     updatedAt: Date;
   },
 ) {
+  const router = useRouter();
   return (
     <Card key={room.id}>
       <CardHeader>
         <div className="flex flex-row items-center justify-between">
           <div className="text-lg font-semibold">{room.name}</div>
           <div className="flex items-center space-x-2">
-            <Badge
-              className={
-                `${room.available ? "bg-green-500" : "bg-red-500"} text-white` +
-                " rounded-md"
-              }
-            >
-              {room.available ? "Available" : "Not Available"}
-            </Badge>
             <div className="flex gap-2 text-lg font-semibold leading-none text-muted-foreground">
               <User2Icon size={18} />
               {room.capacity}
@@ -69,7 +63,12 @@ function displayRoomItem(
         </div>
       </CardHeader>
       <CardFooter className="flex flex-row justify-end">
-        <Button size={"sm"}>Book</Button>
+        <Button
+          size={"sm"}
+          onClick={() => router.push("/dashboard/member/room/" + room.id)}
+        >
+          View Availabilites
+        </Button>
       </CardFooter>
     </Card>
   );
@@ -80,17 +79,17 @@ export default function AvailableRooms({
 }: {
   params: { slug: number };
 }) {
-  const { data } = api.room.getCospaceRooms.useQuery({
+  const { data, isPending } = api.room.getCospaceRooms.useQuery({
     cospaceId: params.slug,
-    available: "true",
   });
+  if (isPending) return <SkeletonCard />;
   return (
     <div className="flex w-full flex-col gap-4 md:w-1/2">
       <div className="flex flex-row items-center justify-between">
         <div>Available Rooms</div>
       </div>
       <div className="flex flex-col gap-4">
-        {data?.map((room) => displayRoomItem(room))}
+        {data?.map((room) => <RoomItem {...room} key={room.id} />)}
       </div>
     </div>
   );

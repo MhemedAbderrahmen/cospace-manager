@@ -62,19 +62,29 @@ model Cospace {
 }
 
 model Room {
-    id        Int        @id @default(autoincrement())
-    name      String
-    type      RoomType
-    amenties  Amenties[]
-    capacity  Int
-    cospaceId Int
-    available Boolean    @default(true)
-    cospace   Cospace    @relation(fields: [cospaceId], references: [id])
-    createdAt DateTime   @default(now())
-    updatedAt DateTime   @updatedAt
-    Booking   Booking[]
+    id           Int            @id @default(autoincrement())
+    name         String
+    type         RoomType
+    amenties     Amenties[]
+    capacity     Int
+    cospaceId    Int
+    cospace      Cospace        @relation(fields: [cospaceId], references: [id])
+    createdAt    DateTime       @default(now())
+    updatedAt    DateTime       @updatedAt
+    Booking      Booking[]
+    Availability Availability[]
 
     @@index([name])
+}
+
+model Availability {
+    id        Int      @id @default(autoincrement())
+    roomId    Int
+    date      DateTime
+    startTime DateTime
+    endTime   DateTime
+    isBooked  Boolean  @default(false)
+    room      Room     @relation(fields: [roomId], references: [id])
 }
 
 model Booking {

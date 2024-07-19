@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
+import { toTitleCase } from "~/app/_components/dashboard/cospaces/cospace-rooms";
 import { api } from "~/trpc/react";
 import { Button } from "./ui/button";
 import { Checkbox } from "./ui/checkbox";
@@ -92,8 +93,17 @@ export const RoomCreateModal: React.FC = () => {
     onMutate: () => {
       toast.message("Creating your room", { id: "isPending" });
     },
-    onSuccess: async () => {
+    onSuccess: async ({ id }) => {
+      await generateAvailabilities.mutateAsync({
+        roomId: id,
+        startDate: new Date().toISOString(),
+        months: 1,
+        startHour: 9,
+        endHour: 18,
+      });
+
       await utils.room.invalidate();
+
       toast.dismiss("isPending");
       toast.success("Room created", {
         duration: 1000,
@@ -101,6 +111,8 @@ export const RoomCreateModal: React.FC = () => {
       setIsOpen(false);
     },
   });
+
+  const generateAvailabilities = api.availability.generateSlots.useMutation({});
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     await createRoom.mutateAsync(values);
@@ -227,7 +239,7 @@ export const RoomCreateModal: React.FC = () => {
                                   />
                                 </FormControl>
                                 <FormLabel className="font-normal">
-                                  {item.label}
+                                  {toTitleCase(item.label)}
                                 </FormLabel>
                               </FormItem>
                             );
