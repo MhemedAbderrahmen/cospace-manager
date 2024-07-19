@@ -33,33 +33,37 @@ const FormSchema = z.object({
   }),
 });
 
-export function CalendarForm() {
+export function CalendarForm({
+  handleSubmit,
+}: {
+  handleSubmit: (date: Date) => void;
+}) {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log("🚀 ~ onSubmit ~ data:", data);
+    handleSubmit(data.date);
   }
 
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-row items-center gap-2"
+        className="flex w-full flex-row items-center gap-2"
       >
         <FormField
           control={form.control}
           name="date"
           render={({ field }) => (
-            <FormItem className="flex flex-col">
+            <FormItem className="flex w-full flex-col">
               <Popover>
                 <PopoverTrigger asChild>
                   <FormControl>
                     <Button
                       variant={"outline"}
                       className={cn(
-                        "w-[240px] pl-3 text-left font-normal",
+                        "w-full pl-3 text-left font-normal",
                         !field.value && "text-muted-foreground",
                       )}
                     >
@@ -97,36 +101,44 @@ export default function AvailableSlots({
 }: {
   params: { slug: number };
 }) {
-  const { data, isPending } = api.availability.getAvailableSlots.useQuery({
-    roomId: params.slug,
-    // start date is today and end date is tomorrow
-    startDate: "2024-07-19",
-    endDate: "2024-07-20",
-  });
-  if (isPending) return <SkeletonLine />;
+  const { data, mutate, isPending } =
+    api.availability.availableSlotsByDate.useMutation();
+
   return (
     <div className="flex w-full flex-col gap-4">
-      <CalendarForm />
-      <div className="flex w-full flex-row flex-wrap gap-4">
-        {data?.map((slot) => (
-          <Card key={slot.id}>
-            <CardHeader className="gap-2">
-              <div className="flex flex-row items-center justify-between space-x-2">
-                <div>{dayjs(slot.date).format("MMMM D, YYYY")}</div>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button size={"icon"} className="size-8">
-                      <BookOpen size={18} />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>Book this slot</TooltipContent>
-                </Tooltip>
-              </div>
-              <>{dayjs(slot.startTime).format("h:mm A")}</>
-            </CardHeader>
-          </Card>
-        ))}
-      </div>
+      <CalendarForm
+        handleSubmit={(date: Date) => {
+          mutate({
+            roomId: params.slug,
+            date: date.toDateString(),
+          });
+        }}
+      />
+      {isPending ? (
+        <SkeletonLine />
+      ) : (
+        <div className="flex w-full flex-row flex-wrap gap-4">
+          {data?.length === 0 && <div>No slots available for this date</div>}
+          {data?.map((slot) => (
+            <Card key={slot.id}>
+              <CardHeader className="gap-2">
+                <div className="flex flex-row items-center justify-between space-x-2">
+                  <div>{dayjs(slot.date).format("MMMM D, YYYY")}</div>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button size={"icon"} className="size-8">
+                        <BookOpen size={18} />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>Book this slot</TooltipContent>
+                  </Tooltip>
+                </div>
+                <>{dayjs(slot.startTime).format("h:mm A")}</>
+              </CardHeader>
+            </Card>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

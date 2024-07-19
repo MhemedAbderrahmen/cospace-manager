@@ -22,24 +22,26 @@ export const availabilityReducer = createTRPCRouter({
       });
     }),
 
-  getAvailableSlots: protectedProcedure
+  availableSlotsByDate: protectedProcedure
     .input(
       z.object({
         roomId: z.coerce.number(),
-        startDate: z.string().optional(),
-        endDate: z.string().optional(),
+        date: z.string().optional(),
       }),
     )
-    .query(async ({ ctx, input }) => {
-      const { roomId, startDate, endDate } = input;
+    .mutation(async ({ ctx, input }) => {
+      const { roomId, date } = input;
+      // ? Get the next day
+      const nextDate = new Date(date ?? "");
+      nextDate.setDate(nextDate.getDate() + 1);
 
       return ctx.db.availability.findMany({
         where: {
           roomId: roomId,
           isBooked: false,
           date: {
-            gte: startDate ? new Date(startDate) : undefined,
-            lte: endDate ? new Date(endDate) : undefined,
+            gte: date ? new Date(date) : undefined,
+            lte: date ? nextDate : undefined,
           },
         },
       });
