@@ -13,6 +13,7 @@ import {
   CardFooter,
   CardHeader,
 } from "~/components/ui/card";
+import { DEFAULT_DATE_FORMAT } from "~/lib/constants";
 import { api } from "~/trpc/react";
 export default function CospaceCreate() {
   const { data, isPending } = api.profile.getUserProfile.useQuery();
@@ -41,7 +42,7 @@ export default function CospaceCreate() {
             </small>
           </div>
           <small className="text-sm font-medium leading-none text-muted-foreground">
-            Created {dayjs(data?.Cospace.createdAt).format("DD/MM/YYYY")}
+            Created {dayjs(data?.Cospace.createdAt).format(DEFAULT_DATE_FORMAT)}
           </small>
           <p className="leading-7 [&:not(:first-child)]:mt-6">
             {data?.Cospace.description}

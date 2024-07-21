@@ -11,6 +11,7 @@ import {
   CardFooter,
   CardHeader,
 } from "~/components/ui/card";
+import { DEFAULT_DATE_FORMAT } from "~/lib/constants";
 import { api } from "~/trpc/react";
 export default function LatestCospace() {
   const router = useRouter();
@@ -42,7 +43,7 @@ export default function LatestCospace() {
           </small>
         </div>
         <small className="text-sm font-medium leading-none text-muted-foreground">
-          Created {dayjs(latestCospace?.createdAt).format("DD/MM/YYYY")}
+          Created {dayjs(latestCospace?.createdAt).format(DEFAULT_DATE_FORMAT)}
         </small>
         <p className="leading-7 [&:not(:first-child)]:mt-6">
           {latestCospace?.description}

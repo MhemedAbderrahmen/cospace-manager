@@ -4,6 +4,7 @@ import { Loader2, ShoppingCart, TrashIcon } from "lucide-react";
 import { useState, type Dispatch, type SetStateAction } from "react";
 import { toast } from "sonner";
 import { type SlotType } from "~/app/_components/dashboard/rooms/available-slots";
+import { DEFAULT_DATE_FORMAT, DEFAULT_TIME_FORMAT } from "~/lib/constants";
 import { api } from "~/trpc/react";
 import { Button } from "./ui/button";
 import {
@@ -71,9 +72,14 @@ export function BookingCartDialog({
           {items.map((item) => (
             <div key={item?.id} className="flex flex-row justify-between">
               <div className="flex flex-col space-y-2">
-                <div>Date: {dayjs(item?.date).format("MMM D, YYYY")}</div>
-                <div>Start Time: {dayjs(item?.startTime).format("h:mm A")}</div>
-                <div>End Time: {dayjs(item?.endTime).format("h:mm A")}</div>
+                <div>Date: {dayjs(item?.date).format(DEFAULT_DATE_FORMAT)}</div>
+                <div>
+                  Start Time:{" "}
+                  {dayjs(item?.startTime).format(DEFAULT_TIME_FORMAT)}
+                </div>
+                <div>
+                  End Time: {dayjs(item?.endTime).format(DEFAULT_TIME_FORMAT)}
+                </div>
               </div>
               <div>
                 <Button

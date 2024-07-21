@@ -25,8 +25,10 @@ export const SideNav = () => {
         </Button>
         <Button
           className="justify-start"
-          variant={isActive("/dashboard/bookings") ? "secondary" : "ghost"}
-          onClick={() => router.push("/dashboard/bookings")}
+          variant={
+            isActive("/dashboard/member/bookings") ? "secondary" : "ghost"
+          }
+          onClick={() => router.push("/dashboard/member/bookings")}
         >
           <UserIcon size={20} className="mr-2 h-4 w-4" /> Bookings
         </Button>

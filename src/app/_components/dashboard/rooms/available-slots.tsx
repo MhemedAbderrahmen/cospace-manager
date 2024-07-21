@@ -27,6 +27,7 @@ import {
   PopoverTrigger,
 } from "~/components/ui/popover";
 import { Tooltip, TooltipContent } from "~/components/ui/tooltip";
+import { DEFAULT_DATE_FORMAT, DEFAULT_TIME_FORMAT } from "~/lib/constants";
 import { cn } from "~/lib/utils";
 import { api } from "~/trpc/react";
 
@@ -158,7 +159,7 @@ export default function AvailableSlots({
             <Card key={slot.id}>
               <CardHeader className="gap-2">
                 <div className="flex flex-row items-center justify-between space-x-2">
-                  <div>{dayjs(slot.date).format("MMMM D, YYYY")}</div>
+                  <div>{dayjs(slot.date).format(DEFAULT_DATE_FORMAT)}</div>
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <Button
@@ -182,7 +183,7 @@ export default function AvailableSlots({
                     <TooltipContent>Book this slot</TooltipContent>
                   </Tooltip>
                 </div>
-                <>{dayjs(slot.startTime).format("h:mm A")}</>
+                <>{dayjs(slot.startTime).format(DEFAULT_TIME_FORMAT)}</>
               </CardHeader>
             </Card>
           ))}
