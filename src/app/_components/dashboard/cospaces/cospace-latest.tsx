@@ -16,6 +16,12 @@ export default function LatestCospace() {
   const router = useRouter();
   const [latestCospace] = api.cospace.getLatest.useSuspenseQuery();
 
+  if (!latestCospace)
+    return (
+      <Card className="w-full md:w-1/2">
+        <CardHeader>No Coworking spaces on our platform yet</CardHeader>
+      </Card>
+    );
   return (
     <Card className="w-full md:w-1/2">
       <CardHeader>Latest Coworking Space</CardHeader>

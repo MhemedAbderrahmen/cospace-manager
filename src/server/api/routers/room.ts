@@ -90,6 +90,7 @@ export const roomReducer = createTRPCRouter({
         },
         include: {
           cospace: true,
+          Booking: true,
         },
       });
     }),

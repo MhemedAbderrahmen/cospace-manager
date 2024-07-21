@@ -1,8 +1,9 @@
 import AvailableSlots from "~/app/_components/dashboard/rooms/available-slots";
 import { Card, CardHeader } from "~/components/ui/card";
-import { HydrateClient } from "~/trpc/server";
+import { api, HydrateClient } from "~/trpc/server";
 
 export default function Page({ params }: { params: { slug: number } }) {
+  void api.availability.availableSlotsByDate({ roomId: params.slug });
   return (
     <HydrateClient>
       <div className="flex flex-col gap-4">

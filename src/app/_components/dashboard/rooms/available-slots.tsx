@@ -5,7 +5,7 @@ import { TooltipTrigger } from "@radix-ui/react-tooltip";
 import { format } from "date-fns";
 import dayjs from "dayjs";
 import { BookOpen, CalendarIcon, CheckIcon } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -113,6 +113,7 @@ export default function AvailableSlots({
 }: {
   params: { slug: number };
 }) {
+  const [selectedDate, setSelectedDate] = useState<Date>();
   const [selectedSlots, setSelectedSlots] = useState<SlotType[]>([]);
   const { data, mutate, isPending } =
     api.availability.availableSlotsByDate.useMutation();
@@ -120,18 +121,33 @@ export default function AvailableSlots({
   const addSlot = (slot: SlotType) => {
     setSelectedSlots((prev) => [...prev, slot]);
   };
+
+  const submit = (date: Date) => setSelectedDate(date);
+
+  useEffect(() => {
+    if (selectedDate)
+      mutate({
+        roomId: params.slug,
+        date: selectedDate.toDateString(),
+      });
+  }, [mutate, params.slug, selectedDate]);
+
   return (
     <div className="flex w-full flex-col gap-4">
       <div className="flex flex-row items-center gap-2">
-        <CalendarForm
-          handleSubmit={(date: Date) => {
+        <CalendarForm handleSubmit={(date: Date) => submit(date)} />
+        <BookingCartDialog
+          next={() =>
+            selectedDate &&
             mutate({
               roomId: params.slug,
-              date: date.toDateString(),
-            });
-          }}
+              date: selectedDate.toDateString(),
+            })
+          }
+          items={selectedSlots}
+          setItems={setSelectedSlots}
+          roomId={params.slug}
         />
-        <BookingCartDialog items={selectedSlots} setItems={setSelectedSlots} />
       </div>
       {isPending ? (
         <SkeletonLine />

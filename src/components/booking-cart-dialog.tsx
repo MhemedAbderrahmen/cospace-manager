@@ -1,8 +1,10 @@
 "use client";
 import dayjs from "dayjs";
-import { ShoppingCart, TrashIcon } from "lucide-react";
-import { type Dispatch, type SetStateAction } from "react";
+import { Loader2, ShoppingCart, TrashIcon } from "lucide-react";
+import { useState, type Dispatch, type SetStateAction } from "react";
+import { toast } from "sonner";
 import { type SlotType } from "~/app/_components/dashboard/rooms/available-slots";
+import { api } from "~/trpc/react";
 import { Button } from "./ui/button";
 import {
   Dialog,
@@ -15,14 +17,45 @@ import {
 } from "./ui/dialog";
 
 interface BookingCartDialogProps {
+  next: () => void;
+  roomId: number;
   items: SlotType[];
   setItems: Dispatch<SetStateAction<SlotType[]>>;
 }
-export function BookingCartDialog({ items, setItems }: BookingCartDialogProps) {
+export function BookingCartDialog({
+  items,
+  setItems,
+  roomId,
+  next,
+}: BookingCartDialogProps) {
+  const utils = api.useUtils();
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const createBooking = api.bookings.create.useMutation({
+    onMutate: () => {
+      toast.loading("Creating booking...", { id: "create-booking" });
+    },
+    onSuccess: () => {
+      toast.dismiss("create-booking");
+      toast.success("Booking created successfully", { duration: 5000 });
+      setIsOpen(false);
+      next();
+    },
+  });
+
+  const submit = async () => {
+    const payload = {
+      roomId,
+      availabilities: items.map((item) => item.id),
+    };
+    await createBooking.mutateAsync(payload);
+    await utils.availability.invalidate();
+  };
+
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={(open) => setIsOpen(open)}>
       <DialogTrigger asChild>
-        <Button size={"icon"}>
+        <Button size={"icon"} disabled={items.length === 0}>
           <ShoppingCart size={18} />
         </Button>
       </DialogTrigger>
@@ -58,7 +91,13 @@ export function BookingCartDialog({ items, setItems }: BookingCartDialogProps) {
           ))}
         </div>
         <DialogFooter>
-          <Button disabled={items.length === 0}>
+          <Button
+            disabled={items.length === 0 || createBooking.isPending}
+            onClick={() => submit()}
+          >
+            {createBooking.isPending && (
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            )}
             {items.length === 0 ? "No items in cart" : "Book selection"}
           </Button>
         </DialogFooter>

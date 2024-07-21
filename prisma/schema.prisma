@@ -27,28 +27,30 @@ enum Amenties {
 }
 
 model Profile {
-    id        Int       @id @default(autoincrement())
-    userId    String    @unique
-    username  String
-    bio       String?
-    createdAt DateTime  @default(now())
-    updatedAt DateTime  @updatedAt
-    Cospace   Cospace?
-    Booking   Booking[]
+    id       Int       @id @default(autoincrement())
+    userId   String    @unique
+    username String
+    bio      String?
+    Cospace  Cospace?
+    Booking  Booking[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 
     @@index([username])
 }
 
 model Cospace {
-    id          Int      @id @default(autoincrement())
-    managerId   String   @unique
-    manager     Profile  @relation(fields: [managerId], references: [userId])
+    id          Int     @id @default(autoincrement())
+    managerId   String  @unique
+    manager     Profile @relation(fields: [managerId], references: [userId])
     name        String
     description String
     coverImage  String
-    createdAt   DateTime @default(now())
-    updatedAt   DateTime @updatedAt
     Room        Room[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 
     @@index([name])
 }
@@ -60,11 +62,13 @@ model Room {
     amenties     Amenties[]
     capacity     Int
     cospaceId    Int
-    cospace      Cospace        @relation(fields: [cospaceId], references: [id])
-    createdAt    DateTime       @default(now())
-    updatedAt    DateTime       @updatedAt
     Booking      Booking[]
     Availability Availability[]
+
+    cospace Cospace @relation(fields: [cospaceId], references: [id])
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 
     @@index([name])
 }
@@ -72,19 +76,26 @@ model Room {
 model Availability {
     id        Int      @id @default(autoincrement())
     roomId    Int
+    bookingId Int?
     date      DateTime
     startTime DateTime
     endTime   DateTime
     isBooked  Boolean  @default(false)
-    room      Room     @relation(fields: [roomId], references: [id])
+
+    room    Room     @relation(fields: [roomId], references: [id])
+    Booking Booking? @relation(fields: [bookingId], references: [id])
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
 
 model Booking {
-    id        Int      @id @default(autoincrement())
+    id        Int  @id @default(autoincrement())
     profileId Int
     roomId    Int? // Nullable for desk bookings
-    startTime DateTime
-    endTime   DateTime
+
+    availabilities Availability[]
+
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
