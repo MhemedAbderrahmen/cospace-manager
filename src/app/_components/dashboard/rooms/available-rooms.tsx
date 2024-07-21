@@ -88,7 +88,7 @@ export default function AvailableRooms({
       <div className="flex flex-row items-center justify-between">
         <div>Available Rooms</div>
       </div>
-      <div className="flex flex-col gap-4">
+      <div className="flex w-full flex-col gap-4">
         {data?.map((room) => <RoomItem {...room} key={room.id} />)}
       </div>
     </div>
