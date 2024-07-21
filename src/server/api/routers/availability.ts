@@ -47,6 +47,16 @@ export const availabilityReducer = createTRPCRouter({
       });
     }),
 
+  getAvailableSlotsById: protectedProcedure
+    .input(z.number())
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.db.availability.findFirst({
+        where: {
+          id: input,
+        },
+      });
+    }),
+
   generateSlots: protectedProcedure
     .input(
       z.object({

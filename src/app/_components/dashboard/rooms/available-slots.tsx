@@ -30,6 +30,15 @@ import { Tooltip, TooltipContent } from "~/components/ui/tooltip";
 import { cn } from "~/lib/utils";
 import { api } from "~/trpc/react";
 
+export interface SlotType {
+  id: number;
+  roomId: number;
+  date: Date;
+  startTime: Date;
+  endTime: Date;
+  isBooked: boolean;
+}
+
 const FormSchema = z.object({
   date: z.date({
     required_error: "A date of birth is required.",
@@ -104,12 +113,12 @@ export default function AvailableSlots({
 }: {
   params: { slug: number };
 }) {
-  const [selectedSlots, setSelectedSlots] = useState<number[]>([]);
+  const [selectedSlots, setSelectedSlots] = useState<SlotType[]>([]);
   const { data, mutate, isPending } =
     api.availability.availableSlotsByDate.useMutation();
 
-  const addSlot = (slotId: number) => {
-    setSelectedSlots((prev) => [...prev, slotId]);
+  const addSlot = (slot: SlotType) => {
+    setSelectedSlots((prev) => [...prev, slot]);
   };
   return (
     <div className="flex w-full flex-col gap-4">
@@ -122,7 +131,7 @@ export default function AvailableSlots({
             });
           }}
         />
-        <BookingCartDialog />
+        <BookingCartDialog items={selectedSlots} />
       </div>
       {isPending ? (
         <SkeletonLine />
@@ -139,15 +148,15 @@ export default function AvailableSlots({
                       <Button
                         size={"icon"}
                         className="size-8"
-                        disabled={selectedSlots.includes(slot.id)}
+                        disabled={selectedSlots.includes(slot)}
                         onClick={() => {
-                          addSlot(slot.id);
+                          addSlot(slot);
                           toast.success("Slot added to cart", {
                             duration: 4000,
                           });
                         }}
                       >
-                        {selectedSlots.includes(slot.id) ? (
+                        {selectedSlots.includes(slot) ? (
                           <CheckIcon size={18} />
                         ) : (
                           <BookOpen size={18} />
