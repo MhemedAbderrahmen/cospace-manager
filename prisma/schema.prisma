@@ -26,11 +26,17 @@ enum Amenties {
     SNACKS
 }
 
+enum Role {
+    MANAGER
+    MEMBER
+}
+
 model Profile {
     id       Int       @id @default(autoincrement())
     userId   String    @unique
     username String
     bio      String?
+    role     Role      @default(MEMBER)
     Cospace  Cospace?
     Booking  Booking[]
 

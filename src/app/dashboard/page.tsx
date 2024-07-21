@@ -6,7 +6,7 @@ export default function Dashboard() {
   void api.profile.getUserProfile.prefetch();
   const { sessionClaims } = auth();
 
-  if (sessionClaims?.metadata.role === "manager")
+  if (sessionClaims?.metadata.role === "MANAGER")
     redirect("/dashboard/manager");
   redirect("/dashboard/member");
 }

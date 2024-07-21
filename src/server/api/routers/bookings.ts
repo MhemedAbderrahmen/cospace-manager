@@ -38,4 +38,23 @@ export const bookingsReducer = createTRPCRouter({
         },
       });
     }),
+
+  getMyBookings: protectedProcedure.query(async ({ ctx }) => {
+    const profile = await ctx.db.profile.findFirst({
+      where: {
+        userId: ctx.user.userId,
+      },
+    });
+    if (!profile) throw new Error("Profile not found");
+
+    return ctx.db.booking.findMany({
+      where: {
+        profileId: profile.id,
+      },
+      include: {
+        room: true,
+        availabilities: true,
+      },
+    });
+  }),
 });

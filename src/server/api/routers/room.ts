@@ -14,7 +14,7 @@ export const roomReducer = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      if (ctx.user.sessionClaims.metadata.role !== "manager")
+      if (ctx.user.sessionClaims.metadata.role !== "MANAGER")
         throw new TRPCError({ code: "UNAUTHORIZED" });
       const cospace = await ctx.db.cospace.findFirst({
         where: {

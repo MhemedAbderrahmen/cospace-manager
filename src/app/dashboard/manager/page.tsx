@@ -9,7 +9,7 @@ export default function ManagerDashboard() {
   void api.profile.getUserProfile.prefetch();
   const { sessionClaims } = auth();
 
-  if (sessionClaims?.metadata.role !== "manager") redirect("/");
+  if (sessionClaims?.metadata.role !== "MANAGER") redirect("/");
 
   return (
     <HydrateClient>

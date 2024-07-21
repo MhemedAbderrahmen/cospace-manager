@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
@@ -41,7 +42,7 @@ export const availabilityReducer = createTRPCRouter({
           isBooked: false,
           date: {
             gte: date ? new Date(date) : undefined,
-            lte: date ? nextDate : undefined,
+            lte: date ? dayjs(input.date).add(1, "day").toDate() : undefined,
           },
         },
       });

@@ -7,12 +7,18 @@ import {
 
 export const profileReducer = createTRPCRouter({
   create: protectedProcedure
-    .input(z.object({ username: z.string().min(1) }))
+    .input(
+      z.object({
+        username: z.string().min(1),
+        role: z.enum(["MANAGER", "MEMBER"]),
+      }),
+    )
     .mutation(({ ctx, input }) => {
       return ctx.db.profile.create({
         data: {
           userId: ctx.user.userId,
           username: input.username,
+          role: input.role,
         },
       });
     }),

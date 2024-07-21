@@ -4,7 +4,7 @@ import { auth, clerkClient } from "@clerk/nextjs/server";
 
 export const completeOnboarding = async (onboarding: {
   username: string;
-  role: "manager" | "member";
+  role: "MANAGER" | "MEMBER";
 }) => {
   const { userId } = auth();
 

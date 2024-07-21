@@ -22,6 +22,7 @@ interface BookingCartDialogProps {
   items: SlotType[];
   setItems: Dispatch<SetStateAction<SlotType[]>>;
 }
+
 export function BookingCartDialog({
   items,
   setItems,

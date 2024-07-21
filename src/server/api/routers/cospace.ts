@@ -42,7 +42,7 @@ export const cospaceReducer = createTRPCRouter({
       }),
     )
     .mutation(({ ctx, input }) => {
-      if (ctx.user.sessionClaims.metadata.role !== "manager")
+      if (ctx.user.sessionClaims.metadata.role !== "MANAGER")
         throw new TRPCError({ code: "UNAUTHORIZED" });
       return ctx.db.cospace.create({
         data: {

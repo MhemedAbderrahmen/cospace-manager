@@ -32,7 +32,7 @@ import { api } from "~/trpc/react";
 
 const formSchema = z.object({
   username: z.string().min(2).max(50),
-  role: z.enum(["manager", "member"]),
+  role: z.enum(["MANAGER", "MEMBER"]),
 });
 
 export default function OnboardingComponent() {
@@ -45,7 +45,7 @@ export default function OnboardingComponent() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: "",
-      role: "member",
+      role: "MEMBER",
     },
   });
 
@@ -111,7 +111,7 @@ export default function OnboardingComponent() {
                       >
                         <FormItem className="flex items-center space-x-3 space-y-0">
                           <FormControl>
-                            <RadioGroupItem value="manager" />
+                            <RadioGroupItem value="MANAGER" />
                           </FormControl>
                           <FormLabel className="font-normal">
                             To manage my coworking space
@@ -119,7 +119,7 @@ export default function OnboardingComponent() {
                         </FormItem>
                         <FormItem className="flex items-center space-x-3 space-y-0">
                           <FormControl>
-                            <RadioGroupItem value="member" />
+                            <RadioGroupItem value="MEMBER" />
                           </FormControl>
                           <FormLabel className="font-normal">
                             To find a coworking space
