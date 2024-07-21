@@ -4,9 +4,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { TooltipTrigger } from "@radix-ui/react-tooltip";
 import { format } from "date-fns";
 import dayjs from "dayjs";
-import { BookOpen, CalendarIcon } from "lucide-react";
+import { BookOpen, CalendarIcon, CheckIcon } from "lucide-react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
+import { BookingCartDialog } from "~/components/booking-cart-dialog";
 import { SkeletonLine } from "~/components/skeleton-line";
 import { Button } from "~/components/ui/button";
 import { Calendar } from "~/components/ui/calendar";
@@ -101,19 +104,26 @@ export default function AvailableSlots({
 }: {
   params: { slug: number };
 }) {
+  const [selectedSlots, setSelectedSlots] = useState<number[]>([]);
   const { data, mutate, isPending } =
     api.availability.availableSlotsByDate.useMutation();
 
+  const addSlot = (slotId: number) => {
+    setSelectedSlots((prev) => [...prev, slotId]);
+  };
   return (
     <div className="flex w-full flex-col gap-4">
-      <CalendarForm
-        handleSubmit={(date: Date) => {
-          mutate({
-            roomId: params.slug,
-            date: date.toDateString(),
-          });
-        }}
-      />
+      <div className="flex flex-row items-center gap-2">
+        <CalendarForm
+          handleSubmit={(date: Date) => {
+            mutate({
+              roomId: params.slug,
+              date: date.toDateString(),
+            });
+          }}
+        />
+        <BookingCartDialog />
+      </div>
       {isPending ? (
         <SkeletonLine />
       ) : (
@@ -126,8 +136,22 @@ export default function AvailableSlots({
                   <div>{dayjs(slot.date).format("MMMM D, YYYY")}</div>
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <Button size={"icon"} className="size-8">
-                        <BookOpen size={18} />
+                      <Button
+                        size={"icon"}
+                        className="size-8"
+                        disabled={selectedSlots.includes(slot.id)}
+                        onClick={() => {
+                          addSlot(slot.id);
+                          toast.success("Slot added to cart", {
+                            duration: 4000,
+                          });
+                        }}
+                      >
+                        {selectedSlots.includes(slot.id) ? (
+                          <CheckIcon size={18} />
+                        ) : (
+                          <BookOpen size={18} />
+                        )}
                       </Button>
                     </TooltipTrigger>
                     <TooltipContent>Book this slot</TooltipContent>
