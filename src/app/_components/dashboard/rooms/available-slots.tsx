@@ -131,7 +131,7 @@ export default function AvailableSlots({
             });
           }}
         />
-        <BookingCartDialog items={selectedSlots} />
+        <BookingCartDialog items={selectedSlots} setItems={setSelectedSlots} />
       </div>
       {isPending ? (
         <SkeletonLine />

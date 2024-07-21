@@ -1,20 +1,24 @@
 "use client";
 import dayjs from "dayjs";
 import { ShoppingCart, TrashIcon } from "lucide-react";
+import { type Dispatch, type SetStateAction } from "react";
 import { type SlotType } from "~/app/_components/dashboard/rooms/available-slots";
 import { Button } from "./ui/button";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "./ui/dialog";
 
-export function BookingCartDialog({ items }: { items: SlotType[] }) {
-  // get the items from server
-
+interface BookingCartDialogProps {
+  items: SlotType[];
+  setItems: Dispatch<SetStateAction<SlotType[]>>;
+}
+export function BookingCartDialog({ items, setItems }: BookingCartDialogProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -38,13 +42,26 @@ export function BookingCartDialog({ items }: { items: SlotType[] }) {
                 <div>End Time: {dayjs(item?.endTime).format("h:mm A")}</div>
               </div>
               <div>
-                <Button size={"icon"} className="size-7">
+                <Button
+                  size={"icon"}
+                  className="size-7"
+                  onClick={() => {
+                    setItems((prev) =>
+                      prev.filter((prevItem) => prevItem.id !== item.id),
+                    );
+                  }}
+                >
                   <TrashIcon size={18} />
                 </Button>
               </div>
             </div>
           ))}
         </div>
+        <DialogFooter>
+          <Button disabled={items.length === 0}>
+            {items.length === 0 ? "No items in cart" : "Book selection"}
+          </Button>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
