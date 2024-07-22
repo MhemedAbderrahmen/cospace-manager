@@ -1,4 +1,5 @@
 "use client";
+import { useUser } from "@clerk/nextjs";
 import {
   LayoutDashboardIcon,
   SettingsIcon,
@@ -11,6 +12,7 @@ import { Button } from "~/components/ui/button";
 export const SideNav = () => {
   const router = useRouter();
   const pathname = usePathname();
+  const { user } = useUser();
 
   const isActive = (path: string) => pathname === path;
 
@@ -28,15 +30,27 @@ export const SideNav = () => {
         >
           <LayoutDashboardIcon size={18} />
         </Button>
-        <Button
-          variant={
-            isActive("/dashboard/member/bookings") ? "secondary" : "ghost"
-          }
-          onClick={() => router.push("/dashboard/member/bookings")}
-          size={"icon"}
-        >
-          <ShoppingCart size={18} />
-        </Button>
+        {user?.publicMetadata.role === "MEMBER" ? (
+          <Button
+            variant={
+              isActive("/dashboard/member/bookings") ? "secondary" : "ghost"
+            }
+            onClick={() => router.push("/dashboard/member/bookings")}
+            size={"icon"}
+          >
+            <ShoppingCart size={18} />
+          </Button>
+        ) : (
+          <Button
+            variant={
+              isActive("/dashboard/manager/bookings") ? "secondary" : "ghost"
+            }
+            onClick={() => router.push("/dashboard/manager/bookings")}
+            size={"icon"}
+          >
+            <ShoppingCart size={18} />
+          </Button>
+        )}
         <Button
           variant={isActive("/dashboard/profile") ? "secondary" : "ghost"}
           onClick={() => router.push("/dashboard/profile")}

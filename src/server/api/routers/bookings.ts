@@ -57,4 +57,23 @@ export const bookingsReducer = createTRPCRouter({
       },
     });
   }),
+
+  getCospaceBookings: protectedProcedure.query(async ({ ctx }) => {
+    return ctx.db.booking.findMany({
+      where: {
+        room: {
+          cospace: {
+            managerId: {
+              equals: ctx.user.userId,
+            },
+          },
+        },
+      },
+      include: {
+        profile: true,
+        room: true,
+        availabilities: true,
+      },
+    });
+  }),
 });

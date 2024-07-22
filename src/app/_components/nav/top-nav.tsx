@@ -1,8 +1,17 @@
-import { SignedIn, SignedOut, SignUpButton, UserButton } from "@clerk/nextjs";
+"use client";
+import {
+  SignedIn,
+  SignedOut,
+  SignUpButton,
+  UserButton,
+  useUser,
+} from "@clerk/nextjs";
 import Link from "next/link";
 import { ModeToggle } from "~/components/mode-toggle";
 
 export const TopNav = () => {
+  const { user } = useUser();
+
   return (
     <nav className="min-h-24 w-full">
       <div className="lex-row flex justify-between space-x-4 p-4">
@@ -16,6 +25,7 @@ export const TopNav = () => {
         </div>
 
         <div className="flex flex-row items-center space-x-4">
+          <div>Welcome back, {user?.firstName}</div>
           <ModeToggle />
           <SignedOut>
             <div>

@@ -50,7 +50,7 @@ export const CospaceCreateModal: React.FC = () => {
 
   const createCospace = api.cospace.create.useMutation({
     onMutate: () => {
-      toast.message("Creating your cospace", { id: "isPending" });
+      toast.loading("Creating your cospace", { id: "isPending" });
     },
     onSuccess: async () => {
       await utils.cospace.invalidate();
@@ -93,11 +93,11 @@ export const CospaceCreateModal: React.FC = () => {
           <UploadButton
             endpoint="imageUploader"
             onUploadBegin={() =>
-              toast.message("Uploading image", { id: "isPending" })
+              toast.loading("Uploading image", { id: "isPending" })
             }
             onClientUploadComplete={(res) => {
               toast.dismiss("isPending");
-              toast.message("Image uploaded", { duration: 1000 });
+              toast.success("Image uploaded", { duration: 1000 });
               form.setValue("coverImage", res[0]?.url ?? "");
               setUploadedFileName(res[0]?.name ?? "");
             }}

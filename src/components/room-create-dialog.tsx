@@ -91,7 +91,7 @@ export const RoomCreateModal: React.FC = () => {
 
   const createRoom = api.room.create.useMutation({
     onMutate: () => {
-      toast.message("Creating your room", { id: "isPending" });
+      toast.loading("Creating your room", { id: "isPending" });
     },
     onSuccess: async ({ id }) => {
       await generateAvailabilities.mutateAsync({

@@ -2,6 +2,7 @@
 
 import { useUser } from "@clerk/nextjs";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Role } from "@prisma/client";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -32,7 +33,7 @@ import { api } from "~/trpc/react";
 
 const formSchema = z.object({
   username: z.string().min(2).max(50),
-  role: z.enum(["MANAGER", "MEMBER"]),
+  role: z.nativeEnum(Role),
 });
 
 export default function OnboardingComponent() {
@@ -45,7 +46,7 @@ export default function OnboardingComponent() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: "",
-      role: "MEMBER",
+      role: "MANAGER",
     },
   });
 
@@ -58,7 +59,6 @@ export default function OnboardingComponent() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
     const res = await completeOnboarding(values);
-    console.log("🚀 ~ onSubmit ~ res:", res);
     if (res?.message) {
       await user?.reload();
       await createProfile.mutateAsync(values);
@@ -111,7 +111,7 @@ export default function OnboardingComponent() {
                       >
                         <FormItem className="flex items-center space-x-3 space-y-0">
                           <FormControl>
-                            <RadioGroupItem value="MANAGER" />
+                            <RadioGroupItem value={"MANAGER"} />
                           </FormControl>
                           <FormLabel className="font-normal">
                             To manage my coworking space
@@ -119,7 +119,7 @@ export default function OnboardingComponent() {
                         </FormItem>
                         <FormItem className="flex items-center space-x-3 space-y-0">
                           <FormControl>
-                            <RadioGroupItem value="MEMBER" />
+                            <RadioGroupItem value={"MEMBER"} />
                           </FormControl>
                           <FormLabel className="font-normal">
                             To find a coworking space

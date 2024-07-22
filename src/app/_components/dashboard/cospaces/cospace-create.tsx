@@ -22,7 +22,7 @@ export default function CospaceCreate() {
   if (isPending) return <SkeletonCard />;
   if (data?.Cospace)
     return (
-      <Card className="w-full md:w-1/2">
+      <Card className="w-full md:w-1/2" suppressHydrationWarning>
         <CardHeader>Your coworking space</CardHeader>
         <CardContent className="flex flex-col gap-2">
           {data?.Cospace?.coverImage ? (
@@ -30,8 +30,8 @@ export default function CospaceCreate() {
               src={data?.Cospace?.coverImage}
               alt="cospace cover"
               className="h-32 w-full rounded-md object-cover"
-              width={100}
-              height={100}
+              width={1920}
+              height={1080}
             />
           ) : null}
 
