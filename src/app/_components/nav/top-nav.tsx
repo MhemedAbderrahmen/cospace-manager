@@ -8,6 +8,7 @@ import {
 } from "@clerk/nextjs";
 import Link from "next/link";
 import { ModeToggle } from "~/components/mode-toggle";
+import { Button } from "~/components/ui/button";
 
 export const TopNav = () => {
   const { user } = useUser();
@@ -32,7 +33,9 @@ export const TopNav = () => {
           <ModeToggle />
           <SignedOut>
             <div>
-              <SignUpButton />
+              <SignUpButton>
+                <Button>Sign up</Button>
+              </SignUpButton>
             </div>
           </SignedOut>
           <SignedIn>
