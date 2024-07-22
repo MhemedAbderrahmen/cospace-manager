@@ -10,7 +10,7 @@ export default function DashboardLayout({
   return (
     <div className="flex flex-col lg:flex-row">
       <SideNav />
-      <div className="flex w-screen grow flex-col overflow-y-auto px-4 sm:w-full sm:p-6">
+      <div className="flex w-screen flex-col p-4">
         <DynamicBreadcrumbs />
         {children}
       </div>

@@ -1,5 +1,10 @@
 "use client";
-import { LayoutDashboardIcon, SettingsIcon, UserIcon } from "lucide-react";
+import {
+  LayoutDashboardIcon,
+  SettingsIcon,
+  ShoppingCart,
+  UserIcon,
+} from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { Button } from "~/components/ui/button";
 
@@ -10,41 +15,41 @@ export const SideNav = () => {
   const isActive = (path: string) => pathname === path;
 
   return (
-    <nav className="border-1 h-full min-w-48 p-4">
-      <div className="flex:row flex gap-2 lg:flex-col">
+    <nav className="h-full p-2">
+      <div className="flex:row flex h-full items-center justify-center gap-2 lg:flex-col">
         <Button
-          className="justify-start"
           variant={
             isActive("/dashboard/manager") || isActive("/dashboard/member")
               ? "secondary"
               : "ghost"
           }
           onClick={() => router.push("/dashboard")}
+          size={"icon"}
         >
-          <LayoutDashboardIcon size={20} className="mr-2 h-4 w-4" /> Dashboard
+          <LayoutDashboardIcon size={18} />
         </Button>
         <Button
-          className="justify-start"
           variant={
             isActive("/dashboard/member/bookings") ? "secondary" : "ghost"
           }
           onClick={() => router.push("/dashboard/member/bookings")}
+          size={"icon"}
         >
-          <UserIcon size={20} className="mr-2 h-4 w-4" /> Bookings
+          <ShoppingCart size={18} />
         </Button>
         <Button
-          className="justify-start"
           variant={isActive("/dashboard/profile") ? "secondary" : "ghost"}
           onClick={() => router.push("/dashboard/profile")}
+          size={"icon"}
         >
-          <UserIcon size={20} className="mr-2 h-4 w-4" /> Profile
+          <UserIcon size={18} />
         </Button>
         <Button
-          className="justify-start"
           variant={isActive("/dashboard/settings") ? "secondary" : "ghost"}
           onClick={() => router.push("/dashboard/settings")}
+          size={"icon"}
         >
-          <SettingsIcon size={20} className="mr-2 h-4 w-4" /> Settings
+          <SettingsIcon size={18} />
         </Button>
       </div>
     </nav>

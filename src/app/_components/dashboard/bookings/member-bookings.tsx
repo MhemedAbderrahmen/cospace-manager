@@ -10,21 +10,24 @@ export default function MemberBookingsList() {
   const { data, isPending } = api.bookings.getMyBookings.useQuery();
   if (isPending) return <SkeletonLine />;
   return (
-    <div>
+    <div className="flex flex-col gap-4">
+      <div>Bookings History ({data?.length ?? 0})</div>
       {data?.map((booking) => (
-        <div key={booking.id}>
-          <p>Room: {booking?.room?.name}</p>
-          <p>
-            Booked at: {dayjs(booking?.createdAt).format(DEFAULT_DATE_FORMAT)}
-          </p>
-          <p>
-            Availabilities:{" "}
+        <div key={booking.id} className="rounded-md border bg-muted p-2">
+          <small className="flex flex-row justify-between">
+            <p>Booked Room: {booking?.room?.name}</p>
+            <p className="text-muted-foreground">
+              Booked at: {dayjs(booking?.createdAt).format(DEFAULT_DATE_FORMAT)}
+            </p>
+          </small>
+          <small>
             {booking.availabilities.map((availability) => (
               <span key={availability.id}>
-                {dayjs(availability.startTime).format(DEFAULT_TIME_FORMAT)}
+                {dayjs(availability.startTime).format(DEFAULT_TIME_FORMAT)} To{" "}
+                {dayjs(availability.endTime).format(DEFAULT_TIME_FORMAT)} ; {""}
               </span>
             ))}
-          </p>
+          </small>
         </div>
       ))}
     </div>
