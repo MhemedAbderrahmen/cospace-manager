@@ -21,11 +21,14 @@ export const TopNav = () => {
               cospace
             </Link>
           </h1>
-          {/* <DynamicBreadcrumbs /> */}
         </div>
 
         <div className="flex flex-row items-center space-x-4">
-          <div>Welcome back, {user?.firstName}</div>
+          <SignedIn>
+            <div className="hidden w-full md:visible">
+              Welcome back, {user?.firstName}
+            </div>
+          </SignedIn>
           <ModeToggle />
           <SignedOut>
             <div>
