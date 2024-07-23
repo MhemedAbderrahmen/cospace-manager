@@ -65,7 +65,7 @@ function displayRoomItem(
               </Badge>
             ))}
           </div>
-          <div>{room.availabilityPrice} TND / Hour</div>
+          <div>{room.availabilityPrice} USD / Hour</div>
         </div>
       </CardHeader>
     </Card>

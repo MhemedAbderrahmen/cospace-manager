@@ -62,7 +62,7 @@ function RoomItem(
               </Badge>
             ))}
           </div>
-          <div>{room.availabilityPrice} TND / Hour </div>
+          <div>{room.availabilityPrice} USD / Hour </div>
         </div>
       </CardHeader>
       <CardFooter className="flex flex-row justify-between">
