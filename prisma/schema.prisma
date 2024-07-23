@@ -62,14 +62,15 @@ model Cospace {
 }
 
 model Room {
-    id           Int            @id @default(autoincrement())
-    name         String
-    type         RoomType
-    amenties     Amenties[]
-    capacity     Int
-    cospaceId    Int
-    Booking      Booking[]
-    Availability Availability[]
+    id                Int            @id @default(autoincrement())
+    name              String
+    type              RoomType
+    amenties          Amenties[]
+    capacity          Int
+    cospaceId         Int
+    Booking           Booking[]
+    Availability      Availability[]
+    availabilityPrice Float
 
     cospace Cospace @relation(fields: [cospaceId], references: [id])
 

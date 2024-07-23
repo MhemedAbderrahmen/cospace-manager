@@ -66,6 +66,8 @@ export function BookingCartDialog({
           <DialogTitle>Bookings</DialogTitle>
           <DialogDescription>
             Manage your availabilities and bookings here
+            <br />
+            Total: {items.length} {items.length > 1 ? "bookings" : "booking"}
           </DialogDescription>
         </DialogHeader>
         <div className="flex flex-col gap-4">
@@ -97,7 +99,13 @@ export function BookingCartDialog({
             </div>
           ))}
         </div>
-        <DialogFooter>
+
+        <DialogFooter className="items-center gap-2">
+          {items.length > 0 && items[0]?.room?.availabilityPrice ? (
+            <div>
+              Price: {items.length * items[0]?.room?.availabilityPrice || 0}$
+            </div>
+          ) : null}
           <Button
             disabled={items.length === 0 || createBooking.isPending}
             onClick={() => submit()}

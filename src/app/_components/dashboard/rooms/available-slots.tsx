@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { type Room } from "@prisma/client";
 import { TooltipTrigger } from "@radix-ui/react-tooltip";
 import { format } from "date-fns";
 import dayjs from "dayjs";
@@ -37,6 +38,7 @@ export interface SlotType {
   date: Date;
   startTime: Date;
   endTime: Date;
+  room: Room;
   isBooked: boolean;
 }
 
@@ -168,6 +170,7 @@ export default function AvailableSlots({
                         disabled={selectedSlots.includes(slot)}
                         onClick={() => {
                           addSlot(slot);
+
                           toast.success("Slot added to cart", {
                             duration: 4000,
                           });

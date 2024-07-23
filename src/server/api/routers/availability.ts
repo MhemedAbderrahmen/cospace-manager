@@ -45,6 +45,9 @@ export const availabilityReducer = createTRPCRouter({
             lte: date ? dayjs(input.date).add(1, "day").toDate() : undefined,
           },
         },
+        include: {
+          room: true,
+        },
       });
     }),
 
