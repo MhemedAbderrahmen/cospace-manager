@@ -43,7 +43,7 @@ const formSchema = z.object({
   capacity: z.coerce.number(),
   type: z.nativeEnum(RoomType),
   amenties: z.array(z.nativeEnum(Amenties)),
-  availabilityPrice: z.number(),
+  availabilityPrice: z.coerce.number(),
 });
 
 const items = [

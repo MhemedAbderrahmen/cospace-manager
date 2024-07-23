@@ -1,10 +1,10 @@
 "use client";
 
 import { type Amenties, type RoomType } from "@prisma/client";
-import { EditIcon, User2Icon } from "lucide-react";
+import { User2Icon } from "lucide-react";
 import { RoomCreateModal } from "~/components/room-create-dialog";
+import { RoomEditDialog } from "~/components/room-edit-dialog";
 import { Badge } from "~/components/ui/badge";
-import { Button } from "~/components/ui/button";
 import { Card, CardHeader } from "~/components/ui/card";
 import { api } from "~/trpc/react";
 
@@ -33,6 +33,7 @@ function displayRoomItem(
     capacity: number;
     amenties: Amenties[];
     updatedAt: Date;
+    availabilityPrice: number;
   },
 ) {
   return (
@@ -47,9 +48,7 @@ function displayRoomItem(
                 {room.capacity}
               </div>
             </div>
-            <Button size="icon" variant={"ghost"}>
-              <EditIcon size={18} />
-            </Button>
+            <RoomEditDialog id={room.id} />
             {/* <Button size="icon" variant={"destructive"}>
               <Trash2 size={18} />
             </Button> */}
@@ -66,6 +65,7 @@ function displayRoomItem(
               </Badge>
             ))}
           </div>
+          <div>{room.availabilityPrice} TND / Hour</div>
         </div>
       </CardHeader>
     </Card>
