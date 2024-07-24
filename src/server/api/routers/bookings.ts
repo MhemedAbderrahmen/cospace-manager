@@ -2,6 +2,7 @@ import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
 export const bookingsReducer = createTRPCRouter({
+  // TODO: Add payment when creating a booking ( send it in the input )
   create: protectedProcedure
     .input(
       z.object({
