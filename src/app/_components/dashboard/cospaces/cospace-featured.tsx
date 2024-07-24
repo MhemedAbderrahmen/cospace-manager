@@ -19,7 +19,7 @@ import {
 import { api } from "~/trpc/react";
 export default function FeaturedCospace() {
   const router = useRouter();
-  const [latestCospace] = api.cospace.getLatest.useSuspenseQuery();
+  const [latestCospace] = api.cospace.getFeatured.useSuspenseQuery();
 
   if (!latestCospace)
     return (

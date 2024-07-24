@@ -6,7 +6,7 @@ import { Card, CardHeader } from "~/components/ui/card";
 import { api, HydrateClient } from "~/trpc/server";
 
 export default function MemberDashboard() {
-  void api.cospace.getLatest.prefetch();
+  void api.cospace.getFeatured.prefetch();
   const { sessionClaims } = auth();
 
   // If the user does not have the admin role, redirect them to the home page
