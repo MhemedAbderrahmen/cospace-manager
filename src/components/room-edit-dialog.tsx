@@ -138,7 +138,7 @@ export function RoomEditDialog({ id }: { id: number }) {
           )}
         </Button>
       </SheetTrigger>
-      <SheetContent className="overflow-auto">
+      <SheetContent className="w-full overflow-auto md:w-[600px]">
         <SheetHeader>
           <SheetTitle>Edit room</SheetTitle>
           <SheetDescription>Edit the details of your room</SheetDescription>

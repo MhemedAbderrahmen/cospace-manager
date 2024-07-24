@@ -58,17 +58,17 @@ export const cospaceReducer = createTRPCRouter({
     .input(
       z.object({
         id: z.coerce.number(),
-        data: z.object({
-          name: z.string().min(1),
-          description: z.string().min(1),
-        }),
+        name: z.string().min(1),
+        description: z.string().min(1),
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const { id, data } = input;
       const updatedCospace = await ctx.db.cospace.update({
-        where: { id },
-        data,
+        where: { id: input.id },
+        data: {
+          name: input.name,
+          description: input.description,
+        },
       });
       return updatedCospace;
     }),
@@ -105,7 +105,7 @@ export const cospaceReducer = createTRPCRouter({
     .input(
       z.object({
         id: z.coerce.number(),
-        mediaType: z.enum(["COVER_IMAGE", "VIDEO"]),
+        resourceType: z.enum(["COVER_IMAGE", "VIDEO"]),
         resourceUrl: z.string().url(),
       }),
     )

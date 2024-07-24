@@ -2,12 +2,14 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2, Save } from "lucide-react";
 import Image from "next/image";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import { SkeletonImage } from "~/components/skeleton-image";
+import { Button } from "~/components/ui/button";
 import {
   Form,
   FormControl,
@@ -30,7 +32,26 @@ const formSchema = z.object({
 
 export default function CospaceGeneral() {
   const utils = api.useUtils();
+
   const { data, isPending } = api.cospace.getCospace.useQuery();
+
+  const updateMedia = api.cospace.updateMedia.useMutation({
+    onSuccess: async () => {
+      await utils.cospace.invalidate();
+    },
+  });
+
+  const updateCospace = api.cospace.update.useMutation({
+    onMutate: () => {
+      toast.loading("Update your cospace", { id: "isPending" });
+    },
+    onSuccess: async () => {
+      toast.dismiss("isPending");
+      toast.success("Cospace updated", {
+        duration: 1000,
+      });
+    },
+  });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -49,30 +70,28 @@ export default function CospaceGeneral() {
     }
   }, [data, form]);
 
-  const updateMedia = api.cospace.updateMedia.useMutation({
-    onSuccess: async () => {
-      await utils.cospace.invalidate();
-    },
-  });
-  const createCospace = api.cospace.create.useMutation({
-    onMutate: () => {
-      toast.loading("Creating your cospace", { id: "isPending" });
-    },
-    onSuccess: async () => {
-      toast.dismiss("isPending");
-      toast.success("Cospace created", {
-        duration: 1000,
-      });
-    },
-  });
-
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    await createCospace.mutateAsync(values);
+    await updateCospace.mutateAsync({
+      ...values,
+      id: data?.id ?? 0,
+    });
+  }
+
+  async function handleImageUploadComplete(url: string) {
+    await updateMedia.mutateAsync({
+      id: data?.id ?? 0,
+      resourceType: "COVER_IMAGE",
+      resourceUrl: url,
+    });
+    toast.dismiss("isPending");
+    toast.success("Image uploaded", { duration: 1000 });
+    form.setValue("coverImage", url);
   }
 
   if (isPending) return <SkeletonImage />;
   return (
     <div className="space-y-4">
+      <h2 className="text-lg font-semibold">General</h2>
       <Image
         src={data?.coverImage ?? ""}
         alt="cospace cover"
@@ -85,16 +104,9 @@ export default function CospaceGeneral() {
         onUploadBegin={() =>
           toast.loading("Uploading image", { id: "isPending" })
         }
-        onClientUploadComplete={async (res) => {
-          await updateMedia.mutateAsync({
-            id: data?.id ?? 0,
-            mediaType: "COVER_IMAGE",
-            resourceUrl: res[0]?.url ?? "",
-          });
-          toast.dismiss("isPending");
-          toast.success("Image uploaded", { duration: 1000 });
-          form.setValue("coverImage", res[0]?.url ?? "");
-        }}
+        onClientUploadComplete={(res) =>
+          handleImageUploadComplete(res[0]?.url ?? "")
+        }
         onUploadError={(error: Error) => {
           toast.dismiss("isPending");
           toast.error(error.message, { duration: 3000 });
@@ -135,12 +147,16 @@ export default function CospaceGeneral() {
               </FormItem>
             )}
           />
-          {/* <Button type="submit" disabled={createCospace.isPending}>
-            {createCospace.isPending && (
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            )}
-            Submit
-          </Button> */}
+          <div className="flex justify-end">
+            <Button type="submit" disabled={updateCospace.isPending}>
+              {updateCospace.isPending ? (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              ) : (
+                <Save className="mr-2 h-4 w-4" />
+              )}
+              Update cospace
+            </Button>
+          </div>
         </form>
       </Form>
     </div>
