@@ -3,6 +3,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -28,7 +29,9 @@ const formSchema = z.object({
 });
 
 export default function CospaceGeneral() {
+  const utils = api.useUtils();
   const { data, isPending } = api.cospace.getCospace.useQuery();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -38,6 +41,19 @@ export default function CospaceGeneral() {
     },
   });
 
+  useEffect(() => {
+    if (data) {
+      form.setValue("name", data.name);
+      form.setValue("description", data.description);
+      form.setValue("coverImage", data.coverImage);
+    }
+  }, [data, form]);
+
+  const updateMedia = api.cospace.updateMedia.useMutation({
+    onSuccess: async () => {
+      await utils.cospace.invalidate();
+    },
+  });
   const createCospace = api.cospace.create.useMutation({
     onMutate: () => {
       toast.loading("Creating your cospace", { id: "isPending" });
@@ -58,7 +74,7 @@ export default function CospaceGeneral() {
   return (
     <div className="space-y-4">
       <Image
-        src={data!.coverImage}
+        src={data?.coverImage ?? ""}
         alt="cospace cover"
         className="h-44 w-full rounded-md object-cover"
         width={1080}
@@ -69,7 +85,12 @@ export default function CospaceGeneral() {
         onUploadBegin={() =>
           toast.loading("Uploading image", { id: "isPending" })
         }
-        onClientUploadComplete={(res) => {
+        onClientUploadComplete={async (res) => {
+          await updateMedia.mutateAsync({
+            id: data?.id ?? 0,
+            mediaType: "COVER_IMAGE",
+            resourceUrl: res[0]?.url ?? "",
+          });
           toast.dismiss("isPending");
           toast.success("Image uploaded", { duration: 1000 });
           form.setValue("coverImage", res[0]?.url ?? "");

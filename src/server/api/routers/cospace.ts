@@ -100,4 +100,21 @@ export const cospaceReducer = createTRPCRouter({
       },
     });
   }),
+
+  updateMedia: protectedProcedure
+    .input(
+      z.object({
+        id: z.coerce.number(),
+        mediaType: z.enum(["COVER_IMAGE", "VIDEO"]),
+        resourceUrl: z.string().url(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.db.cospace.update({
+        where: { id: input.id },
+        data: {
+          coverImage: input.resourceUrl,
+        },
+      });
+    }),
 });
