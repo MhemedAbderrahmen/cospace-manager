@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 "use client";
 
-import dayjs from "dayjs";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Button } from "~/components/ui/button";
@@ -11,7 +10,6 @@ import {
   CardFooter,
   CardHeader,
 } from "~/components/ui/card";
-import { DEFAULT_DATE_FORMAT } from "~/lib/constants";
 import { api } from "~/trpc/react";
 export default function FeaturedCospace() {
   const router = useRouter();
@@ -25,7 +23,7 @@ export default function FeaturedCospace() {
     );
   return (
     <Card className="w-full md:w-1/2">
-      <CardHeader>Latest Coworking Space</CardHeader>
+      <CardHeader>Featured Coworking Space 🌟</CardHeader>
       <CardContent className="flex flex-col gap-2">
         {latestCospace?.coverImage ? (
           <Image
@@ -43,16 +41,10 @@ export default function FeaturedCospace() {
           </small>
         </div>
         <small className="text-sm font-medium leading-none text-muted-foreground">
-          Created {dayjs(latestCospace?.createdAt).format(DEFAULT_DATE_FORMAT)}
-        </small>
-        <p className="leading-7 [&:not(:first-child)]:mt-6">
           {latestCospace?.description}
-        </p>
+        </small>
       </CardContent>
       <CardFooter className="flex justify-end">
-        <Button size={"sm"} variant={"link"}>
-          Details
-        </Button>
         <Button
           size={"sm"}
           onClick={() =>

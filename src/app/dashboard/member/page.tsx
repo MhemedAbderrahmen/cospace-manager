@@ -1,6 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
-import FeaturedCospace from "~/app/_components/dashboard/cospaces/cospace-latest";
+import FeaturedCospace from "~/app/_components/dashboard/cospaces/cospace-featured";
 import CospaceList from "~/app/_components/dashboard/cospaces/cospace-list";
 import { Card, CardHeader } from "~/components/ui/card";
 import { api, HydrateClient } from "~/trpc/server";
