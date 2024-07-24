@@ -2,6 +2,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Button } from "~/components/ui/button";
 import {
@@ -10,6 +11,11 @@ import {
   CardFooter,
   CardHeader,
 } from "~/components/ui/card";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "~/components/ui/hover-card";
 import { api } from "~/trpc/react";
 export default function FeaturedCospace() {
   const router = useRouter();
@@ -36,9 +42,21 @@ export default function FeaturedCospace() {
         ) : null}
         <div className="flex flex-row items-center justify-between">
           <div className="text-lg font-semibold">{latestCospace?.name}</div>
-          <small className="text-sm font-medium leading-none text-muted-foreground">
-            Manager @{latestCospace?.manager.username}
-          </small>
+          <HoverCard>
+            <HoverCardTrigger>
+              <Link href="/" legacyBehavior>
+                <Button
+                  variant={"link"}
+                  className="text-sm font-medium leading-none text-muted-foreground"
+                >
+                  Manager @{latestCospace?.manager.username}
+                </Button>
+              </Link>
+            </HoverCardTrigger>
+            <HoverCardContent>
+              @{latestCospace?.manager.username}
+            </HoverCardContent>
+          </HoverCard>
         </div>
         <small className="text-sm font-medium leading-none text-muted-foreground">
           {latestCospace?.description}
