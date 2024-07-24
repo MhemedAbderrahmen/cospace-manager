@@ -6,6 +6,7 @@ import { RoomCreateModal } from "~/components/room-create-dialog";
 import { RoomEditDialog } from "~/components/room-edit-dialog";
 import { Badge } from "~/components/ui/badge";
 import { Card, CardHeader } from "~/components/ui/card";
+import { DEFAULT_CURRENCY } from "~/lib/constants";
 import { api } from "~/trpc/react";
 
 export function toTitleCase(str: string) {
@@ -65,7 +66,9 @@ function displayRoomItem(
               </Badge>
             ))}
           </div>
-          <div>{room.availabilityPrice} USD / Hour</div>
+          <div>
+            {room.availabilityPrice} {DEFAULT_CURRENCY} / Hour
+          </div>
         </div>
       </CardHeader>
     </Card>

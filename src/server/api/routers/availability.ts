@@ -48,6 +48,9 @@ export const availabilityReducer = createTRPCRouter({
         include: {
           room: true,
         },
+        orderBy: {
+          startTime: "asc",
+        },
       });
     }),
 

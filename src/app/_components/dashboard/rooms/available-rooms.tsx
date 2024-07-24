@@ -7,6 +7,7 @@ import { SkeletonCard } from "~/components/skeleton-card";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
 import { Card, CardFooter, CardHeader } from "~/components/ui/card";
+import { DEFAULT_CURRENCY } from "~/lib/constants";
 import { api } from "~/trpc/react";
 
 function toTitleCase(str: string) {
@@ -62,10 +63,13 @@ function RoomItem(
               </Badge>
             ))}
           </div>
-          <div>{room.availabilityPrice} USD / Hour </div>
         </div>
       </CardHeader>
       <CardFooter className="flex flex-row justify-between">
+        <div>
+          {room.availabilityPrice} {DEFAULT_CURRENCY} / Hour{" "}
+        </div>
+
         <Button
           size={"sm"}
           onClick={() => router.push("/dashboard/member/room/" + room.id)}
