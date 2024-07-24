@@ -13,7 +13,7 @@ import {
 } from "~/components/ui/card";
 import { DEFAULT_DATE_FORMAT } from "~/lib/constants";
 import { api } from "~/trpc/react";
-export default function LatestCospace() {
+export default function FeaturedCospace() {
   const router = useRouter();
   const [latestCospace] = api.cospace.getLatest.useSuspenseQuery();
 
