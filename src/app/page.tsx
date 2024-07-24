@@ -13,7 +13,7 @@ export default async function Home() {
             manage them
           </h1>
           <p className="mb-8 text-xl">
-            Easily book coworking spaces and meeting rooms with our apqp.
+            Easily book coworking spaces and meeting rooms with our app.
           </p>
           <Link href={"/dashboard"}>
             <Button variant={"default"} size={"lg"}>
