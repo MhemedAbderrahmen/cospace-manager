@@ -46,10 +46,14 @@ export function BookingCartDialog({
   });
 
   const submit = async () => {
+    const availabilityPrice = items[0]?.room?.availabilityPrice;
+
     const payload = {
       roomId,
       availabilities: items.map((item) => item.id),
+      payment: availabilityPrice ? items.length * availabilityPrice : 0,
     };
+
     await createBooking.mutateAsync(payload);
     await utils.availability.invalidate();
   };

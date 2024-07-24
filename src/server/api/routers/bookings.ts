@@ -8,6 +8,7 @@ export const bookingsReducer = createTRPCRouter({
       z.object({
         availabilities: z.array(z.coerce.number()),
         roomId: z.coerce.number(),
+        payment: z.coerce.number(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -25,6 +26,7 @@ export const bookingsReducer = createTRPCRouter({
           availabilities: {
             connect: input.availabilities.map((id) => ({ id })),
           },
+          payment: input.payment,
         },
       });
 
