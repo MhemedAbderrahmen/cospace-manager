@@ -15,6 +15,7 @@ export function useBookings() {
         setBookings((prev) => [
           ...prev,
           {
+            id: booking.id,
             room: {
               name: booking.room!.name,
             },
@@ -22,7 +23,7 @@ export function useBookings() {
               username: booking.profile.username,
             },
             createdAt: dayjs(booking.createdAt).format(DEFAULT_DATE_FORMAT),
-            payment: 49.99,
+            payment: booking.payment,
           },
         ]);
       });

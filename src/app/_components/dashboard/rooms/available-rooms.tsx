@@ -91,13 +91,16 @@ export default function AvailableRooms({
   });
   if (isPending) return <SkeletonCard />;
   return (
-    <div className="flex w-full flex-col gap-4 md:w-1/2">
-      <div className="flex flex-row items-center justify-between">
-        <div>Available Rooms</div>
+    <>
+      <div>List of available rooms</div>
+      <div className="flex w-full flex-col gap-4 md:w-1/2">
+        <div className="flex flex-row items-center justify-between">
+          <div>Available Rooms</div>
+        </div>
+        <div className="flex w-full flex-col gap-4">
+          {data?.map((room) => <RoomItem {...room} key={room.id} />)}
+        </div>
       </div>
-      <div className="flex w-full flex-col gap-4">
-        {data?.map((room) => <RoomItem {...room} key={room.id} />)}
-      </div>
-    </div>
+    </>
   );
 }

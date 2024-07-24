@@ -1,10 +1,12 @@
 "use client";
 
 import { type ColumnDef } from "@tanstack/react-table";
+import { DEFAULT_CURRENCY } from "~/lib/constants";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 export type Booking = {
+  id: numbe;
   room: {
     name: string;
   };
@@ -16,6 +18,10 @@ export type Booking = {
 };
 
 export const columns: ColumnDef<Booking>[] = [
+  {
+    accessorKey: "id",
+    header: "ID",
+  },
   {
     accessorKey: "profile.username",
     header: "Username",
@@ -30,6 +36,6 @@ export const columns: ColumnDef<Booking>[] = [
   },
   {
     accessorKey: "payment",
-    header: "Payment",
+    header: "Payment " + "(" + DEFAULT_CURRENCY + ")",
   },
 ];

@@ -20,7 +20,6 @@ export default function Page({ params }: { params: { slug: number } }) {
           </CardHeader>
         </Card>
         <CospaceDetails params={params} />
-        <div>List of available rooms</div>
         <AvailableRooms params={params} />
       </div>
     </HydrateClient>
