@@ -126,10 +126,10 @@ export function BookingCartDialog({
             </div>
           ) : null}
           <Button
-            disabled={items.length === 0 || createBooking.isPending}
+            disabled={items.length === 0 || createStripeSession.isPending}
             onClick={() => submit()}
           >
-            {createBooking.isPending && (
+            {createStripeSession.isPending && (
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
             )}
             {items.length === 0 ? "No items in cart" : "Book selection"}
