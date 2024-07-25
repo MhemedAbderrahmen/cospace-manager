@@ -1,17 +1,15 @@
 import Stripe from "stripe";
 import { z } from "zod";
+import { env } from "~/env";
 import {
   createTRPCRouter,
   protectedProcedure,
   publicProcedure,
 } from "~/server/api/trpc";
 
-const stripe = new Stripe(
-  "sk_test_51PUAoHE4C6EflxeoJVXnWWH7LXkdPA4c08MN5VUIZwPM0rx5OyixGWfOpPfKgiu2QeDWwcudcRpyX5St5XjiHQfu00ZneoJFZz",
-  {
-    apiVersion: "2024-06-20",
-  },
-);
+const stripe = new Stripe(env.STRIPE_SECRET_KEY, {
+  apiVersion: "2024-06-20",
+});
 
 export const profileReducer = createTRPCRouter({
   create: protectedProcedure
@@ -66,6 +64,24 @@ export const profileReducer = createTRPCRouter({
       },
     });
   }),
+
+  getUserProfileByCospaceId: protectedProcedure
+    .input(
+      z.object({
+        cospaceId: z.coerce.number(),
+      }),
+    )
+    .query(({ ctx, input }) => {
+      return ctx.db.profile.findFirst({
+        where: {
+          Cospace: {
+            id: {
+              equals: input.cospaceId,
+            },
+          },
+        },
+      });
+    }),
 
   getLatest: publicProcedure.query(({ ctx }) => {
     return ctx.db.profile.findFirst({

@@ -118,6 +118,7 @@ export default function AvailableSlots({
 }) {
   const [selectedDate, setSelectedDate] = useState<Date>();
   const [selectedSlots, setSelectedSlots] = useState<SlotType[]>([]);
+
   const { data, mutate, isPending } =
     api.availability.availableSlotsByDate.useMutation();
 

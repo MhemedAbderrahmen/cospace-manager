@@ -6,6 +6,7 @@ export const bookingsReducer = createTRPCRouter({
   create: protectedProcedure
     .input(
       z.object({
+        stripeSessionId: z.string(),
         availabilities: z.array(z.coerce.number()),
         roomId: z.coerce.number(),
         payment: z.coerce.number(),
@@ -27,6 +28,7 @@ export const bookingsReducer = createTRPCRouter({
             connect: input.availabilities.map((id) => ({ id })),
           },
           payment: input.payment,
+          stripeSessionId: input.stripeSessionId,
         },
       });
 

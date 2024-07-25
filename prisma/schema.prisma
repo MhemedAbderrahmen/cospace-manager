@@ -103,12 +103,12 @@ model Availability {
 }
 
 model Booking {
-    id        Int  @id @default(autoincrement())
-    profileId Int
-    roomId    Int? // Nullable for desk bookings
-
-    availabilities Availability[]
-    payment        Float          @default(0)
+    id              Int            @id @default(autoincrement())
+    profileId       Int
+    roomId          Int? // Nullable for desk bookings
+    stripeSessionId String         @unique
+    availabilities  Availability[]
+    payment         Float          @default(0)
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt

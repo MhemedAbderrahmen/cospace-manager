@@ -33,6 +33,10 @@ export function BookingCartDialog({
   const utils = api.useUtils();
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
+  const { data } = api.profile.getUserProfileByCospaceId.useQuery({
+    cospaceId: items[0]?.room.cospaceId ?? 0,
+  });
+
   const createBooking = api.bookings.create.useMutation({
     onMutate: () => {
       toast.loading("Creating booking...", { id: "create-booking" });
@@ -45,16 +49,27 @@ export function BookingCartDialog({
     },
   });
 
+  const createStripeSession = api.payments.createSession.useMutation({
+    onSuccess({ url }) {
+      if (url) window.open(url);
+    },
+  });
+
   const submit = async () => {
     const availabilityPrice = items[0]?.room?.availabilityPrice;
 
-    const payload = {
-      roomId,
-      availabilities: items.map((item) => item.id),
-      payment: availabilityPrice ? items.length * availabilityPrice : 0,
-    };
+    if (data?.stripeAccountId && availabilityPrice)
+      await createStripeSession.mutateAsync({
+        currency: "usd",
+        destination: data?.stripeAccountId,
+        productName: "Booking Room" + roomId,
+        quantity: items.length,
+        unitAmount: availabilityPrice,
+        roomId,
+        availabilities: items.map((item) => item.id),
+        payment: availabilityPrice ? items.length * availabilityPrice : 0,
+      });
 
-    await createBooking.mutateAsync(payload);
     await utils.availability.invalidate();
   };
 
