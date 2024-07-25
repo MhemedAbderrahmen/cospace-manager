@@ -6,18 +6,9 @@ import {
   UserButton,
   useUser,
 } from "@clerk/nextjs";
-import { BellIcon } from "lucide-react";
 import Link from "next/link";
 import { ModeToggle } from "~/components/mode-toggle";
 import { Button } from "~/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "~/components/ui/dropdown-menu";
 
 export const TopNav = () => {
   const { user } = useUser();
@@ -35,7 +26,7 @@ export const TopNav = () => {
 
         <div className="flex flex-row items-center space-x-2">
           <ModeToggle />
-          <SignedIn>
+          {/* <SignedIn>
             <DropdownMenu>
               <DropdownMenuTrigger>
                 <Button size={"icon"} variant={"ghost"}>
@@ -54,7 +45,7 @@ export const TopNav = () => {
                 <DropdownMenuItem>Subscription</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-          </SignedIn>
+          </SignedIn> */}
           <SignedOut>
             <div>
               <SignUpButton>

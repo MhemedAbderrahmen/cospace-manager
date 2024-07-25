@@ -1,9 +1,17 @@
+import Stripe from "stripe";
 import { z } from "zod";
 import {
   createTRPCRouter,
   protectedProcedure,
   publicProcedure,
 } from "~/server/api/trpc";
+
+const stripe = new Stripe(
+  "sk_test_51PUAoHE4C6EflxeoJVXnWWH7LXkdPA4c08MN5VUIZwPM0rx5OyixGWfOpPfKgiu2QeDWwcudcRpyX5St5XjiHQfu00ZneoJFZz",
+  {
+    apiVersion: "2024-06-20",
+  },
+);
 
 export const profileReducer = createTRPCRouter({
   create: protectedProcedure
@@ -12,12 +20,16 @@ export const profileReducer = createTRPCRouter({
         username: z.string().min(1),
       }),
     )
-    .mutation(({ ctx, input }) => {
-      console.log("input", input);
-      return ctx.db.profile.create({
+    .mutation(async ({ ctx, input }) => {
+      const account = await stripe.accounts.create({
+        type: "standard",
+      });
+
+      return await ctx.db.profile.create({
         data: {
           userId: ctx.user.userId,
           username: input.username,
+          stripeAccountId: account.id,
         },
       });
     }),
@@ -27,8 +39,9 @@ export const profileReducer = createTRPCRouter({
       z.object({
         id: z.coerce.number(),
         data: z.object({
-          username: z.string().min(2).max(50),
-          bio: z.string().min(2).max(50),
+          username: z.string().min(2).max(50).optional(),
+          bio: z.string().min(2).max(50).optional(),
+          paymentsEnabled: z.boolean().optional(),
         }),
       }),
     )

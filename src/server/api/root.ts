@@ -2,6 +2,7 @@ import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
 import { availabilityReducer } from "./routers/availability";
 import { bookingsReducer } from "./routers/bookings";
 import { cospaceReducer } from "./routers/cospace";
+import { paymentsReducer } from "./routers/payments";
 import { profileReducer } from "./routers/profile";
 import { roomReducer } from "./routers/room";
 
@@ -16,6 +17,7 @@ export const appRouter = createTRPCRouter({
   room: roomReducer,
   availability: availabilityReducer,
   bookings: bookingsReducer,
+  payments: paymentsReducer,
 });
 
 // export type definition of API
