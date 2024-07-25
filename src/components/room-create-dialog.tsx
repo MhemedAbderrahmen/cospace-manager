@@ -29,7 +29,6 @@ import {
   FormMessage,
 } from "./ui/form";
 import { Input } from "./ui/input";
-import { ScrollArea } from "./ui/scroll-area";
 import {
   Select,
   SelectContent,
@@ -137,157 +136,152 @@ export const RoomCreateModal: React.FC = () => {
           </DialogDescription>
 
           <Form {...form}>
-            <ScrollArea className="h-[500px]">
-              <form
-                onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-8"
-              >
-                <FormField
-                  control={form.control}
-                  name="name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Room name</FormLabel>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Room name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Room name" {...field} />
+                    </FormControl>
+                    <FormDescription>
+                      This is the name of the room
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="capacity"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Capacity</FormLabel>
+                    <Input
+                      type="number"
+                      placeholder="Number of persons"
+                      {...field}
+                    />
+                    <FormDescription>
+                      Choose the Capacity of your room
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="type"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Room Type</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
                       <FormControl>
-                        <Input placeholder="Room name" {...field} />
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select a room type" />
+                        </SelectTrigger>
                       </FormControl>
+                      <SelectContent>
+                        <SelectItem value="MEETING">Meeting Room</SelectItem>
+                        <SelectItem value="REGULAR">Regular Room</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormDescription>
+                      Choose the type of your room
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="amenties"
+                render={() => (
+                  <FormItem>
+                    <div className="mb-4">
+                      <FormLabel className="text-base">Amenties</FormLabel>
                       <FormDescription>
-                        This is the name of the room
+                        Select the items you want to display in the sidebar.
                       </FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                    </div>
+                    <div className="flex w-full flex-row flex-wrap gap-4">
+                      {items.map((item) => (
+                        <FormField
+                          key={item.id}
+                          control={form.control}
+                          name="amenties"
+                          render={({ field }) => {
+                            return (
+                              <FormItem
+                                key={item.id}
+                                className="flex flex-row items-start space-x-3 space-y-0"
+                              >
+                                <FormControl>
+                                  <Checkbox
+                                    checked={field.value?.includes(item.id)}
+                                    onCheckedChange={(checked) => {
+                                      return checked
+                                        ? field.onChange([
+                                            ...field.value,
+                                            item.id,
+                                          ])
+                                        : field.onChange(
+                                            field.value?.filter(
+                                              (value) => value !== item.id,
+                                            ),
+                                          );
+                                    }}
+                                  />
+                                </FormControl>
+                                <FormLabel className="font-normal">
+                                  {toTitleCase(item.label)}
+                                </FormLabel>
+                              </FormItem>
+                            );
+                          }}
+                        />
+                      ))}
+                    </div>
 
-                <FormField
-                  control={form.control}
-                  name="capacity"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Capacity</FormLabel>
-                      <Input
-                        type="number"
-                        placeholder="Number of persons"
-                        {...field}
-                      />
-                      <FormDescription>
-                        Choose the Capacity of your room
-                      </FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-                <FormField
-                  control={form.control}
-                  name="type"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Room Type</FormLabel>
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select a room type" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectItem value="MEETING">Meeting Room</SelectItem>
-                          <SelectItem value="REGULAR">Regular Room</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <FormDescription>
-                        Choose the type of your room
-                      </FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+              <FormField
+                control={form.control}
+                name="availabilityPrice"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Price per hour</FormLabel>
+                    <Input
+                      type="number"
+                      placeholder="Price per hour"
+                      {...field}
+                    />
+                    <FormDescription>
+                      Choose the price of your room per hour (availability)
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-                <FormField
-                  control={form.control}
-                  name="amenties"
-                  render={() => (
-                    <FormItem>
-                      <div className="mb-4">
-                        <FormLabel className="text-base">Amenties</FormLabel>
-                        <FormDescription>
-                          Select the items you want to display in the sidebar.
-                        </FormDescription>
-                      </div>
-                      <div className="flex w-full flex-row flex-wrap gap-4">
-                        {items.map((item) => (
-                          <FormField
-                            key={item.id}
-                            control={form.control}
-                            name="amenties"
-                            render={({ field }) => {
-                              return (
-                                <FormItem
-                                  key={item.id}
-                                  className="flex flex-row items-start space-x-3 space-y-0"
-                                >
-                                  <FormControl>
-                                    <Checkbox
-                                      checked={field.value?.includes(item.id)}
-                                      onCheckedChange={(checked) => {
-                                        return checked
-                                          ? field.onChange([
-                                              ...field.value,
-                                              item.id,
-                                            ])
-                                          : field.onChange(
-                                              field.value?.filter(
-                                                (value) => value !== item.id,
-                                              ),
-                                            );
-                                      }}
-                                    />
-                                  </FormControl>
-                                  <FormLabel className="font-normal">
-                                    {toTitleCase(item.label)}
-                                  </FormLabel>
-                                </FormItem>
-                              );
-                            }}
-                          />
-                        ))}
-                      </div>
-
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="availabilityPrice"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Price per hour</FormLabel>
-                      <Input
-                        type="number"
-                        placeholder="Price per hour"
-                        {...field}
-                      />
-                      <FormDescription>
-                        Choose the price of your room per hour (availability)
-                      </FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <Button type="submit" disabled={createRoom.isPending}>
-                  {createRoom.isPending && (
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  )}
-                  Create
-                </Button>
-              </form>
-            </ScrollArea>
+              <Button type="submit" disabled={createRoom.isPending}>
+                {createRoom.isPending && (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                )}
+                Create
+              </Button>
+            </form>
           </Form>
         </DialogHeader>
       </DialogContent>
