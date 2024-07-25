@@ -2,6 +2,7 @@ import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import CospaceCreate from "~/app/_components/dashboard/cospaces/cospace-create";
 import CospaceList from "~/app/_components/dashboard/cospaces/cospace-list";
+import { DashboardAlert } from "~/components/dashboard-alert";
 import { Card, CardHeader } from "~/components/ui/card";
 import { api, HydrateClient } from "~/trpc/server";
 
@@ -25,6 +26,11 @@ export default function ManagerDashboard() {
             </p>
           </CardHeader>
         </Card>
+        <DashboardAlert
+          type={"warning"}
+          title="Payment Not Enabled"
+          message="To recieve payments and collect your income money you will have to enable payments in your profile settings"
+        />
         <div className="flex flex-col gap-4 lg:flex-row">
           <CospaceCreate />
           <CospaceList />
