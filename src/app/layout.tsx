@@ -25,6 +25,13 @@ const fontSans = FontSans({
   variable: "--font-sans",
 });
 
+const Footer = () => {
+  return (
+    <footer className="flex w-full flex-col items-center justify-center p-12">
+      Copyright © 2024 Abderrahmen MHEMED. All rights reserved.
+    </footer>
+  );
+};
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
@@ -49,13 +56,14 @@ export default function RootLayout({
           >
             <TooltipProvider>
               <TRPCReactProvider>
-                <div className="w-full max-w-screen-xl">
+                <div className="h-full w-full max-w-screen-xl">
                   <TopNav />
                   <NextSSRPlugin
                     routerConfig={extractRouterConfig(ourFileRouter)}
                   />
 
                   {children}
+                  <Footer />
                 </div>
                 <Toaster />
               </TRPCReactProvider>
