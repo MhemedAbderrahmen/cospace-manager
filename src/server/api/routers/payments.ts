@@ -60,15 +60,8 @@ export const paymentsReducer = createTRPCRouter({
         },
         mode: "payment",
         success_url:
-          "http://localhost:3000/dashboard/checkout?session_id={CHECKOUT_SESSION_ID}",
+          env.STRIPE_SUCCESS_URL + `?session_id={CHECKOUT_SESSION_ID}`,
       });
-
-      // if (session.payment_status === "paid")
-      //   await api.bookings.create({
-      //     availabilities: input.availabilities,
-      //     payment: input.payment,
-      //     roomId: input.roomId,
-      //   });
 
       return session;
     }),
@@ -85,10 +78,11 @@ export const paymentsReducer = createTRPCRouter({
       const accountLink = await stripe.accountLinks.create({
         account: account,
         return_url:
-          `http://localhost:3000/dashboard/settings?tab=payments&account=` +
+          env.STRIPE_RETURN_URL +
+          `?tab=payments&account=` +
           account +
           `&status=enabled`,
-        refresh_url: `http://localhost:3000/dashboard/settings?tab=payments`,
+        refresh_url: env.STRIPE_REFRESH_URL + `?tab=payments`,
         type: "account_onboarding",
       });
 
