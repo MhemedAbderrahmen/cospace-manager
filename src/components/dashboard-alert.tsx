@@ -9,7 +9,7 @@ export function DashboardAlert() {
 
   if (data?.paymentsEnabled) return null;
   return (
-    <Alert>
+    <Alert variant={"destructive"}>
       <TriangleAlert className="h-4 w-4" />
       <AlertTitle>Payment Not Enabled</AlertTitle>
       <AlertDescription>

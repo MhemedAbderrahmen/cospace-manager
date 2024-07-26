@@ -17,7 +17,7 @@ export const TopNav = () => {
         <div className="flex flex-row items-center gap-4">
           <h1 className="scroll-m-20 text-xl font-extrabold tracking-tight lg:text-2xl">
             <Link href={"/"} legacyBehavior>
-              cospace
+              HubMate
             </Link>
           </h1>
         </div>

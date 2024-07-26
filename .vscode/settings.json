@@ -1,13 +1,11 @@
 {
-  "editor.fontFamily": "Fira Code",
-  "editor.fontLigatures": true,
+  "editor.fontFamily": "SF Mono, Menlo, Monaco, 'Courier New', monospace",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnPaste": false, // required
   "editor.formatOnType": false, // required
   "explorer.confirmDragAndDrop": true,
   "editor.mouseWheelZoom": true,
   "editor.formatOnSave": true,
-  "editor.fontWeight": "500", // Regular
   "editor.codeActionsOnSave": {
     "source.fixAll": "explicit",
     "source.organizeImports": "explicit",

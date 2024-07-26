@@ -102,7 +102,7 @@ export default function OnboardingComponent() {
                 name="role"
                 render={({ field }) => (
                   <FormItem className="space-y-3">
-                    <FormLabel>Why do you want to be on Cospace</FormLabel>
+                    <FormLabel>Why do you want to be on Hubmate</FormLabel>
                     <FormControl>
                       <RadioGroup
                         onValueChange={field.onChange}
