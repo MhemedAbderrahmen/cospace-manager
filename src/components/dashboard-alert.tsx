@@ -1,21 +1,21 @@
-import { CheckIcon, TriangleAlert } from "lucide-react";
+"use client";
+
+import { TriangleAlert } from "lucide-react";
+import { api } from "~/trpc/react";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 
-export function DashboardAlert({
-  title,
-  message,
-  type,
-}: {
-  title: string;
-  message: string;
-  type: "success" | "warning";
-}) {
+export function DashboardAlert() {
+  const { data } = api.profile.getUserProfile.useQuery();
+
+  if (data?.paymentsEnabled) return null;
   return (
     <Alert>
       <TriangleAlert className="h-4 w-4" />
-      {type === "success" ?? <CheckIcon className="h-4 w-4" />}
-      <AlertTitle>{title}</AlertTitle>
-      <AlertDescription>{message}</AlertDescription>
+      <AlertTitle>Payment Not Enabled</AlertTitle>
+      <AlertDescription>
+        To recieve payments and collect your income money you will have to
+        enable payments in your profile settings
+      </AlertDescription>
     </Alert>
   );
 }

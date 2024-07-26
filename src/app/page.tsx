@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Button } from "~/components/ui/button";
 import { HydrateClient } from "~/trpc/server";
@@ -12,9 +13,16 @@ export default async function Home() {
             <span className="text-primary underline">coworking spaces</span> and
             manage them
           </h1>
-          <p className="mb-8 text-xl">
+          <p className="text-xl">
             Easily book coworking spaces and meeting rooms with our app.
           </p>
+          <Image
+            src={"/cospace-cover.jpg"}
+            alt="cospace cover"
+            className="object-cover"
+            width={1280}
+            height={720}
+          />
           <Link href={"/dashboard"}>
             <Button variant={"default"} size={"lg"}>
               Get Started

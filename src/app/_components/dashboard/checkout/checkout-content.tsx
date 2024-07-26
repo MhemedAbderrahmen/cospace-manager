@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { toast } from "sonner";
 import { SkeletonLine } from "~/components/skeleton-line";
 import { Button } from "~/components/ui/button";
+import { Card, CardContent, CardHeader } from "~/components/ui/card";
 import { api } from "~/trpc/react";
 
 export function CheckoutContent() {
@@ -45,17 +46,35 @@ export function CheckoutContent() {
 
   if (isPending) return <SkeletonLine />;
   return (
-    <div>
-      <div>Session: {data?.id}</div>
-      <div>Session: {data?.payment_status}</div>
-      {data?.payment_status === "paid" ? (
-        <div>
-          <div>Payment was established</div>
+    <div className="w-full">
+      <Card className="w-full">
+        <CardHeader>
+          {data?.payment_status === "paid" ? (
+            <>
+              <p className="text-xl font-semibold leading-7 [&:not(:first-child)]:mt-6">
+                Thank you for your purchase
+              </p>
+              <p className="text-md text-muted-foreground">
+                Your order has been successfully placed!
+              </p>
+            </>
+          ) : (
+            <p className="text-xl font-semibold leading-7 [&:not(:first-child)]:mt-6">
+              Error trying to establish this purchase
+            </p>
+          )}
+        </CardHeader>
+        <CardContent>
+          <p className="text-md text-muted-foreground">
+            You have successfully completed the payment process, your next step
+            is to
+          </p>
+          <p className="text-md text-muted-foreground">
+            You can continue the process by clicking the button below
+          </p>
           <Button>Continue Process</Button>
-        </div>
-      ) : (
-        <div>Error with payment process</div>
-      )}
+        </CardContent>
+      </Card>
     </div>
   );
 }

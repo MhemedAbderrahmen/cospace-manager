@@ -32,6 +32,7 @@ const Footer = () => {
     </footer>
   );
 };
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
@@ -44,7 +45,7 @@ export default function RootLayout({
       <html lang="en" suppressHydrationWarning>
         <body
           className={cn(
-            "flex h-full min-h-screen w-full flex-col items-center bg-background font-sans antialiased",
+            "dots-bg flex h-full min-h-screen w-full flex-col items-center bg-background font-sans antialiased",
             fontSans.variable,
           )}
         >

@@ -2,17 +2,15 @@
 import {
   SignedIn,
   SignedOut,
+  SignInButton,
   SignUpButton,
   UserButton,
-  useUser,
 } from "@clerk/nextjs";
 import Link from "next/link";
 import { ModeToggle } from "~/components/mode-toggle";
 import { Button } from "~/components/ui/button";
 
 export const TopNav = () => {
-  const { user } = useUser();
-
   return (
     <nav className="min-h-24 w-full">
       <div className="lex-row flex justify-between space-x-4 p-4">
@@ -26,28 +24,11 @@ export const TopNav = () => {
 
         <div className="flex flex-row items-center space-x-2">
           <ModeToggle />
-          {/* <SignedIn>
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <Button size={"icon"} variant={"ghost"}>
-                  <BellIcon
-                    size={18}
-                    className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all"
-                  />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuLabel>Notifications</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>Profile</DropdownMenuItem>
-                <DropdownMenuItem>Billing</DropdownMenuItem>
-                <DropdownMenuItem>Team</DropdownMenuItem>
-                <DropdownMenuItem>Subscription</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </SignedIn> */}
           <SignedOut>
-            <div>
+            <div className="flex flex-row items-center space-x-2">
+              <SignInButton>
+                <Button variant={"ghost"}>Sign In</Button>
+              </SignInButton>
               <SignUpButton>
                 <Button>Sign up</Button>
               </SignUpButton>

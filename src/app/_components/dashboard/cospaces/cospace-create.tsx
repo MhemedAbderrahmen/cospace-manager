@@ -60,7 +60,7 @@ export default function CospaceCreate() {
     );
 
   return (
-    <Card className="w-full md:w-1/2">
+    <Card className="w-full md:w-1/2" suppressHydrationWarning>
       <CardHeader>Get Started</CardHeader>
       <CardContent className="flex flex-col gap-2">
         <div className="text-md">Add a new coworking space!</div>

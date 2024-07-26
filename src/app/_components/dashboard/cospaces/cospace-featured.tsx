@@ -24,7 +24,7 @@ export default function FeaturedCospace() {
   if (!latestCospace)
     return (
       <Card className="w-full md:w-1/2">
-        <CardHeader>No Coworking spaces on our platform yet</CardHeader>
+        <CardHeader>No featured coworking spaces</CardHeader>
       </Card>
     );
   return (

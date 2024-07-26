@@ -4,10 +4,8 @@ import { HydrateClient } from "~/trpc/server";
 export default async function Checkout() {
   return (
     <HydrateClient>
-      <main className="flex h-full w-full flex-col items-center p-4">
-        <section className="flex h-screen max-w-screen-md flex-col items-center justify-center gap-4">
-          <CheckoutContent />
-        </section>
+      <main className="flex h-full w-full items-center justify-center">
+        <CheckoutContent />
       </main>
     </HydrateClient>
   );

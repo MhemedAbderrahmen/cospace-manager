@@ -7,8 +7,9 @@ import { Card, CardHeader } from "~/components/ui/card";
 import { api, HydrateClient } from "~/trpc/server";
 
 export default function ManagerDashboard() {
-  void api.profile.getUserProfile.prefetch();
   const { sessionClaims } = auth();
+
+  void api.profile.getUserProfile.prefetch();
 
   if (sessionClaims?.metadata.role !== "MANAGER") redirect("/");
 
@@ -26,11 +27,7 @@ export default function ManagerDashboard() {
             </p>
           </CardHeader>
         </Card>
-        <DashboardAlert
-          type={"warning"}
-          title="Payment Not Enabled"
-          message="To recieve payments and collect your income money you will have to enable payments in your profile settings"
-        />
+        <DashboardAlert />
         <div className="flex flex-col gap-4 lg:flex-row">
           <CospaceCreate />
           <CospaceList />
