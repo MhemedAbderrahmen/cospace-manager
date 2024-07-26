@@ -128,7 +128,7 @@ export const RoomCreateModal: React.FC = () => {
           <PlusIcon className="m-2" size={18} /> New Room
         </Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="h-[600px] overflow-auto">
         <DialogHeader>
           <DialogTitle>Create a room</DialogTitle>
           <DialogDescription className="flex flex-col gap-4">

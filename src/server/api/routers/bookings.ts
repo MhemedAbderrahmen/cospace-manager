@@ -2,7 +2,6 @@ import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
 export const bookingsReducer = createTRPCRouter({
-  // TODO: Add payment when creating a booking ( send it in the input )
   create: protectedProcedure
     .input(
       z.object({
@@ -59,6 +58,28 @@ export const bookingsReducer = createTRPCRouter({
       include: {
         room: true,
         availabilities: true,
+      },
+    });
+  }),
+
+  getMyLatestBookings: protectedProcedure.query(async ({ ctx }) => {
+    const profile = await ctx.db.profile.findFirst({
+      where: {
+        userId: ctx.user.userId,
+      },
+    });
+    if (!profile) throw new Error("Profile not found");
+
+    return ctx.db.booking.findMany({
+      where: {
+        profileId: profile.id,
+      },
+      include: {
+        room: true,
+        availabilities: true,
+      },
+      orderBy: {
+        createdAt: "desc",
       },
     });
   }),

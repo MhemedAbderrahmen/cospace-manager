@@ -23,7 +23,9 @@ export default function CospaceCreate() {
 
   return data?.Cospace ? (
     <Card className="w-full md:w-1/2" suppressHydrationWarning>
-      <CardHeader>Your Coworking Space</CardHeader>
+      <CardHeader>
+        <div>Your Coworking Space</div>
+      </CardHeader>
       <CardContent className="flex flex-col gap-2">
         {data?.Cospace?.coverImage ? (
           <Image

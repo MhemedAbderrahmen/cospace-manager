@@ -1,5 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
+import { LatestUserBookings } from "~/app/_components/dashboard/bookings/latest-user-bookings";
 import FeaturedCospace from "~/app/_components/dashboard/cospaces/cospace-featured";
 import CospaceList from "~/app/_components/dashboard/cospaces/cospace-list";
 import { Card, CardHeader } from "~/components/ui/card";
@@ -27,8 +28,9 @@ export default function MemberDashboard() {
             </p>
           </CardHeader>
         </Card>
+        <FeaturedCospace />
         <div className="flex flex-col gap-4 lg:flex-row">
-          <FeaturedCospace />
+          <LatestUserBookings />
           <CospaceList />
         </div>
       </div>
