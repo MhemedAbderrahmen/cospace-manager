@@ -27,10 +27,12 @@ export const TopNav = () => {
           <SignedOut>
             <div className="flex flex-row items-center space-x-2">
               <SignInButton>
-                <Button variant={"ghost"}>Sign In</Button>
+                <Button variant={"ghost"} size={"sm"}>
+                  Sign In
+                </Button>
               </SignInButton>
               <SignUpButton>
-                <Button>Sign up</Button>
+                <Button size={"sm"}>Sign up</Button>
               </SignUpButton>
             </div>
           </SignedOut>

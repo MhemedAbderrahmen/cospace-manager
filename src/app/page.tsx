@@ -7,10 +7,10 @@ export default async function Home() {
   return (
     <HydrateClient>
       <main className="flex h-full w-full flex-col items-center">
-        <section className="flex h-screen max-w-screen-md flex-col items-center justify-center gap-12 p-12 text-center">
+        <section className="flex h-screen max-w-screen-md flex-col items-center justify-center gap-12 p-4 text-center">
           <div className="flex flex-col gap-4">
             <div className="flex w-full justify-start">
-              <small className="rounded-3xl border bg-stone-950 p-2 text-sm font-medium leading-none">
+              <small className="rounded-3xl border p-2 text-sm font-medium leading-none dark:bg-stone-950">
                 🌟 New Release
               </small>
             </div>
@@ -35,7 +35,7 @@ export default async function Home() {
             height={720}
           /> */}
         </section>
-        <section className="flex h-screen max-w-screen-md flex-col items-center gap-12 p-12">
+        <section className="flex h-screen max-w-screen-md flex-col items-center gap-4 p-12">
           <Card className="rounded-2xl">
             <CardHeader>
               <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
@@ -85,7 +85,7 @@ export default async function Home() {
             </Link>
             <Link href={"/dashboard"}>
               <Button variant={"default"} size={"lg"}>
-                Get Started
+                Join Now
               </Button>
             </Link>
           </div>
