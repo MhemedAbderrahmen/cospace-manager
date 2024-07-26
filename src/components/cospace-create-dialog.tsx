@@ -33,6 +33,14 @@ const formSchema = z.object({
   name: z.string().min(2).max(50),
   description: z.string().min(2).max(250),
   coverImage: z.string().url(),
+  address: z.string().min(2).max(250),
+  city: z.string().min(2).max(250),
+  country: z.string().min(2).max(250),
+  state: z.string().min(2).max(250),
+  postalCode: z.string().min(2).max(250),
+  phone: z.string().min(2).max(250),
+  email: z.string().min(2).max(250),
+  website: z.string().min(2).max(250),
 });
 
 export const CospaceCreateModal: React.FC = () => {
@@ -45,6 +53,14 @@ export const CospaceCreateModal: React.FC = () => {
       name: "",
       description: "",
       coverImage: "",
+      address: "",
+      city: "",
+      country: "",
+      state: "",
+      postalCode: "",
+      phone: "",
+      email: "",
+      website: "",
     },
   });
 
@@ -137,6 +153,23 @@ export const CospaceCreateModal: React.FC = () => {
                   <FormDescription>
                     Write a good description; this will be displayed for all
                     members
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="address"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Address</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Address" {...field} />
+                  </FormControl>
+                  <FormDescription>
+                    This is your coworking space address
                   </FormDescription>
                   <FormMessage />
                 </FormItem>

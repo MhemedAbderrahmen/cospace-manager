@@ -15,6 +15,11 @@ export const metricsReducer = createTRPCRouter({
             cospaceId: {
               equals: input.cospaceId,
             },
+            cospace: {
+              manager: {
+                userId: ctx.user.userId,
+              },
+            },
           },
           isBooked: {
             equals: false,
@@ -27,6 +32,11 @@ export const metricsReducer = createTRPCRouter({
           room: {
             cospaceId: {
               equals: input.cospaceId,
+            },
+            cospace: {
+              manager: {
+                userId: ctx.user.userId,
+              },
             },
           },
           isBooked: {
@@ -44,6 +54,11 @@ export const metricsReducer = createTRPCRouter({
             cospaceId: {
               equals: input.cospaceId,
             },
+            cospace: {
+              manager: {
+                userId: ctx.user.userId,
+              },
+            },
           },
         },
       });
@@ -53,17 +68,14 @@ export const metricsReducer = createTRPCRouter({
         0,
       );
 
-      console.log(
-        "🚀 ~ .query ~ bookedAvailabilities:",
-        bookedAvailabilities.length,
-      );
+      const occupancyRate = (
+        (bookedAvailabilities.length / notBookedAvailabilities.length) *
+        100
+      ).toFixed(2);
 
       return {
         count: bookings.length,
-        occupancyRate: (
-          (bookedAvailabilities.length / notBookedAvailabilities.length) *
-          100
-        ).toFixed(2),
+        occupancyRate: typeof occupancyRate === "number" ? occupancyRate : 0,
         revenue: totalRevenue,
       };
     }),

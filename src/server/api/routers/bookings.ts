@@ -75,7 +75,11 @@ export const bookingsReducer = createTRPCRouter({
         profileId: profile.id,
       },
       include: {
-        room: true,
+        room: {
+          include: {
+            cospace: true,
+          },
+        },
         availabilities: true,
       },
       orderBy: {
