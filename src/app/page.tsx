@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { Button } from "~/components/ui/button";
 import { HydrateClient } from "~/trpc/server";
-import { Features } from "./_components/landing/features";
 import { WhyHubMate } from "./_components/landing/why-hubmate";
 
 export default async function Home() {
@@ -28,7 +27,6 @@ export default async function Home() {
           </div>
         </section>
         <WhyHubMate />
-        <Features />
       </main>
     </HydrateClient>
   );

@@ -16,7 +16,7 @@ export function WhyHubMate() {
           </p>
         </CardHeader>
       </Card>
-      <div className="flex flex-row items-center justify-between gap-4">
+      <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
         <Card className="h-full">
           <CardHeader>
             <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
