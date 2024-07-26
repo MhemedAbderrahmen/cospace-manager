@@ -8,10 +8,17 @@ export default async function Home() {
     <HydrateClient>
       <main className="flex h-full w-full flex-col items-center">
         <section className="flex h-screen max-w-screen-md flex-col items-center justify-center gap-12 p-12 text-center">
-          <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
-            Manage. Book. Connect. With{" "}
-            <span className="text-primary">HubMate</span>
-          </h1>
+          <div className="flex flex-col gap-4">
+            <div className="flex w-full justify-start">
+              <small className="rounded-3xl border bg-stone-950 p-2 text-sm font-medium leading-none">
+                🌟 New Release
+              </small>
+            </div>
+            <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
+              Manage. Book. Connect. With{" "}
+              <span className="text-primary">HubMate</span>
+            </h1>
+          </div>
           <p className="text-xl">
             The smart choice for coworking space management.
           </p>
@@ -44,18 +51,6 @@ export default async function Home() {
           </Card>
 
           <Card className="rounded-2xl">
-            <CardHeader>
-              <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
-                Our <span className="text-primary">Story</span>
-              </h3>
-            </CardHeader>
-            <CardContent>
-              <p className="leading-7 [&:not(:first-child)]:mt-6">
-                We noticed that coworking space managers often struggle with
-                inefficient booking systems, complex membership management, and
-                lack of community engagement tools.
-              </p>
-            </CardContent>
             <CardHeader>
               <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
                 The <span className="text-primary">Vision</span>
