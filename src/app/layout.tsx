@@ -14,6 +14,7 @@ import { TRPCReactProvider } from "~/trpc/react";
 import { TopNav } from "./_components/nav/top-nav";
 
 import { ourFileRouter } from "~/app/api/uploadthing/core";
+import { Separator } from "~/components/ui/separator";
 export const metadata: Metadata = {
   title: "Coworking Space Booking App",
   description: "Book coworking spaces and meeting rooms easily.",
@@ -28,6 +29,7 @@ const fontSans = FontSans({
 const Footer = () => {
   return (
     <footer className="flex w-full flex-col items-center justify-center p-12">
+      <Separator className="my-4" />
       Copyright © 2024 Abderrahmen MHEMED. All rights reserved.
     </footer>
   );

@@ -15,11 +15,19 @@ export default async function Home() {
           <p className="text-xl">
             The smart choice for coworking space management.
           </p>
-          <Link href={"/dashboard"}>
-            <Button variant={"default"} size={"lg"}>
-              Get Started
-            </Button>
-          </Link>
+          <div className="flex gap-4">
+            <Link href={"/dashboard"}>
+              <Button variant={"default"} size={"lg"}>
+                Get Started
+              </Button>
+            </Link>
+            <Link href={"/"}>
+              <Button variant={"link"} size={"lg"}>
+                Live Demo
+              </Button>
+            </Link>
+          </div>
+          <p>No credit card required</p>
           <div>
             <small className="rounded-3xl border p-2 text-sm font-medium leading-none dark:bg-stone-950">
               🌟 New Release
