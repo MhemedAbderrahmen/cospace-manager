@@ -20,46 +20,44 @@ export default function CospaceCreate() {
   const router = useRouter();
 
   if (isPending) return <SkeletonCard />;
-  if (data?.Cospace)
-    return (
-      <Card className="w-full md:w-1/2" suppressHydrationWarning>
-        <CardHeader>Your coworking space</CardHeader>
-        <CardContent className="flex flex-col gap-2">
-          {data?.Cospace?.coverImage ? (
-            <Image
-              src={data?.Cospace?.coverImage}
-              alt="cospace cover"
-              className="h-32 w-full rounded-md object-cover"
-              width={1920}
-              height={1080}
-            />
-          ) : null}
 
-          <div className="flex flex-row items-center justify-between">
-            <div className="text-lg font-semibold">{data?.Cospace.name}</div>
-            <small className="text-sm font-medium leading-none text-muted-foreground">
-              Manager @{data?.username}
-            </small>
-          </div>
+  return data?.Cospace ? (
+    <Card className="w-full md:w-1/2" suppressHydrationWarning>
+      <CardHeader>Your Coworking Space</CardHeader>
+      <CardContent className="flex flex-col gap-2">
+        {data?.Cospace?.coverImage ? (
+          <Image
+            src={data?.Cospace?.coverImage}
+            alt="cospace cover"
+            className="h-32 w-full rounded-md object-cover"
+            width={1920}
+            height={1080}
+          />
+        ) : null}
+
+        <div className="flex flex-row items-center justify-between">
+          <div className="text-lg font-semibold">{data?.Cospace.name}</div>
           <small className="text-sm font-medium leading-none text-muted-foreground">
-            Created {dayjs(data?.Cospace.createdAt).format(DEFAULT_DATE_FORMAT)}
+            Manager @{data?.username}
           </small>
-          <p className="leading-7 [&:not(:first-child)]:mt-6">
-            {data?.Cospace.description}
-          </p>
-        </CardContent>
-        <CardFooter className="flex w-full justify-end">
-          <Button
-            size={"sm"}
-            onClick={() => router.push("/dashboard/manager/cospace")}
-          >
-            Manage
-          </Button>
-        </CardFooter>
-      </Card>
-    );
-
-  return (
+        </div>
+        <small className="text-sm font-medium leading-none text-muted-foreground">
+          Created {dayjs(data?.Cospace.createdAt).format(DEFAULT_DATE_FORMAT)}
+        </small>
+        <p className="leading-7 [&:not(:first-child)]:mt-6">
+          {data?.Cospace.description}
+        </p>
+      </CardContent>
+      <CardFooter className="flex w-full justify-end">
+        <Button
+          size={"sm"}
+          onClick={() => router.push("/dashboard/manager/cospace")}
+        >
+          Manage
+        </Button>
+      </CardFooter>
+    </Card>
+  ) : (
     <Card className="w-full md:w-1/2" suppressHydrationWarning>
       <CardHeader>Get Started</CardHeader>
       <CardContent className="flex flex-col gap-2">

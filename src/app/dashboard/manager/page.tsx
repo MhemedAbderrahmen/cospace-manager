@@ -2,6 +2,7 @@ import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import CospaceCreate from "~/app/_components/dashboard/cospaces/cospace-create";
 import CospaceList from "~/app/_components/dashboard/cospaces/cospace-list";
+import { FreemiumKeymetrics } from "~/app/_components/dashboard/keymetrics/freemium-keymetrics";
 import { DashboardAlert } from "~/components/dashboard-alert";
 import { Card, CardHeader } from "~/components/ui/card";
 import { api, HydrateClient } from "~/trpc/server";
@@ -28,6 +29,7 @@ export default function ManagerDashboard() {
           </CardHeader>
         </Card>
         <DashboardAlert />
+        <FreemiumKeymetrics />
         <div className="flex flex-col gap-4 lg:flex-row">
           <CospaceCreate />
           <CospaceList />

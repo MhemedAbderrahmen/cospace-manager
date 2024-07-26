@@ -67,7 +67,7 @@ function RoomItem(
       </CardHeader>
       <CardFooter className="flex flex-row justify-between">
         <div>
-          {room.availabilityPrice} {DEFAULT_CURRENCY} / Hour{" "}
+          {room.availabilityPrice} {DEFAULT_CURRENCY} / Hour
         </div>
 
         <Button
