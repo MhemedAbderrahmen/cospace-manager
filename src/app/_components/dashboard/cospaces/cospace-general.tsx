@@ -29,12 +29,21 @@ const formSchema = z.object({
   name: z.string().min(2).max(50),
   description: z.string().min(2).max(250),
   coverImage: z.string().url(),
+  address: z.string().min(2).max(250),
+  city: z.string().min(2).max(250),
+  country: z.string().min(2).max(250),
+  state: z.string().min(2).max(250),
+  postalCode: z.string().min(2).max(250),
+  phone: z.string().min(2).max(250),
+  email: z.string().min(2).max(250),
+  website: z.string().min(2).max(250),
 });
 
 export default function CospaceGeneral() {
   const utils = api.useUtils();
 
   const { data, isPending } = api.cospace.getCospace.useQuery();
+  const { data: countries } = api.countries.getAll.useQuery();
 
   const updateMedia = api.cospace.updateMedia.useMutation({
     onSuccess: async () => {
@@ -60,6 +69,14 @@ export default function CospaceGeneral() {
       name: "",
       description: "",
       coverImage: "",
+      address: "",
+      city: "",
+      country: "",
+      state: "",
+      postalCode: "",
+      phone: "",
+      email: "",
+      website: "",
     },
   });
 
@@ -70,6 +87,10 @@ export default function CospaceGeneral() {
       form.setValue("coverImage", data.coverImage);
     }
   }, [data, form]);
+
+  useEffect(() => {
+    if (countries) console.log(countries);
+  }, [countries]);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     await updateCospace.mutateAsync({
@@ -139,7 +160,7 @@ export default function CospaceGeneral() {
                 <FormItem>
                   <FormLabel>Cospace description</FormLabel>
                   <FormControl>
-                    <Textarea placeholder="Cospacy descrition" {...field} />
+                    <Textarea placeholder="Cospacy description" {...field} />
                   </FormControl>
                   <FormDescription>
                     Write a good description; this will be displayed for all
@@ -149,6 +170,110 @@ export default function CospaceGeneral() {
                 </FormItem>
               )}
             />
+
+            <FormField
+              control={form.control}
+              name="address"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Address</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Cospacy address" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="country"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Country</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Cospacy country" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="city"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>City</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Cospacy city" {...field} />
+                  </FormControl>
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="state"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>State</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Cospacy state" {...field} />
+                  </FormControl>
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="phone"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Phone</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Cospacy phone" {...field} />
+                  </FormControl>
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="postalCode"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Postal Code</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Cospacy postal code" {...field} />
+                  </FormControl>
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="website"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Website</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Cospacy website" {...field} />
+                  </FormControl>
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             <div className="flex justify-end">
               <Button type="submit" disabled={updateCospace.isPending}>
                 {updateCospace.isPending ? (

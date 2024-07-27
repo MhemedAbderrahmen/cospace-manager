@@ -20,7 +20,6 @@ export default function CospaceCreate() {
   const router = useRouter();
 
   if (isPending) return <SkeletonCard />;
-
   return data?.Cospace ? (
     <Card className="w-full md:w-1/2" suppressHydrationWarning>
       <CardHeader>
