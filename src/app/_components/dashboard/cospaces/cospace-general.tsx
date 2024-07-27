@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { z } from "zod";
 import { SkeletonImage } from "~/components/skeleton-image";
 import { Button } from "~/components/ui/button";
+import { Card, CardContent, CardHeader } from "~/components/ui/card";
 import {
   Form,
   FormControl,
@@ -90,75 +91,77 @@ export default function CospaceGeneral() {
 
   if (isPending) return <SkeletonImage />;
   return (
-    <div className="space-y-4">
-      <h2 className="text-lg font-semibold">General</h2>
-      <Image
-        src={data?.coverImage ?? ""}
-        alt="cospace cover"
-        className="h-44 w-full rounded-md object-cover"
-        width={1080}
-        height={1920}
-      />
-      <UploadButton
-        endpoint="imageUploader"
-        onUploadBegin={() =>
-          toast.loading("Uploading image", { id: "isPending" })
-        }
-        onClientUploadComplete={(res) =>
-          handleImageUploadComplete(res[0]?.url ?? "")
-        }
-        onUploadError={(error: Error) => {
-          toast.dismiss("isPending");
-          toast.error(error.message, { duration: 3000 });
-        }}
-      />
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Cospace name</FormLabel>
-                <FormControl>
-                  <Input placeholder="Cospacy" {...field} />
-                </FormControl>
-                <FormDescription>
-                  This is your coworking space name
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="description"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Cospace description</FormLabel>
-                <FormControl>
-                  <Textarea placeholder="Cospacy descrition" {...field} />
-                </FormControl>
-                <FormDescription>
-                  Write a good description; this will be displayed for all
-                  members
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <div className="flex justify-end">
-            <Button type="submit" disabled={updateCospace.isPending}>
-              {updateCospace.isPending ? (
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              ) : (
-                <Save className="mr-2 h-4 w-4" />
+    <Card>
+      <CardHeader>General</CardHeader>
+      <CardContent>
+        <Image
+          src={data?.coverImage ?? ""}
+          alt="cospace cover"
+          className="h-44 w-full rounded-md object-cover"
+          width={1080}
+          height={1920}
+        />
+        <UploadButton
+          endpoint="imageUploader"
+          onUploadBegin={() =>
+            toast.loading("Uploading image", { id: "isPending" })
+          }
+          onClientUploadComplete={(res) =>
+            handleImageUploadComplete(res[0]?.url ?? "")
+          }
+          onUploadError={(error: Error) => {
+            toast.dismiss("isPending");
+            toast.error(error.message, { duration: 3000 });
+          }}
+        />
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Cospace name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Cospacy" {...field} />
+                  </FormControl>
+                  <FormDescription>
+                    This is your coworking space name
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
               )}
-              Update cospace
-            </Button>
-          </div>
-        </form>
-      </Form>
-    </div>
+            />
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Cospace description</FormLabel>
+                  <FormControl>
+                    <Textarea placeholder="Cospacy descrition" {...field} />
+                  </FormControl>
+                  <FormDescription>
+                    Write a good description; this will be displayed for all
+                    members
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div className="flex justify-end">
+              <Button type="submit" disabled={updateCospace.isPending}>
+                {updateCospace.isPending ? (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                ) : (
+                  <Save className="mr-2 h-4 w-4" />
+                )}
+                Update cospace
+              </Button>
+            </div>
+          </form>
+        </Form>
+      </CardContent>
+    </Card>
   );
 }
