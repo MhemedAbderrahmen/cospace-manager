@@ -23,18 +23,21 @@ export const countriesReducer = createTRPCRouter({
     return countries;
   }),
 
-  getStates: protectedProcedure.query(async () => {
+  getCities: protectedProcedure.query(async () => {
     const response = await fetch(
       "https://countriesnow.space/api/v0.1/countries",
       {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           country: "tunisia",
         }),
       },
     );
 
-    const countries = (await response.json()) as Country[];
+    const countries = (await response.json()) as string[];
 
     return countries;
   }),

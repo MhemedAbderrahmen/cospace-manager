@@ -21,6 +21,13 @@ import {
   FormMessage,
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "~/components/ui/select";
 import { Textarea } from "~/components/ui/textarea";
 import { UploadButton } from "~/lib/uploadthing";
 import { api } from "~/trpc/react";
@@ -43,7 +50,8 @@ export default function CospaceGeneral() {
   const utils = api.useUtils();
 
   const { data, isPending } = api.cospace.getCospace.useQuery();
-  const { data: countries } = api.countries.getAll.useQuery();
+  const { data: cities } = api.countries.getCities.useQuery();
+  console.log("🚀 ~ CospaceGeneral ~ cities:", cities);
 
   const updateMedia = api.cospace.updateMedia.useMutation({
     onSuccess: async () => {
@@ -87,10 +95,6 @@ export default function CospaceGeneral() {
       form.setValue("coverImage", data.coverImage);
     }
   }, [data, form]);
-
-  useEffect(() => {
-    if (countries) console.log(countries);
-  }, [countries]);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     await updateCospace.mutateAsync({
@@ -192,7 +196,19 @@ export default function CospaceGeneral() {
                 <FormItem>
                   <FormLabel>Country</FormLabel>
                   <FormControl>
-                    <Input placeholder="Cospacy country" {...field} />
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select a country" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="tunisia">Tunisa</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -206,7 +222,27 @@ export default function CospaceGeneral() {
                 <FormItem>
                   <FormLabel>City</FormLabel>
                   <FormControl>
-                    <Input placeholder="Cospacy city" {...field} />
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select a city" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {cities && cities?.length > 0
+                          ? cities?.map((city, index) => {
+                              return (
+                                <SelectItem value={city} key={index}>
+                                  {city}
+                                </SelectItem>
+                              );
+                            })
+                          : null}
+                      </SelectContent>
+                    </Select>
                   </FormControl>
 
                   <FormMessage />

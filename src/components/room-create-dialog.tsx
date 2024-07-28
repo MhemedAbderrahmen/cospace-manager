@@ -78,7 +78,7 @@ const items = [
 
 export const RoomCreateModal: React.FC = () => {
   const { data } = api.cospace.getCospace.useQuery();
-  const { data: countriesData } = api.countries.getAll.useQuery();
+  const { data: countriesData } = api.countries.getAllCountries.useQuery();
 
   const utils = api.useUtils();
   const [isOpen, setIsOpen] = useState<boolean>(false);
