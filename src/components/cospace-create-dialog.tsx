@@ -141,6 +141,7 @@ export const CospaceCreateModal: React.FC = () => {
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="description"
@@ -175,6 +176,7 @@ export const CospaceCreateModal: React.FC = () => {
                 </FormItem>
               )}
             />
+
             <Button type="submit" disabled={createCospace.isPending}>
               {createCospace.isPending && (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />

@@ -40,7 +40,7 @@ const formSchema = z.object({
   city: z.string().min(2).max(250),
   country: z.string().min(2).max(250),
   state: z.string().min(2).max(250),
-  postalCode: z.string().min(2).max(250),
+  zip: z.string().min(2).max(250),
   phone: z.string().min(2).max(250),
   email: z.string().min(2).max(250),
   website: z.string().min(2).max(250),
@@ -50,8 +50,7 @@ export default function CospaceGeneral() {
   const utils = api.useUtils();
 
   const { data, isPending } = api.cospace.getCospace.useQuery();
-  const { data: cities } = api.countries.getCities.useQuery();
-  console.log("🚀 ~ CospaceGeneral ~ cities:", cities);
+  // const { data: cities } = api.countries.getCities.useQuery();
 
   const updateMedia = api.cospace.updateMedia.useMutation({
     onSuccess: async () => {
@@ -81,7 +80,7 @@ export default function CospaceGeneral() {
       city: "",
       country: "",
       state: "",
-      postalCode: "",
+      zip: "",
       phone: "",
       email: "",
       website: "",
@@ -232,15 +231,7 @@ export default function CospaceGeneral() {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        {cities && cities?.length > 0
-                          ? cities?.map((city, index) => {
-                              return (
-                                <SelectItem value={city} key={index}>
-                                  {city}
-                                </SelectItem>
-                              );
-                            })
-                          : null}
+                        <SelectItem value={"city"}>Test</SelectItem>
                       </SelectContent>
                     </Select>
                   </FormControl>
@@ -282,7 +273,7 @@ export default function CospaceGeneral() {
 
             <FormField
               control={form.control}
-              name="postalCode"
+              name="zip"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Postal Code</FormLabel>
