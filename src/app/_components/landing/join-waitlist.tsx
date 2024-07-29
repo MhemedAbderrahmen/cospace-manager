@@ -22,7 +22,10 @@ export function JoinWaitlist() {
       toast.error("Failed to add you to the waitlist. Please try again later.");
     },
     onMutate() {
-      toast.loading("Adding you to the waitlist..");
+      toast.loading("Adding you to the waitlist..", { id: "waitlist-loading" });
+    },
+    onSettled() {
+      toast.dismiss("waitlist-loading");
     },
   });
 
