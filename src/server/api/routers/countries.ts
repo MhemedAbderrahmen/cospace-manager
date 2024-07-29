@@ -25,7 +25,7 @@ export const countriesReducer = createTRPCRouter({
 
   getCities: protectedProcedure.query(async () => {
     const response = await fetch(
-      "https://countriesnow.space/api/v0.1/countries",
+      "https://countriesnow.space/api/v0.1/countries/cities",
       {
         method: "POST",
         headers: {
@@ -37,8 +37,10 @@ export const countriesReducer = createTRPCRouter({
       },
     );
 
-    const countries = (await response.json()) as string[];
+    const cities = (await response.json()) as {
+      data: string[];
+    };
 
-    return countries;
+    return cities.data;
   }),
 });

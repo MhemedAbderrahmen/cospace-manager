@@ -39,8 +39,6 @@ const formSchema = z.object({
   address: z.string().min(2).max(250),
   city: z.string().min(2).max(250),
   country: z.string().min(2).max(250),
-  state: z.string().min(2).max(250),
-  zip: z.string().min(2).max(250),
   phone: z.string().min(2).max(250),
   email: z.string().min(2).max(250),
   website: z.string().min(2).max(250),
@@ -50,7 +48,7 @@ export default function CospaceGeneral() {
   const utils = api.useUtils();
 
   const { data, isPending } = api.cospace.getCospace.useQuery();
-  // const { data: cities } = api.countries.getCities.useQuery();
+  const { data: cities } = api.countries.getCities.useQuery();
 
   const updateMedia = api.cospace.updateMedia.useMutation({
     onSuccess: async () => {
@@ -79,8 +77,6 @@ export default function CospaceGeneral() {
       address: "",
       city: "",
       country: "",
-      state: "",
-      zip: "",
       phone: "",
       email: "",
       website: "",
@@ -92,6 +88,13 @@ export default function CospaceGeneral() {
       form.setValue("name", data.name);
       form.setValue("description", data.description);
       form.setValue("coverImage", data.coverImage);
+      form.setValue("address", data.coverImage);
+      form.setValue("city", data.coverImage);
+      form.setValue("country", data.coverImage);
+      form.setValue("phone", data.coverImage);
+      form.setValue("phone", data.coverImage);
+      form.setValue("website", data.coverImage);
+      form.setValue("email", data.coverImage);
     }
   }, [data, form]);
 
@@ -117,7 +120,7 @@ export default function CospaceGeneral() {
   return (
     <Card>
       <CardHeader>General</CardHeader>
-      <CardContent>
+      <CardContent className="space-y-2">
         <Image
           src={data?.coverImage ?? ""}
           alt="cospace cover"
@@ -231,24 +234,13 @@ export default function CospaceGeneral() {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value={"city"}>Test</SelectItem>
+                        {cities?.map((city, index) => (
+                          <SelectItem value={city} key={index}>
+                            {city}
+                          </SelectItem>
+                        ))}
                       </SelectContent>
                     </Select>
-                  </FormControl>
-
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="state"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>State</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Cospacy state" {...field} />
                   </FormControl>
 
                   <FormMessage />
@@ -273,14 +265,13 @@ export default function CospaceGeneral() {
 
             <FormField
               control={form.control}
-              name="zip"
+              name="website"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Postal Code</FormLabel>
+                  <FormLabel>Website</FormLabel>
                   <FormControl>
-                    <Input placeholder="Cospacy postal code" {...field} />
+                    <Input placeholder="Cospacy website" {...field} />
                   </FormControl>
-
                   <FormMessage />
                 </FormItem>
               )}
@@ -288,12 +279,12 @@ export default function CospaceGeneral() {
 
             <FormField
               control={form.control}
-              name="website"
+              name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Website</FormLabel>
+                  <FormLabel>Contact E-mail</FormLabel>
                   <FormControl>
-                    <Input placeholder="Cospacy website" {...field} />
+                    <Input placeholder="Contact E-mail" {...field} />
                   </FormControl>
 
                   <FormMessage />

@@ -43,7 +43,7 @@ const formSchema = z.object({
   website: z.string().min(2).max(250),
 });
 
-export const CospaceCreateModal: React.FC = () => {
+export const CospaceCreateDialog: React.FC = () => {
   const utils = api.useUtils();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [uploadedFileName, setUploadedFileName] = useState<string>("");

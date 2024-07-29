@@ -4,7 +4,7 @@
 import dayjs from "dayjs";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { CospaceCreateModal } from "~/components/cospace-create-dialog";
+import { CospaceCreateDialog } from "~/components/cospace-create-dialog";
 import { SkeletonCard } from "~/components/skeleton-card";
 import { Button } from "~/components/ui/button";
 import {
@@ -63,7 +63,7 @@ export default function CospaceCreate() {
       <CardHeader>Get Started</CardHeader>
       <CardContent className="flex flex-col gap-2">
         <div className="text-md">Add a new coworking space!</div>
-        <CospaceCreateModal />
+        <CospaceCreateDialog />
       </CardContent>
     </Card>
   );

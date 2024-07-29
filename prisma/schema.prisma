@@ -59,8 +59,6 @@ model Cospace {
     coverImage  String
     addresse    String  @default("")
     city        String  @default("")
-    state       String  @default("")
-    zip         String  @default("")
     country     String  @default("")
     phone       String  @default("")
     email       String  @default("")

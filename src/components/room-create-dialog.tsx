@@ -2,7 +2,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Amenties, RoomType } from "@prisma/client";
 import { Loader2, PlusIcon } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -78,7 +78,6 @@ const items = [
 
 export const RoomCreateModal: React.FC = () => {
   const { data } = api.cospace.getCospace.useQuery();
-  const { data: countriesData } = api.countries.getAllCountries.useQuery();
 
   const utils = api.useUtils();
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -116,10 +115,6 @@ export const RoomCreateModal: React.FC = () => {
       setIsOpen(false);
     },
   });
-
-  useEffect(() => {
-    console.log(countriesData);
-  }, [countriesData]);
 
   const generateAvailabilities = api.availability.generateSlots.useMutation({});
 
