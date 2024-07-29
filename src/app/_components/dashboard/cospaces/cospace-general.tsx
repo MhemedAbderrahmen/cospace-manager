@@ -88,13 +88,12 @@ export default function CospaceGeneral() {
       form.setValue("name", data.name);
       form.setValue("description", data.description);
       form.setValue("coverImage", data.coverImage);
-      form.setValue("address", data.coverImage);
-      form.setValue("city", data.coverImage);
-      form.setValue("country", data.coverImage);
-      form.setValue("phone", data.coverImage);
-      form.setValue("phone", data.coverImage);
-      form.setValue("website", data.coverImage);
-      form.setValue("email", data.coverImage);
+      form.setValue("address", data.addresse);
+      form.setValue("city", data.city);
+      form.setValue("country", data.country);
+      form.setValue("email", data.email);
+      form.setValue("phone", data.phone);
+      form.setValue("website", data.website);
     }
   }, [data, form]);
 
@@ -286,7 +285,6 @@ export default function CospaceGeneral() {
                   <FormControl>
                     <Input placeholder="Contact E-mail" {...field} />
                   </FormControl>
-
                   <FormMessage />
                 </FormItem>
               )}

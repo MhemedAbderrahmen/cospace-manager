@@ -39,6 +39,12 @@ export const cospaceReducer = createTRPCRouter({
         name: z.string().min(1),
         description: z.string().min(1),
         coverImage: z.string().url(),
+        address: z.string().min(2).max(250),
+        city: z.string().min(2).max(250),
+        country: z.string().min(2).max(250),
+        phone: z.string().min(2).max(250),
+        email: z.string().min(2).max(250),
+        website: z.string().min(2).max(250),
       }),
     )
     .mutation(({ ctx, input }) => {
@@ -50,6 +56,12 @@ export const cospaceReducer = createTRPCRouter({
           description: input.description,
           name: input.name,
           coverImage: input.coverImage,
+          addresse: input.address,
+          city: input.city,
+          country: input.country,
+          phone: input.phone,
+          email: input.email,
+          website: input.website,
         },
       });
     }),
@@ -60,6 +72,12 @@ export const cospaceReducer = createTRPCRouter({
         id: z.coerce.number(),
         name: z.string().min(1),
         description: z.string().min(1),
+        address: z.string().min(2).max(250),
+        city: z.string().min(2).max(250),
+        country: z.string().min(2).max(250),
+        phone: z.string().min(2).max(250),
+        email: z.string().min(2).max(250),
+        website: z.string().min(2).max(250),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -68,6 +86,12 @@ export const cospaceReducer = createTRPCRouter({
         data: {
           name: input.name,
           description: input.description,
+          addresse: input.address,
+          city: input.city,
+          country: input.country,
+          phone: input.phone,
+          email: input.email,
+          website: input.website,
         },
       });
       return updatedCospace;

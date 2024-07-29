@@ -27,6 +27,13 @@ import {
   FormMessage,
 } from "./ui/form";
 import { Input } from "./ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
 import { Textarea } from "./ui/textarea";
 
 const formSchema = z.object({
@@ -36,8 +43,6 @@ const formSchema = z.object({
   address: z.string().min(2).max(250),
   city: z.string().min(2).max(250),
   country: z.string().min(2).max(250),
-  state: z.string().min(2).max(250),
-  postalCode: z.string().min(2).max(250),
   phone: z.string().min(2).max(250),
   email: z.string().min(2).max(250),
   website: z.string().min(2).max(250),
@@ -45,8 +50,12 @@ const formSchema = z.object({
 
 export const CospaceCreateDialog: React.FC = () => {
   const utils = api.useUtils();
+
+  const { data: cities } = api.countries.getCities.useQuery();
+
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [uploadedFileName, setUploadedFileName] = useState<string>("");
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -56,8 +65,6 @@ export const CospaceCreateDialog: React.FC = () => {
       address: "",
       city: "",
       country: "",
-      state: "",
-      postalCode: "",
       phone: "",
       email: "",
       website: "",
@@ -90,7 +97,7 @@ export const CospaceCreateDialog: React.FC = () => {
           <PlusIcon className="m-2" size={18} /> Create a new cospace
         </Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="h-[650px] overflow-auto">
         <DialogHeader>
           <DialogTitle>Get started</DialogTitle>
           <DialogDescription>
@@ -172,6 +179,106 @@ export const CospaceCreateDialog: React.FC = () => {
                   <FormDescription>
                     This is your coworking space address
                   </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="country"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Country</FormLabel>
+                  <FormControl>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select a country" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="tunisia">Tunisa</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="city"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>City</FormLabel>
+                  <FormControl>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select a city" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {cities?.map((city, index) => (
+                          <SelectItem value={city} key={index}>
+                            {city}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="phone"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Phone</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Cospacy phone" {...field} />
+                  </FormControl>
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="website"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Website</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Cospacy website" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Contact E-mail</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Contact E-mail" {...field} />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
