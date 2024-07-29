@@ -31,7 +31,7 @@ export const bookingsReducer = createTRPCRouter({
         },
       });
 
-      await ctx.db.availability.updateMany({
+      return await ctx.db.availability.updateMany({
         where: {
           id: {
             in: input.availabilities,

@@ -30,7 +30,7 @@ export default function FeaturedCospace() {
   return (
     <Card className="w-full">
       <CardHeader>Featured Coworking Space 🌟</CardHeader>
-      <CardContent className="flex flex-col gap-2">
+      <CardContent className="flex flex-col gap-6">
         {latestCospace?.coverImage ? (
           <Image
             src={latestCospace.coverImage}
@@ -58,9 +58,7 @@ export default function FeaturedCospace() {
             </HoverCardContent>
           </HoverCard>
         </div>
-        <small className="text-sm font-medium leading-none text-muted-foreground">
-          {latestCospace?.description}
-        </small>
+        <p className="leading-7">{latestCospace?.description}</p>
       </CardContent>
       <CardFooter className="flex justify-end">
         <Button
