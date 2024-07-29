@@ -7,6 +7,7 @@ import { metricsReducer } from "./routers/metrics";
 import { paymentsReducer } from "./routers/payments";
 import { profileReducer } from "./routers/profile";
 import { roomReducer } from "./routers/room";
+import { waitlistReducer } from "./routers/waitlist";
 
 /**
  * This is the primary router for your server.
@@ -14,6 +15,7 @@ import { roomReducer } from "./routers/room";
  * All routers added in /api/routers should be manually added here.
  */
 export const appRouter = createTRPCRouter({
+  waitlist: waitlistReducer,
   profile: profileReducer,
   cospace: cospaceReducer,
   room: roomReducer,

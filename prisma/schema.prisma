@@ -121,3 +121,11 @@ model Booking {
     profile Profile @relation(fields: [profileId], references: [id])
     room    Room?   @relation(fields: [roomId], references: [id])
 }
+
+model WaitlistMember {
+    id    Int    @id @default(autoincrement())
+    email String @unique
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}

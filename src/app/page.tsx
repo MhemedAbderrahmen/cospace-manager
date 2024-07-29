@@ -1,6 +1,5 @@
-import Link from "next/link";
-import { Button } from "~/components/ui/button";
 import { HydrateClient } from "~/trpc/server";
+import { JoinWaitlist } from "./_components/landing/join-waitlist";
 import { WhyHubMate } from "./_components/landing/why-hubmate";
 
 export default async function Home() {
@@ -15,22 +14,11 @@ export default async function Home() {
           <p className="text-xl">
             The smart choice for coworking space management.
           </p>
-          <div className="flex gap-4">
-            <Link href={"/dashboard"}>
-              <Button variant={"default"} size={"lg"}>
-                Get Started
-              </Button>
-            </Link>
-            <Link href={"/"}>
-              <Button variant={"link"} size={"lg"}>
-                Live Demo
-              </Button>
-            </Link>
-          </div>
-          <p>No credit card required</p>
+          <JoinWaitlist />
+          <p>Early adopters will have a special discount</p>
           <div>
             <small className="rounded-3xl border p-2 text-sm font-medium leading-none dark:bg-stone-950">
-              🌟 New Release
+              🌟 Work In Progress
             </small>
           </div>
         </section>
