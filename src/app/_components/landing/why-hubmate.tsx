@@ -47,12 +47,12 @@ export function WhyHubMate() {
         </Card>
       </div>
       <div className="flex gap-4">
-        <Link href={"/dashboard"}>
+        <Link href={"/"}>
           <Button size={"lg"} variant={"outline"}>
             Learn More
           </Button>
         </Link>
-        <Link href={"/dashboard"}>
+        <Link href={"/"}>
           <Button variant={"default"} size={"lg"}>
             Join Now
           </Button>
