@@ -1,10 +1,5 @@
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
-type State = {
-  name: string;
-  state_code: string;
-};
-
 type Country = {
   name: string;
   iso2: string;
