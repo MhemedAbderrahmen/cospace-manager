@@ -23,7 +23,10 @@ An app made fore coworking space managers to best manage their space
 - [x] List bookings for managers
 - [x] List bookings for memebers on dashboard
 
-- [] Refactor Routing
+- [x] Refactor Routing
+
+# In Progress
+
 - [] Implement filters and search of coworking spaces
 - [] Allow users to cancel bookings
 - [] User refund / cancel payment w/Stripe (https://docs.stripe.com/refunds)

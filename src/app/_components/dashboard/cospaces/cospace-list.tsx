@@ -1,9 +1,11 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { SkeletonCard } from "~/components/skeleton-card";
 import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardHeader } from "~/components/ui/card";
+import { MEMBER_COSPACE, SEARCH_COSPACE } from "~/lib/paths";
 import { api } from "~/trpc/react";
 
 interface ICospaceItemProps {
@@ -33,10 +35,7 @@ function CospaceItem({ data }: Readonly<{ data: ICospaceItemProps }>) {
           Space Manager @{data.manager.username}
         </small>
       </div>
-      <Button
-        size={"sm"}
-        onClick={() => router.push("member/cospace/" + data.id)}
-      >
+      <Button size={"sm"} onClick={() => router.push(MEMBER_COSPACE + data.id)}>
         Details
       </Button>
     </div>
@@ -51,7 +50,9 @@ export default function CospaceList() {
     <Card className="w-full md:w-1/2">
       <CardHeader className="flex flex-row items-center justify-between">
         <div>Coworking Spaces Available</div>
-        <Button variant={"link"}>View more</Button>
+        <Link href={SEARCH_COSPACE}>
+          <Button variant={"link"}>View more</Button>
+        </Link>
       </CardHeader>
       <CardContent className="space-y-4">
         {data?.map((cospace, index) => (
