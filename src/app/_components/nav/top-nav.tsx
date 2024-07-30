@@ -23,7 +23,7 @@ export const TopNav = () => {
         </div>
 
         <div className="flex flex-row items-center space-x-2">
-          <ModeToggle />
+          {/* <ModeToggle />
           <SignedOut>
             <div className="flex flex-row items-center space-x-2">
               <SignInButton>
@@ -40,7 +40,7 @@ export const TopNav = () => {
             <div>
               <UserButton />
             </div>
-          </SignedIn>
+          </SignedIn> */}
         </div>
       </div>
     </nav>
