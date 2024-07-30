@@ -1,6 +1,6 @@
 import { HydrateClient } from "~/trpc/server";
 import { JoinWaitlist } from "./_components/landing/join-waitlist";
-import { WhyHubMate } from "./_components/landing/why-coworking spacemate";
+import { WhyHubMate } from "./_components/landing/why-hubmate";
 
 export default async function Home() {
   return (
