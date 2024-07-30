@@ -14,6 +14,7 @@ import {
   CardHeader,
 } from "~/components/ui/card";
 import { DEFAULT_DATE_FORMAT } from "~/lib/constants";
+import { MANAGER_COSPACE } from "~/lib/paths";
 import { api } from "~/trpc/react";
 export default function CospaceCreate() {
   const { data, isPending } = api.profile.getUserProfile.useQuery();
@@ -29,7 +30,7 @@ export default function CospaceCreate() {
         {data?.Cospace?.coverImage ? (
           <Image
             src={data?.Cospace?.coverImage}
-            alt="cospace cover"
+            alt="hub cover"
             className="h-32 w-full rounded-md object-cover"
             width={1920}
             height={1080}
@@ -50,10 +51,7 @@ export default function CospaceCreate() {
         </p>
       </CardContent>
       <CardFooter className="flex w-full justify-end">
-        <Button
-          size={"sm"}
-          onClick={() => router.push("/dashboard/manager/cospace")}
-        >
+        <Button size={"sm"} onClick={() => router.push(MANAGER_COSPACE)}>
           Manage
         </Button>
       </CardFooter>
@@ -62,7 +60,7 @@ export default function CospaceCreate() {
     <Card className="w-full md:w-1/2" suppressHydrationWarning>
       <CardHeader>Get Started</CardHeader>
       <CardContent className="flex flex-col gap-2">
-        <div className="text-md">Add a new coworking space!</div>
+        <div className="text-md">Add a new hub!</div>
         <CospaceCreateDialog />
       </CardContent>
     </Card>

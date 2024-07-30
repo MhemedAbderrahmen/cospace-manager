@@ -3,12 +3,7 @@ import { redirect } from "next/navigation";
 import { LatestUserBookings } from "~/app/_components/dashboard/bookings/latest-user-bookings";
 import FeaturedCospace from "~/app/_components/dashboard/cospaces/cospace-featured";
 import CospaceList from "~/app/_components/dashboard/cospaces/cospace-list";
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "~/components/ui/card";
+import { Card, CardHeader } from "~/components/ui/card";
 import { api, HydrateClient } from "~/trpc/server";
 
 export default function MemberDashboard() {
@@ -25,16 +20,12 @@ export default function MemberDashboard() {
       <div className="flex flex-col gap-4">
         <Card>
           <CardHeader>
-            <CardTitle>
-              <p className="text-xl font-semibold leading-7 [&:not(:first-child)]:mt-6">
-                🎉 Congratulations, you are closer to join a coworking space!
-              </p>
-            </CardTitle>
-            <CardDescription>
-              <p className="text-md text-muted-foreground">
-                And we have a wide selection of them.
-              </p>
-            </CardDescription>
+            <p className="text-xl font-semibold leading-7 [&:not(:first-child)]:mt-6">
+              🎉 Congratulations, you are closer to join a coworking space!
+            </p>
+            <p className="text-md text-muted-foreground">
+              And we have a wide selection of them.
+            </p>
           </CardHeader>
         </Card>
 

@@ -16,6 +16,7 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "~/components/ui/hover-card";
+import { MEMBER_COSPACE } from "~/lib/paths";
 import { api } from "~/trpc/react";
 export default function FeaturedCospace() {
   const router = useRouter();
@@ -63,9 +64,7 @@ export default function FeaturedCospace() {
       <CardFooter className="flex justify-end">
         <Button
           size={"sm"}
-          onClick={() =>
-            router.push("/dashboard/member/cospace/" + latestCospace?.id)
-          }
+          onClick={() => router.push(MEMBER_COSPACE + latestCospace?.id)}
         >
           Book Now
         </Button>
