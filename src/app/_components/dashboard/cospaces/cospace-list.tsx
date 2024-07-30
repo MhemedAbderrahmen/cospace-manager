@@ -43,9 +43,12 @@ function CospaceItem({ data }: Readonly<{ data: ICospaceItemProps }>) {
 }
 
 export default function CospaceList() {
-  const { data, isPending } = api.cospace.getAll.useQuery();
-  if (isPending) return <SkeletonCard />;
+  const { data, isPending } = api.cospace.getAll.useQuery({
+    limit: 5,
+    offset: 0,
+  });
 
+  if (isPending) return <SkeletonCard />;
   return (
     <Card className="w-full md:w-1/2">
       <CardHeader className="flex flex-row items-center justify-between">

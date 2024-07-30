@@ -117,13 +117,36 @@ export const cospaceReducer = createTRPCRouter({
     });
   }),
 
-  getAll: protectedProcedure.query(async ({ ctx }) => {
-    return await ctx.db.cospace.findMany({
-      include: {
-        manager: true,
-      },
-    });
-  }),
+  getAll: protectedProcedure
+    .input(
+      z.object({
+        filters: z
+          .object({
+            address: z.string().optional(),
+            country: z.string().optional(),
+            city: z.string().optional(),
+            email: z.string().optional(),
+            phone: z.string().optional(),
+            website: z.string().optional(),
+            isFeatured: z.boolean().optional(),
+          })
+          .optional(),
+        limit: z.number().default(10),
+        offset: z.number().default(0),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      return await ctx.db.cospace.findMany({
+        where: {
+          ...input.filters,
+        },
+        take: input.limit,
+        skip: input.offset,
+        include: {
+          manager: true,
+        },
+      });
+    }),
 
   updateMedia: protectedProcedure
     .input(
