@@ -5,7 +5,7 @@ An app made fore coworking space managers to best manage their space
 # Todo List
 
 - [x] Setup project
-- [x] Initialise on Github
+- [x] Initialise on Gitcoworking space
 - [x] Init DB and link it to app
 - [x] App deployment
 - [x] Clerk Integration
@@ -23,7 +23,8 @@ An app made fore coworking space managers to best manage their space
 - [x] List bookings for managers
 - [x] List bookings for memebers on dashboard
 
+- [] Refactor Routing
 - [] Implement filters and search of coworking spaces
-- [] Allow users to cancel booking
+- [] Allow users to cancel bookings
 - [] User refund / cancel payment w/Stripe (https://docs.stripe.com/refunds)
 - [] Work on landing page animations (section 1 / 2)

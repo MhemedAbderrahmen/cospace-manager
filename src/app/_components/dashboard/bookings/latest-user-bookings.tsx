@@ -4,6 +4,7 @@ import { SkeletonCard } from "~/components/skeleton-card";
 import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardHeader } from "~/components/ui/card";
 import { Separator } from "~/components/ui/separator";
+import { MEMBER_BOOKINGS } from "~/lib/paths";
 import { api } from "~/trpc/react";
 
 export function LatestUserBookings() {
@@ -14,7 +15,7 @@ export function LatestUserBookings() {
     <Card className="w-full md:w-1/2">
       <CardHeader className="flex flex-row items-center justify-between">
         <div>Latest bookings</div>
-        <Link href={"/dashboard/member/bookings"}>
+        <Link href={MEMBER_BOOKINGS}>
           <Button variant={"link"}>View all</Button>
         </Link>
       </CardHeader>

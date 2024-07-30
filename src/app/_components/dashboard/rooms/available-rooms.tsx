@@ -8,6 +8,7 @@ import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
 import { Card, CardFooter, CardHeader } from "~/components/ui/card";
 import { DEFAULT_CURRENCY } from "~/lib/constants";
+import { MEMBER_ROOM } from "~/lib/paths";
 import { api } from "~/trpc/react";
 
 function toTitleCase(str: string) {
@@ -70,10 +71,7 @@ function RoomItem(
           {room.availabilityPrice} {DEFAULT_CURRENCY} / Hour
         </div>
 
-        <Button
-          size={"sm"}
-          onClick={() => router.push("/dashboard/member/room/" + room.id)}
-        >
+        <Button size={"sm"} onClick={() => router.push(MEMBER_ROOM + room.id)}>
           View Availabilites
         </Button>
       </CardFooter>

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardHeader } from "~/components/ui/card";
+import { DASHBOARD } from "~/lib/paths";
 
 export function WhyHubMate() {
   return (
@@ -47,12 +48,12 @@ export function WhyHubMate() {
         </Card>
       </div>
       <div className="flex gap-4">
-        <Link href={"/dashboard"}>
+        <Link href={DASHBOARD}>
           <Button size={"lg"} variant={"outline"}>
             Learn More
           </Button>
         </Link>
-        <Link href={"/dashboard"}>
+        <Link href={DASHBOARD}>
           <Button variant={"default"} size={"lg"}>
             Join Now
           </Button>
