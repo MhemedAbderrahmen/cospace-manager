@@ -14,3 +14,4 @@ export const MANAGER_BOOKINGS = "/dashboard/manager/bookings";
 export const MANAGER_COSPACE = "/dashboard/manager/cospace/";
 export const MEMBER_COSPACE = "/dashboard/member/cospace/";
 export const MEMBER_ROOM = "/dashboard/memeber/room";
+export const SEARCH_COSPACE = "/dashboard/cospace/search";
