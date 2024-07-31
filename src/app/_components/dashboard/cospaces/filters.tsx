@@ -62,13 +62,16 @@ export function Filters({ pending }: { pending: boolean }) {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log("🚀 ~ onSubmit ~ values:", values);
     const params = new URLSearchParams(searchParams);
-    if (values.address) {
-      params.set("address", values.address);
-    } else {
-      params.delete("address");
-    }
+
+    Object.entries(values).forEach(([key, value]) => {
+      if (value) {
+        params.set(key, value as string);
+      } else {
+        params.delete(key);
+      }
+    });
+
     router.replace(`${pathname}?${params.toString()}`);
   }
 
@@ -177,12 +180,23 @@ export function Filters({ pending }: { pending: boolean }) {
             />
           </CardContent>
           <CardFooter className="flex flex-row justify-end">
-            <Button type="submit" disabled={pending}>
-              {pending ? (
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              ) : null}
-              Search
-            </Button>
+            <div className="space-x-2">
+              <Button
+                variant="ghost"
+                onClick={() => {
+                  form.reset();
+                  form.handleSubmit(onSubmit);
+                }}
+              >
+                Reset
+              </Button>
+              <Button type="submit" disabled={pending}>
+                {pending ? (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                ) : null}
+                Search
+              </Button>
+            </div>
           </CardFooter>
         </Card>
       </form>
