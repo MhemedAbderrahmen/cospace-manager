@@ -3,7 +3,6 @@ import Link from "next/link";
 import { SkeletonCard } from "~/components/skeleton-card";
 import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardHeader } from "~/components/ui/card";
-import { Separator } from "~/components/ui/separator";
 import { MEMBER_BOOKINGS } from "~/lib/paths";
 import { api } from "~/trpc/react";
 
@@ -40,7 +39,6 @@ export function LatestUserBookings() {
                 </small>
               </div>
             </div>
-            <Separator />
           </div>
         ))}
       </CardContent>

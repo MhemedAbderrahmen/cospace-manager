@@ -31,8 +31,8 @@ function CospaceItem({ data }: Readonly<{ data: ICospaceItemProps }>) {
   return (
     <div className="flex flex-row items-center justify-between">
       <div>
-        <div className="text-lg font-semibold">{data.name}</div>
-        <small className="text-sm font-medium leading-none text-muted-foreground">
+        <p className="text-md font-semibold">{data.name}</p>
+        <small className="text-md text-muted-foreground">
           Space Manager @{data.manager.username}
         </small>
       </div>

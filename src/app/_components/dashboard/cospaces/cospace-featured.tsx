@@ -37,8 +37,8 @@ export default function FeaturedCospace() {
             src={latestCospace.coverImage}
             alt="cospace cover"
             className="h-32 w-full rounded-md object-cover"
-            width={420}
-            height={520}
+            width={1920}
+            height={1080}
           />
         ) : null}
         <div className="flex flex-row items-center justify-between">
