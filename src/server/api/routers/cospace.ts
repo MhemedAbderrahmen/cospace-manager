@@ -122,7 +122,7 @@ export const cospaceReducer = createTRPCRouter({
       z.object({
         filters: z
           .object({
-            address: z.string().optional(),
+            addresse: z.string().optional(),
             country: z.string().optional(),
             city: z.string().optional(),
             email: z.string().optional(),
@@ -139,6 +139,9 @@ export const cospaceReducer = createTRPCRouter({
       return await ctx.db.cospace.findMany({
         where: {
           ...input.filters,
+          addresse: {
+            contains: input?.filters?.addresse,
+          },
         },
         take: input.limit,
         skip: input.offset,

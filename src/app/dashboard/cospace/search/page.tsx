@@ -1,4 +1,4 @@
-import { Filters } from "~/app/_components/dashboard/cospaces/filters";
+import List from "~/app/_components/dashboard/cospaces/list";
 import { Card, CardHeader } from "~/components/ui/card";
 import { HydrateClient } from "~/trpc/server";
 
@@ -17,7 +17,7 @@ export default function CospaceSearch() {
             </p>
           </CardHeader>
         </Card>
-        <Filters />
+        <List />
       </div>
     </HydrateClient>
   );

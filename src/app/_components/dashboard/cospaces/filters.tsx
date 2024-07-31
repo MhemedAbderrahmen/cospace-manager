@@ -1,5 +1,5 @@
-"use client";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2 } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -39,18 +39,13 @@ const formSchema = z.object({
   isFeatured: z.boolean().optional(),
 });
 
-export function Filters() {
+export function Filters({ pending }: { pending: boolean }) {
   // const { data: countries } = api.countries.getAllCountries.useQuery();
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
 
   const { data: cities } = api.countries.getCities.useQuery();
-
-  const { data, isPending } = api.cospace.getAll.useQuery({
-    limit: 5,
-    offset: 0,
-  });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -68,8 +63,6 @@ export function Filters() {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log("🚀 ~ onSubmit ~ values:", values);
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
     const params = new URLSearchParams(searchParams);
     if (values.address) {
       params.set("address", values.address);
@@ -184,7 +177,12 @@ export function Filters() {
             />
           </CardContent>
           <CardFooter className="flex flex-row justify-end">
-            <Button type="submit">Search</Button>
+            <Button type="submit" disabled={pending}>
+              {pending ? (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              ) : null}
+              Search
+            </Button>
           </CardFooter>
         </Card>
       </form>
