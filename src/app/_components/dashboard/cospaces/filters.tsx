@@ -43,7 +43,7 @@ export function Filters() {
   // const { data: countries } = api.countries.getAllCountries.useQuery();
   const searchParams = useSearchParams();
   const pathname = usePathname();
-  const { replace } = useRouter();
+  const router = useRouter();
 
   const { data: cities } = api.countries.getCities.useQuery();
 
@@ -76,7 +76,7 @@ export function Filters() {
     } else {
       params.delete("address");
     }
-    replace(`${pathname}?${params.toString()}`);
+    router.replace(`${pathname}?${params.toString()}`);
   }
 
   return (
