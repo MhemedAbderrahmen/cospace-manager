@@ -1,7 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
-import { SkeletonLine } from "~/components/skeleton-line";
+import { SkeletonCard } from "~/components/skeleton-card";
 import { Button } from "~/components/ui/button";
 import {
   Card,
@@ -17,16 +18,31 @@ function Item({
   id,
   name,
   description,
+  coverImage,
 }: {
   id: number;
   name: string;
+  coverImage: string;
   description: string;
 }) {
   const router = useRouter();
   return (
     <Card>
-      <CardHeader>{name}</CardHeader>
-      <CardContent>{description}</CardContent>
+      <CardHeader>
+        <Image
+          src={coverImage}
+          alt="hub cover"
+          className="h-full w-full rounded-md object-cover"
+          width={1920}
+          height={1080}
+        />
+      </CardHeader>
+      <CardContent>
+        <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
+          {name}
+        </h4>
+        <p className="leading-7 [&:not(:first-child)]:mt-6">{description}</p>
+      </CardContent>
       <CardFooter className="flex justify-end">
         <Button
           variant={"link"}
@@ -58,9 +74,9 @@ export default function List() {
   return (
     <div className="flex flex-col gap-4">
       <Filters pending={isPending} />
-      <div className="flex flex-col gap-4">
+      <div className="grid grid-cols-3 gap-4">
         {isPending ? (
-          <SkeletonLine />
+          <SkeletonCard />
         ) : (
           data?.map((cospace) => <Item key={cospace.id} {...cospace} />)
         )}
