@@ -2,7 +2,6 @@
 import dayjs from "dayjs";
 import { Loader2, ShoppingCart, TrashIcon } from "lucide-react";
 import { useState, type Dispatch, type SetStateAction } from "react";
-import { toast } from "sonner";
 import { type SlotType } from "~/app/_components/dashboard/rooms/available-slots";
 import { DEFAULT_DATE_FORMAT, DEFAULT_TIME_FORMAT } from "~/lib/constants";
 import { api } from "~/trpc/react";
@@ -18,7 +17,6 @@ import {
 } from "./ui/dialog";
 
 interface BookingCartDialogProps {
-  next: () => void;
   roomId: number;
   items: SlotType[];
   setItems: Dispatch<SetStateAction<SlotType[]>>;
@@ -28,25 +26,12 @@ export function BookingCartDialog({
   items,
   setItems,
   roomId,
-  next,
 }: BookingCartDialogProps) {
   const utils = api.useUtils();
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const { data } = api.profile.getUserProfileByCospaceId.useQuery({
     cospaceId: items[0]?.room.cospaceId ?? 0,
-  });
-
-  const createBooking = api.bookings.create.useMutation({
-    onMutate: () => {
-      toast.loading("Creating booking...", { id: "create-booking" });
-    },
-    onSuccess: () => {
-      toast.dismiss("create-booking");
-      toast.success("Booking created successfully", { duration: 5000 });
-      setIsOpen(false);
-      next();
-    },
   });
 
   const createStripeSession = api.payments.createSession.useMutation({
@@ -62,7 +47,7 @@ export function BookingCartDialog({
       await createStripeSession.mutateAsync({
         currency: "usd",
         destination: data?.stripeAccountId,
-        productName: "Booking Room" + roomId,
+        productName: "Booking Romm: " + roomId,
         quantity: items.length,
         unitAmount: availabilityPrice,
         roomId,

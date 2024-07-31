@@ -141,13 +141,6 @@ export default function AvailableSlots({
       <div className="flex flex-row items-center gap-2">
         <CalendarForm handleSubmit={(date: Date) => submit(date)} />
         <BookingCartDialog
-          next={() =>
-            selectedDate &&
-            mutate({
-              roomId: params.slug,
-              date: selectedDate.toDateString(),
-            })
-          }
           items={selectedSlots}
           setItems={setSelectedSlots}
           roomId={params.slug}
