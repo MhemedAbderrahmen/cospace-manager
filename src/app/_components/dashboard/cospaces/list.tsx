@@ -1,6 +1,6 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { SkeletonLine } from "~/components/skeleton-line";
 import { Button } from "~/components/ui/button";
 import {
@@ -9,6 +9,7 @@ import {
   CardFooter,
   CardHeader,
 } from "~/components/ui/card";
+import { MEMBER_COSPACE } from "~/lib/paths";
 import { api } from "~/trpc/react";
 import { Filters } from "./filters";
 
@@ -21,12 +22,18 @@ function Item({
   name: string;
   description: string;
 }) {
+  const router = useRouter();
   return (
     <Card>
       <CardHeader>{name}</CardHeader>
       <CardContent>{description}</CardContent>
       <CardFooter className="flex justify-end">
-        <Button variant={"link"}>Details</Button>
+        <Button
+          variant={"link"}
+          onClick={() => router.push(MEMBER_COSPACE + id)}
+        >
+          Details
+        </Button>
       </CardFooter>
     </Card>
   );
@@ -51,7 +58,7 @@ export default function List() {
   return (
     <div className="flex flex-col gap-4">
       <Filters pending={isPending} />
-      <div>
+      <div className="flex flex-col gap-4">
         {isPending ? (
           <SkeletonLine />
         ) : (
